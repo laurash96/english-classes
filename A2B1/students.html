@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Back to Basics — Your English Missions</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #faf7f2;
+    --ink: #1c1a17;
+    --coral: #e8552a;
+    --coral-light: #fde8e1;
+    --yellow: #f5c842;
+    --yellow-light: #fef9e4;
+    --green: #2a8c5a;
+    --green-light: #e2f5eb;
+    --blue: #2a5fe8;
+    --blue-light: #e4ecff;
+    --purple: #7c3aed;
+    --purple-light: #f0ebff;
+    --card: #ffffff;
+    --border: #ede9e2;
+    --wa-green: #25d366;
+    --wa-bg: #e9fbe5;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Outfit', sans-serif; background: var(--bg); color: var(--ink); min-height: 100vh; }
+
+  /* ===== HEADER ===== */
+  header { background: var(--coral); padding: 48px 32px 40px; position: relative; overflow: hidden; }
+  .header-deco { position: absolute; top: -40px; right: -40px; width: 200px; height: 200px; background: var(--yellow); border-radius: 50%; opacity: 0.25; }
+  .header-deco2 { position: absolute; bottom: -60px; left: 20%; width: 140px; height: 140px; background: #fff; border-radius: 50%; opacity: 0.08; }
+  .header-inner { max-width: 680px; margin: 0 auto; position: relative; z-index: 1; }
+  .header-tag { display: inline-block; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.35); border-radius: 100px; padding: 5px 14px; font-size: 11px; font-family: 'JetBrains Mono', monospace; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.9); margin-bottom: 20px; }
+  header h1 { font-family: 'Syne', sans-serif; font-size: clamp(32px, 7vw, 56px); font-weight: 800; color: #fff; line-height: 1.05; margin-bottom: 16px; }
+  header h1 em { font-style: normal; color: var(--yellow); }
+  .header-sub { font-size: 15px; color: rgba(255,255,255,0.8); line-height: 1.6; max-width: 460px; margin-bottom: 28px; }
+  .header-pills { display: flex; gap: 10px; flex-wrap: wrap; }
+  .hpill { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25); border-radius: 100px; padding: 6px 16px; font-size: 13px; color: #fff; font-weight: 500; }
+
+  /* ===== PROGRESS ===== */
+  .progress-bar { background: var(--ink); padding: 0 32px; display: flex; align-items: center; justify-content: center; gap: 0; position: sticky; top: 0; z-index: 100; overflow-x: auto; }
+  .prog-btn { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 14px 20px; background: none; border: none; cursor: pointer; position: relative; flex-shrink: 0; }
+  .prog-dot { width: 28px; height: 28px; border-radius: 50%; background: rgba(255,255,255,0.12); border: 2px solid rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.4); font-family: 'JetBrains Mono', monospace; transition: all 0.2s ease; }
+  .prog-label { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.35); font-family: 'JetBrains Mono', monospace; transition: color 0.2s ease; white-space: nowrap; }
+  .prog-btn.active .prog-dot { background: var(--coral); border-color: var(--coral); color: #fff; }
+  .prog-btn.active .prog-label { color: var(--coral); }
+  .prog-connector { width: 32px; height: 2px; background: rgba(255,255,255,0.1); flex-shrink: 0; }
+
+  /* ===== MAIN ===== */
+  main { max-width: 680px; margin: 0 auto; padding: 40px 24px 80px; }
+  .class-panel { display: none; animation: fadeUp 0.3s ease both; }
+  .class-panel.active { display: block; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+  .s-title { font-family: 'Syne', sans-serif; font-size: clamp(22px, 5vw, 34px); font-weight: 800; line-height: 1.1; margin-bottom: 6px; }
+  .s-sub { font-size: 14px; color: #888; margin-bottom: 32px; }
+
+  /* ===== CARD ===== */
+  .card { background: var(--card); border-radius: 20px; border: 1px solid var(--border); margin-bottom: 20px; overflow: hidden; }
+  .card-header { padding: 16px 20px 14px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
+  .card-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+  .card-label { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; font-weight: 500; }
+  .card-time { margin-left: auto; font-size: 11px; color: #aaa; background: #f5f5f5; padding: 3px 10px; border-radius: 100px; font-family: 'JetBrains Mono', monospace; }
+  .card-body { padding: 20px; }
+  .card-body p { font-size: 14.5px; line-height: 1.7; color: #3a3a3a; margin-bottom: 10px; }
+  .card-body p:last-child { margin-bottom: 0; }
+
+  .card-mission .card-header { background: var(--coral-light); }
+  .card-mission .card-icon { background: #ffd5c8; }
+  .card-mission .card-label { color: var(--coral); }
+  .card-vocab .card-header { background: var(--purple-light); }
+  .card-vocab .card-icon { background: #ddd6fe; }
+  .card-vocab .card-label { color: var(--purple); }
+  .card-starters .card-header { background: var(--blue-light); }
+  .card-starters .card-icon { background: #bfdbfe; }
+  .card-starters .card-label { color: var(--blue); }
+  .card-prep .card-header { background: var(--yellow-light); }
+  .card-prep .card-icon { background: #fde68a; }
+  .card-prep .card-label { color: #92400e; }
+
+  /* ===== VOCAB FLIP CARDS ===== */
+  .vocab-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .flip-card { height: 90px; perspective: 800px; cursor: pointer; }
+  .flip-inner { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1); }
+  .flip-card.flipped .flip-inner { transform: rotateY(180deg); }
+  .flip-front, .flip-back { position: absolute; inset: 0; border-radius: 12px; padding: 12px 14px; backface-visibility: hidden; display: flex; flex-direction: column; justify-content: center; }
+  .flip-front { background: linear-gradient(135deg, var(--purple-light) 0%, #f5f0ff 100%); border: 1px solid #d8d0f0; }
+  .flip-back { background: var(--purple); border: 1px solid var(--purple); transform: rotateY(180deg); }
+  .flip-word { font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 500; color: var(--purple); margin-bottom: 3px; }
+  .flip-hint { font-size: 10px; color: #9a8ab0; font-family: 'JetBrains Mono', monospace; }
+  .flip-def { font-size: 12px; color: #fff; line-height: 1.5; }
+  .flip-example { font-size: 11px; color: rgba(255,255,255,0.65); margin-top: 4px; font-style: italic; }
+
+  /* ===== SENTENCE STARTERS ===== */
+  .starters-list { display: flex; flex-direction: column; gap: 8px; }
+  .starter-item { display: flex; align-items: flex-start; gap: 10px; padding: 10px 12px; background: var(--blue-light); border-radius: 10px; border-left: 3px solid var(--blue); }
+  .starter-en { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--blue); font-weight: 500; flex: 1; }
+  .starter-es { font-size: 12px; color: #666; flex: 1; line-height: 1.4; padding-top: 1px; }
+
+  /* ===== WHATSAPP ===== */
+  .wa-wrapper { background: #e5ddd5; border-radius: 16px; overflow: hidden; border: 1px solid #d0c8be; }
+  .wa-bar { background: #075e54; padding: 12px 16px; display: flex; align-items: center; gap: 10px; }
+  .wa-avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--wa-green); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+  .wa-name { font-size: 14px; font-weight: 600; color: #fff; }
+  .wa-status { font-size: 11px; color: rgba(255,255,255,0.65); }
+  .wa-chat { padding: 16px 12px; display: flex; flex-direction: column; gap: 8px; min-height: 80px; }
+  .wa-bubble { max-width: 85%; padding: 10px 14px; border-radius: 8px; font-size: 14px; line-height: 1.5; position: relative; }
+  .wa-bubble.from-teacher { background: #fff; align-self: flex-start; border-radius: 0 8px 8px 8px; color: #333; }
+  .wa-bubble.from-you { background: var(--wa-bg); align-self: flex-end; border-radius: 8px 0 8px 8px; color: #333; }
+  .wa-bubble strong { color: #075e54; }
+  .wa-time { font-size: 11px; color: #aaa; margin-top: 4px; text-align: right; }
+  .wa-tag-row { padding: 10px 14px; background: #f0f0f0; display: flex; gap: 6px; flex-wrap: wrap; border-top: 1px solid #ddd; }
+  .wa-tag { background: #075e54; color: #fff; font-size: 11px; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.5px; padding: 4px 10px; border-radius: 100px; }
+
+  /* ===== CHECKLIST ===== */
+  .checklist { display: flex; flex-direction: column; gap: 8px; }
+  .check-item { display: flex; align-items: flex-start; gap: 12px; padding: 10px 12px; background: var(--yellow-light); border-radius: 10px; cursor: pointer; transition: background 0.15s ease; user-select: none; }
+  .check-item.done { background: var(--green-light); }
+  .check-box { width: 20px; height: 20px; border-radius: 6px; border: 2px solid #d4a017; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 12px; background: #fff; transition: all 0.15s ease; margin-top: 1px; }
+  .check-item.done .check-box { background: var(--green); border-color: var(--green); color: #fff; }
+  .check-text { font-size: 14px; color: #4a3a0a; line-height: 1.4; flex: 1; }
+  .check-item.done .check-text { color: var(--green); text-decoration: line-through; text-decoration-color: rgba(42,140,90,0.4); }
+
+  /* ===== MISSION STEPS ===== */
+  .mission-steps { display: flex; flex-direction: column; gap: 10px; }
+  .m-step { display: flex; gap: 12px; align-items: flex-start; }
+  .m-num { width: 24px; height: 24px; border-radius: 50%; background: var(--coral); color: #fff; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+  .m-text { font-size: 14px; line-height: 1.6; color: #3a3a3a; flex: 1; }
+  .m-text strong { color: var(--ink); }
+
+  .example-chip { display: block; background: #f5f5f5; border: 1px solid #e0e0e0; border-left: 3px solid var(--coral); border-radius: 0 8px 8px 0; padding: 6px 12px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #555; margin: 4px 0; }
+  .example-chip em { color: var(--coral); font-style: normal; }
+
+  .tip-box { background: var(--yellow-light); border: 1px solid #f0d060; border-radius: 12px; padding: 14px 16px; margin-top: 12px; font-size: 13.5px; color: #7a5f10; line-height: 1.6; }
+  .tip-box strong { color: #5a3f08; }
+
+  .contrast-box { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 0; }
+  .contrast-side { border-radius: 10px; padding: 12px 14px; }
+  .contrast-side.wrong { background: #fff0f1; border: 1px solid #fcc; }
+  .contrast-side.right { background: var(--green-light); border: 1px solid #a7f3c0; }
+  .contrast-label { font-size: 10px; font-family: 'JetBrains Mono', monospace; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 6px; font-weight: 600; }
+  .contrast-side.wrong .contrast-label { color: #c0606a; }
+  .contrast-side.right .contrast-label { color: var(--green); }
+  .contrast-text { font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 1.5; }
+  .contrast-side.wrong .contrast-text { color: #c0606a; text-decoration: line-through; text-decoration-color: rgba(192,96,106,0.4); }
+  .contrast-side.right .contrast-text { color: var(--green); }
+
+  .motivator { background: var(--ink); border-radius: 16px; padding: 20px 22px; margin-bottom: 24px; display: flex; align-items: center; gap: 14px; }
+  .motivator-emoji { font-size: 28px; }
+  .motivator p { font-size: 14px; color: rgba(255,255,255,0.75); line-height: 1.55; }
+  .motivator strong { color: var(--yellow); }
+
+  footer { background: var(--ink); text-align: center; padding: 24px; font-size: 12px; color: rgba(255,255,255,0.3); font-family: 'JetBrains Mono', monospace; letter-spacing: 1px; }
+
+  @media (max-width: 480px) {
+    header { padding: 36px 20px 32px; }
+    main { padding: 28px 16px 60px; }
+    .vocab-grid { grid-template-columns: 1fr 1fr; }
+    .flip-card { height: 100px; }
+    .contrast-box { grid-template-columns: 1fr; }
+    .progress-bar { padding: 0 8px; }
+    .prog-btn { padding: 12px 10px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-deco"></div>
+  <div class="header-deco2"></div>
+  <div class="header-inner">
+    <div class="header-tag">Your English Journey · A2 → B1</div>
+    <h1>Back to <em>Basics</em></h1>
+    <p class="header-sub">4 classes, 4 real missions. No vocabulary lists you'll never use. Just English that works in your actual life.</p>
+    <div class="header-pills">
+      <span class="hpill">🖥 Online</span>
+      <span class="hpill">⏱ 60 min / class</span>
+      <span class="hpill">💬 WhatsApp missions</span>
+      <span class="hpill">✨ Tap the cards to flip</span>
+    </div>
+  </div>
+</header>
+
+<div class="progress-bar">
+  <button class="prog-btn active" onclick="goTo(0)">
+    <div class="prog-dot">01</div>
+    <div class="prog-label">Party You</div>
+  </button>
+  <div class="prog-connector"></div>
+  <button class="prog-btn" onclick="goTo(1)">
+    <div class="prog-dot">02</div>
+    <div class="prog-label">Sundays</div>
+  </button>
+  <div class="prog-connector"></div>
+  <button class="prog-btn" onclick="goTo(2)">
+    <div class="prog-dot">03</div>
+    <div class="prog-label">Spill the Tea</div>
+  </button>
+  <div class="prog-connector"></div>
+  <button class="prog-btn" onclick="goTo(3)">
+    <div class="prog-dot">04</div>
+    <div class="prog-label">Caught in Act</div>
+  </button>
+</div>
+
+<main>
+
+  <!-- ===== CLASS 1 ===== -->
+  <div class="class-panel active" id="p0">
+    <div class="s-title">Who Are You at Parties?</div>
+    <div class="s-sub">Class 1 · Verb To Be · Who you are beyond your job title</div>
+
+    <div class="motivator">
+      <div class="motivator-emoji">🎉</div>
+      <p>Today you'll talk about yourself in English — the <strong>real version, not the professional one.</strong> Your friendships, your family, your weird habits. Grammar shows up on its own when you have something real to say.</p>
+    </div>
+
+    <!-- PREP -->
+    <div class="card card-prep">
+      <div class="card-header">
+        <div class="card-icon" style="background:#fde68a;">📋</div>
+        <span class="card-label" style="color:#92400e;">Before class — checklist</span>
+      </div>
+      <div class="card-body">
+        <div class="checklist">
+          <div class="check-item" onclick="toggle(this)">
+            <div class="check-box"></div>
+            <div class="check-text">Camera working and ready (it's non-negotiable ✓)</div>
+          </div>
+          <div class="check-item" onclick="toggle(this)">
+            <div class="check-box"></div>
+            <div class="check-text">Think about: "I'm the friend who always…" — what's your answer?</div>
+          </div>
+          <div class="check-item" onclick="toggle(this)">
+            <div class="check-box"></div>
+            <div class="check-text">Think of one thing people always get wrong about you</div>
+          </div>
+          <div class="check-item" onclick="toggle(this)">
+            <div class="check-box"></div>
+            <div class="check-text">Bring the energy — mistakes are part of the plan</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MISSION -->
+    <div class="card card-mission">
+      <div class="card-header">
+        <div class="card-icon" style="background:#ffd5c8;">⚡</div>
+        <span class="card-label" style="color:#e8552a;">Your mission today</span>
+        <span class="card-time">~33 min</span>
+      </div>
+      <div class="card-body">
+        <p><strong>A Friend of a Friend's Birthday:</strong> You've been invited to a dinner where you only know the host. Everyone else is new, some are international. Make conversation for 45 minutes over dinner. First with a character, then as yourself.</p>
+        <div class="mission-steps">
+          <div class="m-step">
+            <div class="m-num">1</div>
+            <div class="m-text">You get a character card in the private chat. <strong>You are her for 10 minutes.</strong> Introduce yourself, find connections, keep conversation going — even if the pasta is overcooked.</div>
+          </div>
+          <div class="m-step">
+            <div class="m-num">2</div>
+            <div class="m-text">Mid-dinner surprise: the teacher (as another guest) asks you both: "So, what's your story? How do you know each other?" Tell it in English — make it good.</div>
+          </div>
+          <div class="m-step">
+            <div class="m-num">3</div>
+            <div class="m-text">Round 2: <strong>drop the character.</strong> Same party, same table — but it's actually you. What changes? What's easier to say when you're being real?</div>
+          </div>
+        </div>
+        <div class="tip-box" style="margin-top:14px;">
+          <strong>Phrases that will come out naturally:</strong>
+          <span class="example-chip">"I'm the one who… actually I'm not sure how to explain it."</span>
+          <span class="example-chip">"She's actually the reason I…"</span>
+          <span class="example-chip">"We're both from… it's complicated, but in a good way."</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- VOCAB -->
+    <div class="card card-vocab">
+      <div class="card-header">
+        <div class="card-icon" style="background:#ddd6fe;">✨</div>
+        <span class="card-label" style="color:#7c3aed;">Vocabulary — tap to flip</span>
+        <span class="card-time">~10 min</span>
+      </div>
+      <div class="card-body">
+        <p style="margin-bottom:14px; font-size:13px; color:#888;">Press each card to see the meaning and a real example sentence.</p>
+        <div class="vocab-grid">
+          <div class="flip-card" onclick="this.classList.toggle('flipped')">
+            <div class="flip-inner">
+              <div class="flip-front"><div class="flip-word">down to earth</div><div class="flip-hint">tap to flip →</div></div>
+              <div class="flip-back"><div class="flip-def">Natural, sin pretensiones — lo opuesto a "stuck up"</div><div class="flip-example">"She's super down to earth — no drama, no ego."</div></div>
+            </div>
+          </div>
+          <div class="flip-card" onclick="this.classList.toggle('flipped')">
+            <div class="flip-inner">
+              <div class="flip-front"><div class="flip-word">a people person</div><div class="flip-hint">tap to flip →</div></div>
+              <div class="flip-back"><div class="flip-def">Alguien sociable, que le encanta interactuar</div><div class="flip-example">"I'm really not a people person, honestly."</div></div>
+            </div>
+          </div>
+          <div class="flip-card" onclick="this.classList.toggle('flipped')">
+            <div class="flip-inner">
+              <div class="flip-front"><div class="flip-word">it turns out</div><div class="flip-hint">tap to flip →</div></div>
+              <div class="flip-back"><div class="flip-def">Resulta que — para revelar algo inesperado</div><div class="flip-example">"It turns out we went to the same school."</div></div>
+            </div>
+          </div>
+          <div class="flip-card" onclick="this.classList.toggle('flipped')">
+            <div class="flip-inner">
+              <div class="flip-front"><div class="flip-word">low-key</div><div class="flip-hint">tap to flip →</div></div>
+              <div class="flip-back"><div class="flip-def">Un poco / secretamente — tono conversacional</div><div class="flip-example">"I'm low-key obsessed with true crime podcasts."</div></div>
+            </div>
+          </div>
+          <div class="flip-card" onclick="this.classList.toggle('flipped')">
+            <div class="flip-inner">
+              <div class="flip-front"><div class="flip-word">hard to read</div><div class="flip-hint">tap to flip →</div></div>
+              <div class="flip-back"><div class="flip-def">Difícil de entender emocionalmente, impredecible</div><div class="flip-example">"She's brilliant but kind of hard to read."</div></div>
+            </div>
+          </div>
+          <div class="flip-card" onclick="this.classList.toggle('flipped')">
+            <div class="flip-inner">
+              <div class="flip-front"><div class="flip-word">the kind of person who</div><div class="flip-hint">tap to flip →</div></div>
+              <div class="flip-back"><div class="flip-def">Para describir personalidad a través del comportamiento</div><div class="flip-example">"She's the kind of person who remembers everyone's birthday."</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STARTERS -->
+    <div class="card card-starters">
+      <div class="card-header">
+        <div class="card-icon" style="background:#bfdbfe;">💬</div>
+        <span class="card-label" style="color:#2a5fe8;">Sentence starters — use these as a launchpad</span>
+      </div>
+      <div class="card-body">
+        <div class="starters-list">
+          <div class="starter-item">
+            <div class="starter-en">I'm the friend who always…</div>
+            <div class="starter-es">Soy la amiga que siempre… (describe tu patrón de comportamiento)</div>
+          </div>
+          <div class="starter-item">
+            <div class="starter-en">I'm the one who never…</div>
+            <div class="starter-es">Soy la que nunca… (para describir tu "nunca")</div>
+          </div>
+          <div class="starter-item">
+            <div class="starter-en">That's so you! / That's so me!</div>
+            <div class="starter-es">¡Eso es muy tuyo! (para reaccionar con emoción)</div>
+          </div>
+          <div class="starter-item">
+            <div class="starter-en">I wouldn't say I'm… more like…</div>
+            <div class="starter-es">No diría que soy… más bien… (para matizar)</div>
+          </div>
+          <div class="starter-item">
+            <div class="starter-en">She's the kind of person who…</div>
+            <div class="starter-es">Ella es el tipo de persona que… (para describir a alguien)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ERRORS -->
+    <div class="card" style="border-color:#fcc;">
+      <div class="card-header" style="background:#fff0f1;">
+        <div class="card-icon" style="background:#ffe4e6;">🔍</div>
+        <span class="card-label" style="color:#c0606a;">Common errors — know them before they happen</span>
+      </div>
+      <div class="card-body">
+        <div class="contrast-box">
+          <div class="contrast-side wrong"><div class="contrast-label">✗ Common</div><div class="contrast-text">I am have 32 years.</div></div>
+          <div class="contrast-side right"><div class="contrast-label">✓ Natural</div><div class="contrast-text">I'm 32.</div></div>
+        </div>
+        <p style="font-size:13px; color:#888; margin-bottom:12px;">In English, age uses "be", not "have". Simple but easy to forget when thinking in Spanish.</p>
+        <div class="contrast-box">
+          <div class="contrast-side wrong"><div class="contrast-label">✗ Common</div><div class="contrast-text">She is engineer in Google.</div></div>
+          <div class="contrast-side right"><div class="contrast-label">✓ Natural</div><div class="contrast-text">She's an engineer at Google.</div></div>
+        </div>
+        <p style="font-size:13px; color:#888;">Two things: "an" before engineer, and <strong>at</strong> for companies, <strong>in</strong> for cities/departments.</p>
+      </div>
+    </div>
+
+    <!-- WHATSAPP -->
+    <div class="wa-wrapper">
+      <div class="wa-bar">
+        <div class="wa-avatar">🎙</div>
+        <div>
+          <div class="wa-name">English Group · WhatsApp Mission #1</div>
+          <div class="wa-status">Send before the next class</div>
+        </div>
+      </div>
+      <div class="wa-chat">
+        <div class="wa-bubble from-teacher">
+          Your mission: record a <strong>60–90 second voice note.</strong><br><br>
+          Describe yourself as if your best friend were introducing you to a stranger at a party. <strong>The real version</strong> — not the CV version.<br><br>
+          Include: who you are as a person, what makes you weird or lovable, and one thing people always get wrong about you.
+          <div class="wa-time">Teacher · yesterday 8:30 PM</div>
+        </div>
+        <div class="wa-bubble from-you">
+          <em style="color:#888;">👆 Listen to your classmate's audio. Reply with: "That part about [X] is so accurate" or "I'd add that she also…"</em>
+          <div class="wa-time">You · pending ✓</div>
+        </div>
+      </div>
+      <div class="wa-tag-row">
+        <span class="wa-tag">🎙 Voice note 60–90s</span>
+        <span class="wa-tag">💬 1 reaction reply</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== CLASS 2 ===== -->
+  <div class="class-panel" id="p1">
+    <div class="s-title">Sundays &amp; Other Lies</div>
+    <div class="s-sub">Class 2 · Present Simple · Real routines, family habits and what you actually do</div>
+
+    <div class="motivator">
+      <div class="motivator-emoji">☀️</div>
+      <p>Today you'll describe your real life — Sundays, family dynamics, and habits. <strong>The "-s" in third person will show up on its own</strong> when you're talking about someone you actually know.</p>
+    </div>
+
+    <div class="card card-prep">
+      <div class="card-header">
+        <div class="card-icon" style="background:#fde68a;">📋</div>
+        <span class="card-label" style="color:#92400e;">Before class</span>
+      </div>
+      <div class="card-body">
+        <div class="checklist">
+          <div class="check-item" onclick="toggle(this)">
+            <div class="check-box"></div>
+            <div class="check-text">Think of 5 verbs from your typical Sunday (just verbs — wake, call, eat, avoid, regret…)</div>
+          </div>
+          <div class="check-item" onclick="toggle(this)">
+            <div class="check-box"></div>
+            <div class="check-text">Send your voice note + reply from WhatsApp Mission #1</div>
+          </div>
+          <div class="check-item" onclick="toggle(this)">
+            <div class="check-box"></div>
+            <div class="check-text">Open the shared Google Doc before joining the call</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-mission">
+      <div class="card-header">
+        <div class="card-icon" style="background:#ffd5c8;">⚡</div>
+        <span class="card-label" style="color:#e8552a;">Your mission today</span>
+        <span class="card-time">~38 min</span>
+      </div>
+      <div class="card-body">
+        <p><strong>Welcome to My Life:</strong> A foreign friend is visiting you for the first time. She doesn't know your family, your city, or your weekend rituals. Write her a guide — in English.</p>
+        <div class="mission-steps">
+          <div class="m-step">
+            <div class="m-num">1</div>
+            <div class="m-text">Each of you writes your section in the Google Doc: one covers <strong>family life</strong> (who's who, who calls every Sunday, what your mom thinks you should do differently), the other covers <strong>weekend life</strong> (what you eat, what you watch, what you avoid). <strong>10 minutes of real writing.</strong></div>
+          </div>
+          <div class="m-step">
+            <div class="m-num">2</div>
+            <div class="m-text">Read your section aloud. The other plays the curious foreign friend: <em>"Does your mom actually call every day?", "What does your sister do?", "How often do you see them?"</em></div>
+          </div>
+          <div class="m-step">
+            <div class="m-num">3</div>
+            <div class="m-text">The teacher color-codes the text: <span style="color:#2a8c5a; font-weight:600;">green</span> = affirmative, <span style="color:#d47c32; font-weight:600;">orange</span> = negative, <span style="color:#3b5bdb; font-weight:600;">blue</span> = question. Present Simple mapped from your own words.</div>
+          </div>
+        </div>
+        <div class="tip-box" style="margin-top:14px;">
+          <strong>Phrases that will appear naturally:</strong>
+          <span class="example-chip">"My mom <em>calls</em> every Sunday — I <em>don't</em> always pick up."</span>
+          <span class="example-chip">"She <em>lives</em> close by. She <em>works</em> in education."</span>
+          <span class="example-chip">"<em>Does</em> your family eat together?" — "Not really — we <em>tend to</em> do our own thing."</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-vocab">
+      <div class="card-header">
+        <div class="card-icon" style="background:#ddd6fe;">✨</div>
+        <span class="card-label" style="color:#7c3aed;">Vocabulary — tap to flip</span>
+      </div>
+      <div class="card-body">
+        <div class="vocab-grid">
+          <div class="flip-card" onclick="this.classList.toggle('flipped')">
+            <div class="flip-inner">
+              <div class="flip-front"><div class="flip-word">tend to</div><div class="flip-hint">tap →</div></div>
+              <div class="flip-back"><div class="flip-def">Tender a — más sofisticado que "usually"</div><div class="flip-example">"I tend to call her when I'm driving."</div></div>
+            </div>
+          </div>
+          <div class="flip-card" onclick="this.classList.toggle('flipped')">
+            <div class="flip-inner">
+              <div class="flip-front"><div class="flip-word">end up</div><div class="flip-hint">tap →</div></div>
+              <div class="flip-back"><div class="flip-def">Terminar haciendo algo que no planeabas</div><div class="flip-example">"I always end up calling her back."</div></div>
+            </div>
+          </div>
+          <div class="flip-card" onclick="this.classList.toggle('flipped')">
+            <div class="flip-inner">
+              <div class="flip-front"><div class="flip-word">every now and then</div><div class="flip-hint">tap →</div></div>
+              <div class="flip-back"><div class="flip-def">De vez en cuando — para frecuencias casuales</div><div class="flip-example">"She visits every now and then."</div></div>
+            </div>
+          </div>
+          <div class="flip-card" onclick="this.classList.toggle('flipped')">
+            <div class="flip-inner">
+              <div class="flip-front"><div class="flip-word">can't help but</div><div class="flip-hint">tap →</div></div>
+              <div class="flip-back"><div class="flip-def">No poder evitar hacer algo</div><div class="flip-example">"I can't help but check my phone when she calls."</div></div>
+            </div>
+          </div>
+          <div class="flip-card" onclick="this.classList.toggle('flipped')">
+            <div class="flip-inner">
+              <div class="flip-front"><div class="flip-word">it's a whole thing</div><div class="flip-hint">tap →</div></div>
+              <div class="flip-back"><div class="flip-def">Es complicado / hay mucho que explicar</div><div class="flip-example">"My family dynamics? It's a whole thing."</div></div>
+            </div>
+          </div>
+          <div class="flip-card" onclick="this.classList.toggle('flipped')">
+            <div class="flip-inner">
+              <div class="flip-front"><div class="flip-word">get along with</div><div class="flip-hint">tap →</div></div>
+              <div class="flip-back"><div class="flip-def">Llevarse bien con alguien</div><div class="flip-example">"I get along with my sister, mostly."</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-starters">
+      <div class="card-header">
+        <div class="card-icon" style="background:#bfdbfe;">💬</div>
+        <span class="card-label" style="color:#2a5fe8;">Sentence starters</span>
+      </div>
+      <div class="card-body">
+        <div class="starters-list">
+          <div class="starter-item">
+            <div class="starter-en">I usually… but sometimes…</div>
+            <div class="starter-es">Para añadir matiz a una rutina</div>
+          </div>
+          <div class="starter-item">
+            <div class="starter-en">She doesn't… she tends to…</div>
+            <div class="starter-es">Para describir hábitos familiares en 3ª persona</div>
+          </div>
+          <div class="starter-item">
+            <div class="starter-en">Does your family…? / How often do you…?</div>
+            <div class="starter-es">Preguntas sobre rutinas familiares</div>
+          </div>
+          <div class="starter-item">
+            <div class="starter-en">We don't really… we tend to end up…</div>
+            <div class="starter-es">Negativa + lo que realmente pasa en su lugar</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="border-color:#fcc;">
+      <div class="card-header" style="background:#fff0f1;">
+        <div class="card-icon" style="background:#ffe4e6;">🔍</div>
+        <span class="card-label" style="color:#c0606a;">Common errors</span>
+      </div>
+      <div class="card-body">
+        <div class="contrast-box">
+          <div class="contrast-side wrong"><div class="contrast-label">✗</div><div class="contrast-text">She work from home.</div></div>
+          <div class="contrast-side right"><div class="contrast-label">✓</div><div class="contrast-text">She work<strong>s</strong> from home.</div></div>
+        </div>
+        <p style="font-size:13px; color:#888; margin-bottom:12px;">With he/she/it → always add "-s" to the verb. No exceptions.</p>
+        <div class="contrast-box">
+          <div class="contrast-side wrong"><div class="contrast-label">✗</div><div class="contrast-text">Does she works late?</div></div>
+          <div class="contrast-side right"><div class="contrast-label">✓</div><div class="contrast-text">Does she work late?</div></div>
+        </div>
+        <p style="font-size:13px; color:#888;">The "-s" lives in "does" — the main verb stays in base form. Only one "-s" per sentence.</p>
+      </div>
+    </div>
+
+    <div class="wa-wrapper">
+      <div class="wa-bar">
+        <div class="wa-avatar">📸</div>
+        <div>
+          <div class="wa-name">English Group · WhatsApp Mission #2</div>
+          <div class="wa-status">Photo + caption · before the next class</div>
+        </div>
+      </div>
+      <div class="wa-chat">
+        <div class="wa-bubble from-teacher">
+          Take a photo of something that represents your <strong>non-work self</strong> — Sunday coffee, your family, your comfort food, your couch, your cat, whatever.<br><br>
+          Write <strong>3 sentences in Present Simple</strong> as if explaining your real life to a foreign friend who's never met your family.<br><br>
+          <em>Example: "My mom calls every Sunday. I usually don't pick up on the first try. She always calls back."</em>
+          <div class="wa-time">Teacher</div>
+        </div>
+        <div class="wa-bubble from-you">
+          <em style="color:#888;">Your classmate replies with one curious follow-up question in Present Simple.</em>
+          <div class="wa-time">You · pending</div>
+        </div>
+      </div>
+      <div class="wa-tag-row">
+        <span class="wa-tag">📸 Photo</span>
+        <span class="wa-tag">✍️ 3 sentences</span>
+        <span class="wa-tag">💬 1 follow-up question</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== CLASS 3 ===== -->
+  <div class="class-panel" id="p2">
+    <div class="s-title">Spill the Tea ☕</div>
+    <div class="s-sub">Class 3 · Synthesis · Describing people, retelling situations, and gossip as grammar</div>
+
+    <div class="motivator">
+      <div class="motivator-emoji">👀</div>
+      <p>Today you describe people, recount situations, and give opinions — all in English. <strong>Gossip is the best grammar workout.</strong> You'll be using Verb To Be and Present Simple without even noticing.</p>
+    </div>
+
+    <div class="card card-prep">
+      <div class="card-header">
+        <div class="card-icon" style="background:#fde68a;">📋</div>
+        <span class="card-label" style="color:#92400e;">Before class — homework</span>
+      </div>
+      <div class="card-body">
+        <div class="checklist">
+          <div class="check-item" onclick="toggle(this)">
+            <div class="check-box"></div>
+            <div class="check-text">Write 3–4 sentences describing someone in your life (friend, family, coworker) — anonymously. Send to the group before class.</div>
+          </div>
+          <div class="check-item" onclick="toggle(this)">
+            <div class="check-box"></div>
+            <div class="check-text">Don't say their name or relationship — just describe them and let the class guess.</div>
+          </div>
+          <div class="check-item" onclick="toggle(this)">
+            <div class="check-box"></div>
+            <div class="check-text">Review sentence starters from the previous class</div>
+          </div>
+        </div>
+        <div class="tip-box" style="margin-top:12px;">
+          <strong>Description example:</strong> <em>"She's the one who always has drama but somehow it's never her fault. She works in something creative — I think marketing? She's actually really funny once you get past the initial chaos."</em>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-mission">
+      <div class="card-header">
+        <div class="card-icon" style="background:#ffd5c8;">⚡</div>
+        <span class="card-label" style="color:#e8552a;">Your mission today</span>
+        <span class="card-time">~38 min</span>
+      </div>
+      <div class="card-body">
+        <p><strong>The Blind Date Report:</strong> Student A just came back from a blind date set up by Student B. B needs a full debrief — in English. What was he/she like? Worth a second date?</p>
+        <div class="mission-steps">
+          <div class="m-step">
+            <div class="m-num">1</div>
+            <div class="m-text">Student A gets a character card (name, job, personality, one quirk) in private chat. <strong>She's the one who went on the date.</strong> Student B knows nothing — she just set it up.</div>
+          </div>
+          <div class="m-step">
+            <div class="m-num">2</div>
+            <div class="m-text">A debriefs to B — everything. B asks questions: <em>"What does he do?", "Is he funny?", "Is he the kind of person who…?"</em> <strong>15 minutes of pure gossip in English.</strong></div>
+          </div>
+          <div class="m-step">
+            <div class="m-num">3</div>
+            <div class="m-text">B gives her verdict — second date or not? Then they swap: B went on the date, A asks the questions. The teacher throws in one surprise question.</div>
+          </div>
+        </div>
+        <div class="tip-box" style="margin-top:14px;">
+          <strong>Grammar naturally produced:</strong>
+          <span class="example-chip">"He's… / He works as… / He doesn't seem like…"</span>
+          <span class="example-chip">"Does he live alone?" / "Is he the type to…?"</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-vocab">
+      <div class="card-header">
+        <div class="card-icon" style="background:#ddd6fe;">✨</div>
+        <span class="card-label" style="color:#7c3aed;">Vocabulary — tap to flip</span>
+      </div>
+      <div class="card-body">
+        <div class="vocab-grid">
+          <div class="flip-card" onclick="this.classList.toggle('flipped')">
+            <div class="flip-inner">
+              <div class="flip-front"><div class="flip-word">allegedly</div><div class="flip-hint">tap →</div></div>
+              <div class="flip-back"><div class="flip-def">Supuestamente — da sabor de chisme sin comprometerte</div><div class="flip-example">"She allegedly showed up two hours late. Allegedly."</div></div>
+            </div>
+          </div>
+          <div class="flip-card" onclick="this.classList.toggle('flipped')">
+            <div class="flip-inner">
+              <div class="flip-front"><div class="flip-word">the type to</div><div class="flip-hint">tap →</div></div>
+              <div class="flip-back"><div class="flip-def">El tipo de persona que — describe personalidad con comportamiento</div><div class="flip-example">"Is he the type to text back immediately? Red flag."</div></div>
+            </div>
+          </div>
+          <div class="flip-card" onclick="this.classList.toggle('flipped')">
+            <div class="flip-inner">
+              <div class="flip-front"><div class="flip-word">to be fair</div><div class="flip-hint">tap →</div></div>
+              <div class="flip-back"><div class="flip-def">Siendo justos / en su defensa — balancea un comentario duro</div><div class="flip-example">"To be fair, she was going through a lot."</div></div>
+            </div>
+          </div>
+          <div class="flip-card" onclick="this.classList.toggle('flipped')">
+            <div class="flip-inner">
+              <div class="flip-front"><div class="flip-word">plot twist</div><div class="flip-hint">tap →</div></div>
+              <div class="flip-back"><div class="flip-def">Giro inesperado — para revelar algo sorprendente</div><div class="flip-example">"Plot twist: she already knew the whole time."</div></div>
+            </div>
+          </div>
+          <div class="flip-card" onclick="this.classList.toggle('flipped')">
+            <div class="flip-inner">
+              <div class="flip-front"><div class="flip-word">low-key</div><div class="flip-hint">tap →</div></div>
+              <div class="flip-back"><div class="flip-def">Secretamente / un poco — tono muy conversacional</div><div class="flip-example">"I'm low-key glad it didn't work out."</div></div>
+            </div>
+          </div>
+          <div class="flip-card" onclick="this.classList.toggle('flipped')">
+            <div class="flip-inner">
+              <div class="flip-front"><div class="flip-word">grow on you</div><div class="flip-hint">tap →</div></div>
+              <div class="flip-back"><div class="flip-def">Caer mejor con el tiempo, gustar gradualmente</div><div class="flip-example">"He's weird at first but he grows on you."</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-starters">
+      <div class="card-header">
+        <div class="card-icon" style="background:#bfdbfe;">💬</div>
+        <span class="card-label" style="color:#2a5fe8;">Sentence starters — gossip toolkit</span>
+      </div>
+      <div class="card-body">
+        <div class="starters-list">
+          <div class="starter-item">
+            <div class="starter-en">Okay so listen…</div>
+            <div class="starter-es">Apertura de chisme clásica — funciona siempre</div>
+          </div>
+          <div class="starter-item">
+            <div class="starter-en">She's the kind of person who…</div>
+            <div class="starter-es">Para describir personalidad a través de comportamiento</div>
+          </div>
+          <div class="starter-item">
+            <div class="starter-en">To be fair, she…</div>
+            <div class="starter-es">Para ser justas — defender después de criticar</div>
+          </div>
+          <div class="starter-item">
+            <div class="starter-en">Is he the type to…?</div>
+            <div class="starter-es">Para preguntar sobre el carácter de alguien</div>
+          </div>
+          <div class="starter-item">
+            <div class="starter-en">Plot twist: …</div>
+            <div class="starter-es">Para el giro de la historia — funciona en cualquier idioma</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="wa-wrapper">
+      <div class="wa-bar">
+        <div class="wa-avatar">🎙</div>
+        <div>
+          <div class="wa-name">English Group · WhatsApp Mission #3</div>
+          <div class="wa-status">Gossip voice note · before Class 4</div>
+        </div>
+      </div>
+      <div class="wa-chat">
+        <div class="wa-bubble from-teacher">
+          Record a <strong>60–90 second voice note</strong> gossiping in English — about a fictional or anonymized situation. Someone from your life, a show you're watching, a group chat drama, anything.<br><br>
+          Must include: <strong>at least 3 descriptions of a person</strong> (Verb To Be) + <strong>2 things they do</strong> (Present Simple) + <strong>one opinion</strong> with "to be honest" or "allegedly".<br><br>
+          <em>Example: "Okay so listen. She's the one who sets you up and then disappears. She works in PR — allegedly. She doesn't respond for days and then acts like nothing happened. To be honest? I saw it coming."</em>
+          <div class="wa-time">Teacher</div>
+        </div>
+        <div class="wa-bubble from-you">
+          <em style="color:#888;">Your classmate replies with one question or reaction in English.</em>
+          <div class="wa-time">You · pending</div>
+        </div>
+      </div>
+      <div class="wa-tag-row">
+        <span class="wa-tag">🎙 Gossip voice note</span>
+        <span class="wa-tag">3× descriptions</span>
+        <span class="wa-tag">💬 Reply</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== CLASS 4 ===== -->
+  <div class="class-panel" id="p3">
+    <div class="s-title">Caught in the Act</div>
+    <div class="s-sub">Class 4 · Present Continuous · Describing what's happening right now</div>
+
+    <div class="motivator">
+      <div class="motivator-emoji">🎬</div>
+      <p>Today you'll narrate muted videos like radio commentators. <strong>The most fun class so far</strong> — and your brain won't even notice it's learning grammar.</p>
+    </div>
+
+    <div class="card card-prep">
+      <div class="card-header">
+        <div class="card-icon" style="background:#fde68a;">📋</div>
+        <span class="card-label" style="color:#92400e;">Before class</span>
+      </div>
+      <div class="card-body">
+        <div class="checklist">
+          <div class="check-item" onclick="toggle(this)">
+            <div class="check-box"></div>
+            <div class="check-text">Send the DM draft from Mission #3 and leave feedback for your classmate</div>
+          </div>
+          <div class="check-item" onclick="toggle(this)">
+            <div class="check-box"></div>
+            <div class="check-text">Have something to be doing when you turn on your camera (drinking coffee, wearing headphones, looking at the ceiling — whatever)</div>
+          </div>
+          <div class="check-item" onclick="toggle(this)">
+            <div class="check-box"></div>
+            <div class="check-text">Think about this (no Google): what's the difference between "I work from home" and "I'm working from home"?</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-mission">
+      <div class="card-header">
+        <div class="card-icon" style="background:#ffd5c8;">⚡</div>
+        <span class="card-label" style="color:#e8552a;">Your mission today</span>
+        <span class="card-time">~36 min</span>
+      </div>
+      <div class="card-body">
+        <p><strong>Silent Movie Commentary:</strong> The teacher shares a muted video on screen. You are the commentators. Narrate everything in English, in real time.</p>
+        <div class="mission-steps">
+          <div class="m-step">
+            <div class="m-num">1</div>
+            <div class="m-text">Clip 1: <strong>both of you talk at the same time</strong>, like radio hosts. No turns. The chaos is intentional — just keep going.</div>
+          </div>
+          <div class="m-step">
+            <div class="m-num">2</div>
+            <div class="m-text">Clip 2: <strong>swap every 15 seconds.</strong> One describes the action, the other adds detail or context. The teacher times the switch.</div>
+          </div>
+          <div class="m-step">
+            <div class="m-num">3</div>
+            <div class="m-text">Debrief: the teacher shows two columns with your own phrases — <span style="color:#2a5fe8; font-weight:600;">Simple</span> (habit) vs <span style="color:#e8552a; font-weight:600;">Continuous</span> (now). The difference reveals itself.</div>
+          </div>
+        </div>
+        <div class="tip-box" style="margin-top:14px;">
+          <strong>Phrases that will come out naturally:</strong>
+          <span class="example-chip">"She <em>is opening</em> her laptop — she <em>looks</em> exhausted."</span>
+          <span class="example-chip">"He <em>is checking</em> his phone again. He <em>always does</em> that."</span>
+          <span class="example-chip">"They <em>seem to be</em> arguing about something."</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-vocab">
+      <div class="card-header">
+        <div class="card-icon" style="background:#ddd6fe;">✨</div>
+        <span class="card-label" style="color:#7c3aed;">Vocabulary — tap to flip</span>
+      </div>
+      <div class="card-body">
+        <div class="vocab-grid">
+          <div class="flip-card" onclick="this.classList.toggle('flipped')">
+            <div class="flip-inner">
+              <div class="flip-front"><div class="flip-word">seem to be</div><div class="flip-hint">tap →</div></div>
+              <div class="flip-back"><div class="flip-def">Parece estar — para describir sin certeza total</div><div class="flip-example">"She seems to be in a hurry."</div></div>
+            </div>
+          </div>
+          <div class="flip-card" onclick="this.classList.toggle('flipped')">
+            <div class="flip-inner">
+              <div class="flip-front"><div class="flip-word">in the middle of</div><div class="flip-hint">tap →</div></div>
+              <div class="flip-back"><div class="flip-def">En medio de algo</div><div class="flip-example">"She's in the middle of a call — don't interrupt."</div></div>
+            </div>
+          </div>
+          <div class="flip-card" onclick="this.classList.toggle('flipped')">
+            <div class="flip-inner">
+              <div class="flip-front"><div class="flip-word">keep -ing</div><div class="flip-hint">tap →</div></div>
+              <div class="flip-back"><div class="flip-def">Seguir haciendo algo (con repetición)</div><div class="flip-example">"He keeps checking his phone — it's annoying."</div></div>
+            </div>
+          </div>
+          <div class="flip-card" onclick="this.classList.toggle('flipped')">
+            <div class="flip-inner">
+              <div class="flip-front"><div class="flip-word">struggling to</div><div class="flip-hint">tap →</div></div>
+              <div class="flip-back"><div class="flip-def">Con dificultad para — más rico que "trying to"</div><div class="flip-example">"She's struggling to stay awake."</div></div>
+            </div>
+          </div>
+          <div class="flip-card" onclick="this.classList.toggle('flipped')">
+            <div class="flip-inner">
+              <div class="flip-front"><div class="flip-word">apparently</div><div class="flip-hint">tap →</div></div>
+              <div class="flip-back"><div class="flip-def">Al parecer — para describir lo que observas</div><div class="flip-example">"Apparently they're arguing about the budget."</div></div>
+            </div>
+          </div>
+          <div class="flip-card" onclick="this.classList.toggle('flipped')">
+            <div class="flip-inner">
+              <div class="flip-front"><div class="flip-word">on the verge of</div><div class="flip-hint">tap →</div></div>
+              <div class="flip-back"><div class="flip-def">A punto de — expresión dramática y útil</div><div class="flip-example">"She's on the verge of quitting, I can tell."</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="border-color:#fcc;">
+      <div class="card-header" style="background:#fff0f1;">
+        <div class="card-icon" style="background:#ffe4e6;">🔍</div>
+        <span class="card-label" style="color:#c0606a;">Simple vs Continuous — the key difference</span>
+      </div>
+      <div class="card-body">
+        <div class="contrast-box">
+          <div class="contrast-side" style="background:var(--blue-light); border:1px solid #bfdbfe;">
+            <div class="contrast-label" style="color:var(--blue);">Present Simple</div>
+            <div class="contrast-text" style="color:var(--blue);">She works from home.</div>
+          </div>
+          <div class="contrast-side right">
+            <div class="contrast-label">Present Continuous</div>
+            <div class="contrast-text">She's working from home today.</div>
+          </div>
+        </div>
+        <p style="font-size:13px; color:#666; margin-bottom:12px;"><strong>Simple</strong> = habit, routine, general truth. <strong>Continuous</strong> = happening now or during this period.</p>
+        <div class="contrast-box">
+          <div class="contrast-side wrong"><div class="contrast-label">✗ Error</div><div class="contrast-text">I am knowing the answer.</div></div>
+          <div class="contrast-side right"><div class="contrast-label">✓ Correct</div><div class="contrast-text">I know the answer.</div></div>
+        </div>
+        <p style="font-size:13px; color:#888;">State verbs (<em>know, like, want, understand, believe</em>) don't go in Continuous. They're states, not actions.</p>
+      </div>
+    </div>
+
+    <div class="card card-starters">
+      <div class="card-header">
+        <div class="card-icon" style="background:#bfdbfe;">💬</div>
+        <span class="card-label" style="color:#2a5fe8;">Sentence starters — live commentary</span>
+      </div>
+      <div class="card-body">
+        <div class="starters-list">
+          <div class="starter-item">
+            <div class="starter-en">She's + verb-ing…</div>
+            <div class="starter-es">Estructura base del Continuous (she's opening, she's looking)</div>
+          </div>
+          <div class="starter-item">
+            <div class="starter-en">It looks like she's…</div>
+            <div class="starter-es">Parece que está… — para especular sobre lo que ves</div>
+          </div>
+          <div class="starter-item">
+            <div class="starter-en">Meanwhile, he's…</div>
+            <div class="starter-es">Mientras tanto… — para narrar dos acciones paralelas</div>
+          </div>
+          <div class="starter-item">
+            <div class="starter-en">I usually…, but right now I'm…</div>
+            <div class="starter-es">Contraste Simple vs Continuous en una sola frase</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="wa-wrapper">
+      <div class="wa-bar">
+        <div class="wa-avatar">🎙</div>
+        <div>
+          <div class="wa-name">English Group · WhatsApp Mission #4</div>
+          <div class="wa-status">Live audio · any moment during the day</div>
+        </div>
+      </div>
+      <div class="wa-chat">
+        <div class="wa-bubble from-teacher">
+          At any point during the next day, record a 60–90 second voice note.<br><br>
+          You're a <strong>live reporter.</strong> Narrate exactly what you're seeing, hearing and doing at that precise moment.<br><br>
+          Must include: <strong>3+ Continuous sentences + 1 contrast with Simple.</strong><br><br>
+          <em>Example: "I'm sitting at my desk right now and I'm drinking my third coffee of the day — yes, I know. I usually work in silence but right now my neighbor is playing music and it's a lot."</em>
+          <div class="wa-time">Teacher</div>
+        </div>
+        <div class="wa-bubble from-you">
+          <em style="color:#888;">Your classmate sends a 30-second reply reacting + asking one question in Continuous.</em>
+          <div class="wa-time">You · pending</div>
+        </div>
+      </div>
+      <div class="wa-tag-row">
+        <span class="wa-tag">🎙 Spontaneous audio</span>
+        <span class="wa-tag">3× Continuous</span>
+        <span class="wa-tag">1× Simple contrast</span>
+        <span class="wa-tag">💬 30s reply</span>
+      </div>
+    </div>
+
+    <div style="background:linear-gradient(135deg, var(--coral) 0%, #c0393a 100%); border-radius:20px; padding:28px 24px; margin-top:24px; text-align:center;">
+      <div style="font-size:36px; margin-bottom:12px;">🎉</div>
+      <div style="font-family:'Syne', sans-serif; font-size:22px; font-weight:800; color:#fff; margin-bottom:10px;">4 classes done!</div>
+      <p style="font-size:14px; color:rgba(255,255,255,0.85); line-height:1.6; max-width:380px; margin:0 auto;">You now have all three present tenses: being (Verb To Be), habits (Present Simple) and ongoing actions (Present Continuous). The natural next step is the past — or modals (can, should, might). English is no longer a destination. It's a habit.</p>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  Back to Basics · English A2–B1 · 4 × 60 min · 2 students · Online · 2026
+</footer>
+
+<script>
+  function goTo(index) {
+    document.querySelectorAll('.class-panel').forEach((p, i) => p.classList.toggle('active', i === index));
+    document.querySelectorAll('.prog-btn').forEach((b, i) => b.classList.toggle('active', i === index));
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  function toggle(el) {
+    el.classList.toggle('done');
+    el.querySelector('.check-box').textContent = el.classList.contains('done') ? '✓' : '';
+  }
+</script>
+</body>
+</html>

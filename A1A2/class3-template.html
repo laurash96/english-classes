@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Class 3 — My Pen Pal Letter</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal: #0d7a5f;
+    --teal-light: #e0f5ee;
+    --amber: #c47c0a;
+    --amber-light: #fef3dc;
+    --ink: #1a2e22;
+    --border: #d4e8db;
+    --green: #1a7a3c;
+    --green-light: #e3f6e9;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Outfit', sans-serif; background: #f0faf4; color: var(--ink); min-height: 100vh; }
+
+  /* TOOLBAR */
+  .toolbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--teal);
+    padding: 10px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  }
+  .toolbar-left { display: flex; align-items: center; gap: 12px; }
+  .file-icon { font-size: 22px; }
+  .file-name { font-size: 14px; font-weight: 600; color: #fff; }
+  .file-sub { font-size: 11px; color: rgba(255,255,255,0.65); font-family: 'JetBrains Mono', monospace; letter-spacing: 0.5px; }
+  .tip-label { font-size: 12px; color: rgba(255,255,255,0.8); background: rgba(255,255,255,0.15); padding: 5px 12px; border-radius: 100px; }
+  .print-btn { background: #fff; color: var(--teal); border: none; padding: 7px 16px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: 'Outfit', sans-serif; transition: opacity 0.15s; }
+  .print-btn:hover { opacity: 0.85; }
+
+  /* DOC SHELL */
+  .doc { max-width: 700px; margin: 32px auto 60px; background: #fff; border-radius: 20px; border: 1px solid var(--border); box-shadow: 0 4px 20px rgba(13,122,95,0.08); overflow: hidden; }
+
+  /* DOC HEADER */
+  .doc-header { background: linear-gradient(135deg, #0d4a32, #1a7a3c); padding: 36px 40px; }
+  .doc-class-tag { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase; color: rgba(180,240,200,0.7); margin-bottom: 14px; }
+  .doc-title { font-family: 'Lora', serif; font-size: 32px; font-weight: 700; color: #fff; margin-bottom: 10px; line-height: 1.2; }
+  .doc-subtitle { font-size: 14px; color: rgba(255,255,255,0.75); line-height: 1.6; max-width: 520px; margin-bottom: 22px; }
+  .doc-meta { display: flex; gap: 16px; flex-wrap: wrap; }
+  .doc-meta-item { font-size: 12.5px; color: rgba(255,255,255,0.7); }
+  .doc-meta-item span { color: #7eedb4; font-weight: 600; }
+
+  /* INSTRUCTIONS */
+  .instructions { padding: 24px 32px; background: var(--amber-light); border-bottom: 1px solid #f5d78e; display: flex; flex-direction: column; gap: 10px; }
+  .instr-item { display: flex; align-items: flex-start; gap: 12px; }
+  .instr-num { width: 22px; height: 22px; border-radius: 50%; background: var(--amber); color: #fff; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+  .instr-text { font-size: 13.5px; line-height: 1.6; color: #5a3a00; flex: 1; }
+
+  /* SCAFFOLD BOX */
+  .scaffold-strip {
+    padding: 20px 32px;
+    background: var(--teal-light);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .scaffold-title { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--teal); margin-bottom: 4px; font-weight: 600; }
+  .scaffold-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .scaffold-en { font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: var(--ink); background: rgba(255,255,255,0.6); padding: 6px 10px; border-radius: 6px; }
+  .scaffold-es { font-size: 12px; color: #555; display: flex; align-items: center; }
+
+  /* BODY */
+  .doc-body { padding: 28px 32px; }
+
+  /* SECTION */
+  .section { margin-bottom: 28px; }
+  .section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+  .section-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+  .section-title { font-family: 'Lora', serif; font-size: 18px; font-weight: 700; flex: 1; }
+  .section-owner { font-family: 'JetBrains Mono', monospace; font-size: 11px; background: #f5f5f5; border: 1px solid #e0e0e0; color: #777; padding: 3px 10px; border-radius: 100px; }
+
+  /* PROMPTS */
+  .prompt-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
+  .prompt-item { padding: 9px 14px; border-radius: 8px; background: var(--teal-light); border-left: 3px solid var(--teal); font-size: 13.5px; color: #1a3a30; line-height: 1.55; }
+
+  /* WRITE AREA */
+  .write-area {
+    min-height: 130px;
+    border-radius: 10px;
+    border: 1.5px solid var(--border);
+    padding: 14px 16px;
+    font-size: 14px;
+    font-family: 'Lora', serif;
+    line-height: 1.75;
+    color: var(--ink);
+    outline: none;
+    position: relative;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    background: #fff;
+  }
+  .write-area:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(13,122,95,0.1); }
+  .write-area:empty::before {
+    content: attr(data-placeholder);
+    color: #bbb;
+    pointer-events: none;
+    font-style: italic;
+    font-family: 'Outfit', sans-serif;
+    font-size: 13.5px;
+    line-height: 1.65;
+  }
+
+  /* DIVIDER */
+  .section-divider { display: flex; align-items: center; gap: 14px; margin: 24px 0; }
+  .section-divider::before, .section-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  .section-divider-label { font-family: 'JetBraken Mono', monospace; font-size: 11px; color: #aaa; letter-spacing: 1.5px; text-transform: uppercase; white-space: nowrap; font-family: 'JetBrains Mono', monospace; }
+
+  /* COLOR GUIDE */
+  .color-guide { background: #f8f8f8; border-top: 1px solid var(--border); padding: 24px 32px; }
+  .guide-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: #aaa; margin-bottom: 14px; font-weight: 600; }
+  .guide-chips { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+  .chip { display: flex; align-items: center; gap: 7px; padding: 7px 14px; border-radius: 100px; font-size: 12.5px; font-weight: 500; }
+  .chip-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .chip.green { background: var(--green-light); color: var(--green); }
+  .chip.green .chip-dot { background: var(--green); }
+  .chip.orange { background: var(--amber-light); color: #7a4e08; }
+  .chip.orange .chip-dot { background: var(--amber); }
+  .chip.blue { background: #e6eeff; color: #2856b6; }
+  .chip.blue .chip-dot { background: #2856b6; }
+  .example-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 14px; }
+  .example-pill { border-radius: 10px; padding: 12px 14px; font-size: 12.5px; line-height: 1.6; font-family: 'JetBrains Mono', monospace; }
+  .example-pill.green { background: var(--green-light); color: var(--green); border: 1px solid #a7f3c0; }
+  .example-pill.orange { background: var(--amber-light); color: #7a4e08; border: 1px solid #f5d78e; }
+  .example-pill.blue { background: #e6eeff; color: #2856b6; border: 1px solid #b0c8f0; }
+  .guide-note { font-size: 12.5px; color: #888; line-height: 1.6; font-style: italic; }
+
+  @media (max-width: 600px) {
+    .doc-header { padding: 28px 24px; }
+    .doc-body { padding: 20px 20px; }
+    .instructions { padding: 18px 20px; }
+    .scaffold-strip { padding: 16px 20px; }
+    .color-guide { padding: 20px 20px; }
+    .example-row { grid-template-columns: 1fr; }
+    .toolbar { flex-wrap: wrap; }
+    .scaffold-row { grid-template-columns: 1fr; }
+  }
+
+  @media print {
+    .toolbar { display: none; }
+    body { background: #fff; }
+    .doc { box-shadow: none; border: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <div class="toolbar-left">
+    <div class="file-icon">✉️</div>
+    <div>
+      <div class="file-name">Class 3 — My Pen Pal Letter</div>
+      <div class="file-sub">Shared template · Present Simple · Write, then read aloud</div>
+    </div>
+  </div>
+  <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+    <span class="tip-label">✏️ Click to write</span>
+    <button class="print-btn" onclick="window.print()">🖨 Print / Save PDF</button>
+  </div>
+</div>
+
+<div class="doc">
+
+  <div class="doc-header">
+    <div class="doc-class-tag">First Steps · Class 3 · Present Simple</div>
+    <div class="doc-title">My Pen Pal Letter</div>
+    <div class="doc-subtitle">You have a new pen pal who lives abroad. She doesn't know anything about your life. Write her a short letter about your typical day — what you do, what you love, what you hate.</div>
+    <div class="doc-meta">
+      <div class="doc-meta-item">⏱ Writing time: <span>10 minutes</span></div>
+      <div class="doc-meta-item">🎯 Goal: <span>Present Simple — I/she/he + affirmative, negative</span></div>
+      <div class="doc-meta-item">✅ At least <span>6 sentences</span></div>
+    </div>
+  </div>
+
+  <div class="instructions">
+    <div class="instr-item">
+      <div class="instr-num">1</div>
+      <div class="instr-text"><strong>Each person writes her own letter.</strong> Don't look at the other's — you'll read them aloud and react to each other.</div>
+    </div>
+    <div class="instr-item">
+      <div class="instr-num">2</div>
+      <div class="instr-text"><strong>Use Present Simple.</strong> At least 6 sentences. You can use the frames below if you need them.</div>
+    </div>
+    <div class="instr-item">
+      <div class="instr-num">3</div>
+      <div class="instr-text"><strong>If you don't know a word in English,</strong> write it in Spanish and circle it. The teacher will help — keep writing and don't stop.</div>
+    </div>
+  </div>
+
+  <div class="scaffold-strip">
+    <div class="scaffold-title">Sentence frames — use them, change them, make them yours</div>
+    <div class="scaffold-row">
+      <div class="scaffold-en">Every day, I wake up at ___.</div><div class="scaffold-es">Todos los días me levanto a las ___.</div>
+      <div class="scaffold-en">I usually ___ in the morning.</div><div class="scaffold-es">Normalmente ___ por la mañana.</div>
+      <div class="scaffold-en">I love ___. I hate ___.</div><div class="scaffold-es">Me encanta ___. Odio ___.</div>
+      <div class="scaffold-en">I don't like ___.</div><div class="scaffold-es">No me gusta ___.</div>
+      <div class="scaffold-en">At night, I usually ___.</div><div class="scaffold-es">Por la noche, normalmente ___.</div>
+      <div class="scaffold-en">On weekends, I ___.</div><div class="scaffold-es">Los fines de semana, yo ___.</div>
+    </div>
+  </div>
+
+  <div class="doc-body">
+
+    <div class="section">
+      <div class="section-header">
+        <div class="section-dot" style="background:#0d7a5f;"></div>
+        <div class="section-title">Letter A</div>
+        <div class="section-owner">Student A</div>
+      </div>
+      <div class="prompt-list">
+        <div class="prompt-item">What time do you wake up? How do you feel in the morning?</div>
+        <div class="prompt-item">What do you usually do in the morning? Coffee? Gym? Netflix?</div>
+        <div class="prompt-item">What do you love doing? What do you hate doing?</div>
+        <div class="prompt-item">What do you do at night to relax?</div>
+      </div>
+      <div
+        class="write-area"
+        contenteditable="true"
+        data-placeholder="Dear pen pal, every day I wake up at 7. I always drink coffee first — I hate mornings without it. I usually work from home. I love watching TV at night. I don't like cooking, but I do it anyway…"
+      ></div>
+    </div>
+
+    <div class="section-divider">
+      <span class="section-divider-label">Letter B</span>
+    </div>
+
+    <div class="section">
+      <div class="section-header">
+        <div class="section-dot" style="background:#c47c0a;"></div>
+        <div class="section-title">Letter B</div>
+        <div class="section-owner">Student B</div>
+      </div>
+      <div class="prompt-list">
+        <div class="prompt-item">What does your typical day look like? Morning to night.</div>
+        <div class="prompt-item">What do you eat? What do you drink? What do you watch?</div>
+        <div class="prompt-item">What is something you always try to do but never actually do?</div>
+        <div class="prompt-item">What makes your day a good day?</div>
+      </div>
+      <div
+        class="write-area"
+        contenteditable="true"
+        data-placeholder="Dear pen pal, my typical day starts very early. I wake up at 6 and I don't like it. I have breakfast and then I work. I sometimes go to the gym — well, sometimes. I love cooking at night. I never go to bed before midnight…"
+      ></div>
+    </div>
+
+  </div>
+
+  <div class="color-guide">
+    <div class="guide-label">Teacher debrief guide — highlight sentences in these colors</div>
+    <div class="guide-chips">
+      <div class="chip green"><div class="chip-dot"></div>Green = Affirmative ("I wake up at 7")</div>
+      <div class="chip orange"><div class="chip-dot"></div>Orange = Negative ("I don't like cooking")</div>
+      <div class="chip blue"><div class="chip-dot"></div>Blue = Frequency adverb ("I usually / always / never")</div>
+    </div>
+    <div class="example-row">
+      <div class="example-pill green">I wake up at 7.<br>I love coffee.<br>I work from home.<br>I have breakfast early.</div>
+      <div class="example-pill orange">I don't like mornings.<br>I don't cook often.<br>I never go to the gym.<br>I don't feel like working.</div>
+      <div class="example-pill blue">I <u>always</u> drink coffee.<br>I <u>usually</u> work late.<br>I <u>sometimes</u> go out.<br>I <u>never</u> wake up happy.</div>
+    </div>
+    <div class="guide-note">After students read aloud, copy 3–4 sentences from each letter into the board and highlight them. The Present Simple grammar map emerges from their own words — authentic, not textbook.</div>
+  </div>
+
+</div>
+
+</body>
+</html>

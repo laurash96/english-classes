@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>English Classes</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --teal: #0d7a5f;
+    --teal-light: #e0f5ee;
+    --amber: #c47c0a;
+    --amber-light: #fef3dc;
+    --border: #e8e8e8;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: #f7f7f5;
+    color: var(--ink);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  header {
+    background: var(--ink);
+    padding: 56px 32px 48px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    top: -100px; left: 50%;
+    transform: translateX(-50%);
+    width: 500px; height: 300px;
+    background: radial-gradient(ellipse, rgba(13,122,95,0.25) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 18px;
+    position: relative;
+  }
+  header h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(36px, 7vw, 62px);
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.05;
+    position: relative;
+    margin-bottom: 16px;
+  }
+  header h1 em { font-style: normal; color: #7eedb4; }
+  header p {
+    font-size: 15px;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.6;
+    max-width: 400px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  main {
+    flex: 1;
+    max-width: 720px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 48px 24px 72px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: #aaa;
+    margin-bottom: 14px;
+    padding-left: 4px;
+  }
+
+  .class-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 28px 30px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .class-card::after {
+    content: '→';
+    position: absolute;
+    right: 28px;
+    font-size: 20px;
+    color: #ccc;
+    transition: transform 0.15s ease, color 0.15s ease;
+  }
+  .class-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.08); }
+  .class-card:hover::after { transform: translateX(4px); color: #888; }
+
+  .class-card.teal { border-top: 3px solid var(--teal); }
+  .class-card.amber { border-top: 3px solid var(--amber); }
+
+  .card-badge {
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    flex-shrink: 0;
+  }
+  .class-card.teal .card-badge { background: var(--teal-light); }
+  .class-card.amber .card-badge { background: var(--amber-light); }
+
+  .card-info { flex: 1; min-width: 0; }
+  .card-level {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .class-card.teal .card-level { color: var(--teal); }
+  .class-card.amber .card-level { color: var(--amber); }
+  .card-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 21px;
+    font-weight: 800;
+    color: var(--ink);
+    margin-bottom: 6px;
+    line-height: 1.2;
+  }
+  .card-desc { font-size: 13.5px; color: #888; line-height: 1.5; }
+  .card-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
+  .tag {
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 100px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .class-card.teal .tag { background: var(--teal-light); color: var(--teal); }
+  .class-card.amber .tag { background: var(--amber-light); color: #7a4e08; }
+
+  .info-strip {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 18px 24px;
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+  }
+  .info-item { display: flex; align-items: center; gap: 8px; }
+  .info-item span:first-child { font-size: 18px; }
+  .info-item p { font-size: 13px; color: #888; line-height: 1.4; }
+  .info-item p strong { color: var(--ink); display: block; font-size: 13.5px; }
+
+  footer {
+    text-align: center;
+    padding: 20px;
+    font-size: 11px;
+    color: #bbb;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 1px;
+  }
+
+  @media (max-width: 480px) {
+    header { padding: 44px 20px 36px; }
+    .class-card { padding: 22px 20px; gap: 16px; }
+    .class-card::after { display: none; }
+    .card-badge { width: 46px; height: 46px; font-size: 20px; border-radius: 12px; }
+    .card-name { font-size: 18px; }
+    .info-strip { gap: 14px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">English Classes · 2026</div>
+  <h1>Your English<br><em>classes</em></h1>
+  <p>Choose your level and open your class materials. See you inside.</p>
+</header>
+
+<main>
+  <div class="section-label">Choose your level</div>
+
+  <a class="class-card teal" href="./A1A2/students.html">
+    <div class="card-badge">🌱</div>
+    <div class="card-info">
+      <div class="card-level">Level A1 → A2</div>
+      <div class="card-name">First Steps</div>
+      <div class="card-desc">Introductions, family, daily routines, and questions — your first real conversations in English.</div>
+      <div class="card-tags">
+        <span class="tag">Verb To Be</span>
+        <span class="tag">Have / Has</span>
+        <span class="tag">Present Simple</span>
+        <span class="tag">Questions</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="class-card amber" href="./A2B1/students.html">
+    <div class="card-badge">🔥</div>
+    <div class="card-info">
+      <div class="card-level">Level A2 → B1</div>
+      <div class="card-name">Back to Basics</div>
+      <div class="card-desc">Parties, family gossip, weekend routines, and present tenses — grammar through real, social English.</div>
+      <div class="card-tags">
+        <span class="tag">Verb To Be</span>
+        <span class="tag">Present Simple</span>
+        <span class="tag">Present Continuous</span>
+        <span class="tag">Social English</span>
+      </div>
+    </div>
+  </a>
+
+  <div class="info-strip">
+    <div class="info-item">
+      <span>🖥</span>
+      <p><strong>Online classes</strong>Zoom · 60 min/session</p>
+    </div>
+    <div class="info-item">
+      <span>📱</span>
+      <p><strong>WhatsApp missions</strong>Short voice notes between classes</p>
+    </div>
+    <div class="info-item">
+      <span>✨</span>
+      <p><strong>No textbooks</strong>Real conversations only</p>
+    </div>
+  </div>
+</main>
+
+<footer>english-classes · github.io</footer>
+
+</body>
+</html>
