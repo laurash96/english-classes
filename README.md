@@ -8,6 +8,16 @@ Built with [Dogme ELT](https://en.wikipedia.org/wiki/Dogme_language_teaching) an
 
 ## Levels
 
+### 🟣 Pre-A1 — Hello, World
+Four classes for absolute beginners who have never studied English before:
+
+| Class | Topic | Grammar focus |
+|-------|-------|---------------|
+| 1 | Hello, World | Verb To Be · first 5 sentences |
+| 2 | My Things | I have / She has · describing your world |
+| 3 | Every Day | Present Simple · daily verbs · routines |
+| 4 | Yes or No? | Do you…? / Are you…? · short answers |
+
 ### 🌱 A1 → A2 — First Steps
 Four classes covering the essentials for absolute beginners:
 
@@ -34,6 +44,10 @@ Four classes for intermediate learners ready to sound more natural:
 
 ```
 ├── index.html              # Student landing page
+├── PreA1/
+│   ├── students.html       # Student-facing interactive doc (Pre-A1)
+│   ├── english-plan.html   # Teacher's detailed session plan
+│   └── class3-template.html  # Shared writing template · Class 3
 ├── A1A2/
 │   ├── students.html       # Student-facing interactive doc (A1–A2)
 │   ├── english-plan.html   # Teacher's detailed session plan

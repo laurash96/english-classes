@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clase 3 — My Day</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --violet: #6b3ab5;
+    --violet-light: #f0eaff;
+    --violet-mid: #d4b8f8;
+    --amber: #b86a00;
+    --amber-light: #fff4e0;
+    --teal: #0d7a5f;
+    --teal-light: #e0f5ee;
+    --green: #1a7a3c;
+    --green-light: #e3f6e9;
+    --ink: #1e1a2e;
+    --border: #e4ddf5;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Outfit', sans-serif; background: #faf8ff; color: var(--ink); min-height: 100vh; }
+
+  .toolbar { position: sticky; top: 0; z-index: 100; background: var(--violet); padding: 10px 24px; display: flex; align-items: center; justify-content: space-between; gap: 12px; box-shadow: 0 2px 8px rgba(107,58,181,0.2); }
+  .toolbar-left { display: flex; align-items: center; gap: 12px; }
+  .file-icon { font-size: 22px; }
+  .file-name { font-size: 14px; font-weight: 600; color: #fff; }
+  .file-sub { font-size: 11px; color: rgba(255,255,255,0.65); font-family: 'JetBrains Mono', monospace; }
+  .tip-label { font-size: 12px; color: rgba(255,255,255,0.8); background: rgba(255,255,255,0.15); padding: 5px 12px; border-radius: 100px; }
+  .print-btn { background: #fff; color: var(--violet); border: none; padding: 7px 16px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: 'Outfit', sans-serif; }
+
+  .doc { max-width: 680px; margin: 32px auto 60px; background: #fff; border-radius: 20px; border: 1px solid var(--border); box-shadow: 0 4px 20px rgba(107,58,181,0.08); overflow: hidden; }
+
+  .doc-header { background: linear-gradient(135deg, #1e0a3c, #4a1a8a, #6b3ab5); padding: 36px 40px; }
+  .doc-class-tag { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase; color: rgba(200,180,255,0.7); margin-bottom: 14px; }
+  .doc-title { font-family: 'Lora', serif; font-size: 32px; font-weight: 700; color: #fff; margin-bottom: 10px; line-height: 1.2; }
+  .doc-subtitle { font-size: 14px; color: rgba(255,255,255,0.75); line-height: 1.6; max-width: 520px; margin-bottom: 22px; }
+  .doc-meta { display: flex; gap: 16px; flex-wrap: wrap; }
+  .doc-meta-item { font-size: 12.5px; color: rgba(255,255,255,0.7); }
+  .doc-meta-item span { color: #c4a0ff; font-weight: 600; }
+
+  .instructions { padding: 24px 32px; background: var(--amber-light); border-bottom: 1px solid #f5d78e; display: flex; flex-direction: column; gap: 10px; }
+  .instr-item { display: flex; align-items: flex-start; gap: 12px; }
+  .instr-num { width: 22px; height: 22px; border-radius: 50%; background: var(--amber); color: #fff; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+  .instr-text { font-size: 13.5px; line-height: 1.6; color: #5a3000; flex: 1; }
+
+  /* VERB BANK */
+  .verb-bank { padding: 20px 32px; background: var(--violet-light); border-bottom: 1px solid var(--border); }
+  .vbank-title { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--violet); margin-bottom: 12px; font-weight: 600; }
+  .vbank-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .vbank-item { background: #fff; border-radius: 8px; padding: 8px 10px; border: 1px solid var(--violet-mid); }
+  .vbank-en { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--violet); font-weight: 500; }
+  .vbank-es { font-size: 11px; color: #888; margin-top: 2px; }
+
+  /* FRAMES */
+  .frames-strip { padding: 20px 32px; background: var(--teal-light); border-bottom: 1px solid var(--border); }
+  .frames-title { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--teal); margin-bottom: 12px; font-weight: 600; }
+  .frames-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .frame-en { font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: var(--ink); background: rgba(255,255,255,0.7); padding: 6px 10px; border-radius: 6px; }
+  .frame-es { font-size: 12px; color: #555; display: flex; align-items: center; }
+
+  /* WRITE SECTIONS */
+  .doc-body { padding: 28px 32px; }
+  .time-section { margin-bottom: 28px; }
+  .time-header { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+  .time-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+  .time-title { font-family: 'Lora', serif; font-size: 17px; font-weight: 700; flex: 1; }
+  .time-emoji { font-size: 20px; }
+  .prompt-list { display: flex; flex-direction: column; gap: 7px; margin-bottom: 12px; }
+  .prompt-item { padding: 8px 12px; border-radius: 8px; background: var(--violet-light); border-left: 3px solid var(--violet); font-size: 13px; color: #3a1a6a; line-height: 1.5; }
+  .prompt-es { font-size: 11.5px; color: #888; margin-top: 2px; }
+
+  .write-area { min-height: 100px; border-radius: 10px; border: 1.5px solid var(--border); padding: 14px 16px; font-size: 14px; font-family: 'Lora', serif; line-height: 1.75; color: var(--ink); outline: none; transition: border-color 0.2s, box-shadow 0.2s; background: #fff; }
+  .write-area:focus { border-color: var(--violet); box-shadow: 0 0 0 3px rgba(107,58,181,0.1); }
+  .write-area:empty::before { content: attr(data-placeholder); color: #bbb; pointer-events: none; font-style: italic; font-family: 'Outfit', sans-serif; font-size: 13px; line-height: 1.65; }
+
+  .section-divider { display: flex; align-items: center; gap: 14px; margin: 20px 0; }
+  .section-divider::before, .section-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  .section-divider-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #aaa; letter-spacing: 1.5px; text-transform: uppercase; white-space: nowrap; }
+
+  /* GUIDE */
+  .color-guide { background: #f8f8f8; border-top: 1px solid var(--border); padding: 24px 32px; }
+  .guide-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: #aaa; margin-bottom: 14px; font-weight: 600; }
+  .guide-chips { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+  .chip { display: flex; align-items: center; gap: 7px; padding: 7px 14px; border-radius: 100px; font-size: 12.5px; font-weight: 500; }
+  .chip-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .chip.green { background: var(--green-light); color: var(--green); }
+  .chip.green .chip-dot { background: var(--green); }
+  .chip.orange { background: var(--amber-light); color: var(--amber); }
+  .chip.orange .chip-dot { background: var(--amber); }
+  .chip.violet { background: var(--violet-light); color: var(--violet); }
+  .chip.violet .chip-dot { background: var(--violet); }
+  .example-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 14px; }
+  .example-pill { border-radius: 10px; padding: 12px 14px; font-size: 12px; line-height: 1.7; font-family: 'JetBrains Mono', monospace; }
+  .example-pill.green { background: var(--green-light); color: var(--green); border: 1px solid #a7f3c0; }
+  .example-pill.orange { background: var(--amber-light); color: var(--amber); border: 1px solid #f5d78e; }
+  .example-pill.violet { background: var(--violet-light); color: var(--violet); border: 1px solid var(--violet-mid); }
+  .guide-note { font-size: 12.5px; color: #888; line-height: 1.6; font-style: italic; }
+
+  @media (max-width: 600px) {
+    .doc-header { padding: 24px 20px; }
+    .doc-body, .instructions, .verb-bank, .frames-strip, .color-guide { padding-left: 20px; padding-right: 20px; }
+    .vbank-grid { grid-template-columns: repeat(2, 1fr); }
+    .frames-grid { grid-template-columns: 1fr; }
+    .example-row { grid-template-columns: 1fr; }
+  }
+  @media print { .toolbar { display: none; } body { background: #fff; } .doc { box-shadow: none; border: none; } }
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <div class="toolbar-left">
+    <div class="file-icon">📅</div>
+    <div>
+      <div class="file-name">Clase 3 — My Day</div>
+      <div class="file-sub">Documento compartido · Present Simple · Escribe y luego lee en voz alta</div>
+    </div>
+  </div>
+  <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+    <span class="tip-label">✏️ Haz clic para escribir</span>
+    <button class="print-btn" onclick="window.print()">🖨 Imprimir / PDF</button>
+  </div>
+</div>
+
+<div class="doc">
+
+  <div class="doc-header">
+    <div class="doc-class-tag">Hello, World · Clase 3 · Present Simple</div>
+    <div class="doc-title">My Day ☀️</div>
+    <div class="doc-subtitle">Describe tu día típico en inglés — mañana, tarde y noche. Usa las frases de abajo. Si no sabes una palabra, escríbela en español y la profe te ayuda.</div>
+    <div class="doc-meta">
+      <div class="doc-meta-item">⏱ Tiempo de escritura: <span>12 minutos</span></div>
+      <div class="doc-meta-item">🎯 Meta: <span>al menos 6 oraciones</span></div>
+      <div class="doc-meta-item">✅ Auténtico > perfecto</div>
+    </div>
+  </div>
+
+  <div class="instructions">
+    <div class="instr-item">
+      <div class="instr-num">1</div>
+      <div class="instr-text"><strong>Escribe tu día — mañana, tarde y noche.</strong> No tiene que ser perfecto. Lo que importa es que lo intentes en inglés.</div>
+    </div>
+    <div class="instr-item">
+      <div class="instr-num">2</div>
+      <div class="instr-text"><strong>Usa las frases y los verbos de abajo.</strong> Son tus herramientas. Cópiala si necesitas — después las recuerdas solas.</div>
+    </div>
+    <div class="instr-item">
+      <div class="instr-num">3</div>
+      <div class="instr-text"><strong>Si no sabes una palabra en inglés,</strong> escríbela en español entre paréntesis y sigue. La profe la traduce contigo.</div>
+    </div>
+  </div>
+
+  <div class="verb-bank">
+    <div class="vbank-title">Verbos del día — úsalos</div>
+    <div class="vbank-grid">
+      <div class="vbank-item"><div class="vbank-en">wake up</div><div class="vbank-es">despertarse</div></div>
+      <div class="vbank-item"><div class="vbank-en">eat / drink</div><div class="vbank-es">comer / tomar</div></div>
+      <div class="vbank-item"><div class="vbank-en">work / study</div><div class="vbank-es">trabajar / estudiar</div></div>
+      <div class="vbank-item"><div class="vbank-en">go to</div><div class="vbank-es">ir a</div></div>
+      <div class="vbank-item"><div class="vbank-en">watch</div><div class="vbank-es">ver (TV/series)</div></div>
+      <div class="vbank-item"><div class="vbank-en">cook / clean</div><div class="vbank-es">cocinar / limpiar</div></div>
+      <div class="vbank-item"><div class="vbank-en">sleep / relax</div><div class="vbank-es">dormir / relajarse</div></div>
+      <div class="vbank-item"><div class="vbank-en">love / hate / like</div><div class="vbank-es">amar / odiar / gustar</div></div>
+    </div>
+  </div>
+
+  <div class="frames-strip">
+    <div class="frames-title">Frases de apoyo — cópialas y complétalas</div>
+    <div class="frames-grid">
+      <div class="frame-en">Every day, I wake up at ___.</div><div class="frame-es">Todos los días me levanto a las ___.</div>
+      <div class="frame-en">In the morning, I usually ___.</div><div class="frame-es">En la mañana, normalmente ___.</div>
+      <div class="frame-en">I love ___. I hate ___.</div><div class="frame-es">Me encanta ___. Odio ___.</div>
+      <div class="frame-en">I don't like ___.</div><div class="frame-es">No me gusta ___.</div>
+      <div class="frame-en">At night, I ___.</div><div class="frame-es">Por la noche, yo ___.</div>
+      <div class="frame-en">I always / never ___.</div><div class="frame-es">Siempre / nunca ___.</div>
+    </div>
+  </div>
+
+  <div class="doc-body">
+
+    <div class="time-section">
+      <div class="time-header">
+        <div class="time-dot" style="background:#f59e0b;"></div>
+        <div class="time-title">Morning — La mañana</div>
+        <div class="time-emoji">☀️</div>
+      </div>
+      <div class="prompt-list">
+        <div class="prompt-item">What time do you wake up? How do you feel?<div class="prompt-es">¿A qué hora te levantas? ¿Cómo te sientes?</div></div>
+        <div class="prompt-item">What do you eat or drink first?<div class="prompt-es">¿Qué comes o tomas primero?</div></div>
+        <div class="prompt-item">What do you do before work / school?<div class="prompt-es">¿Qué haces antes del trabajo / estudio?</div></div>
+      </div>
+      <div class="write-area" contenteditable="true" data-placeholder="Every day I wake up at 7. I drink coffee first — I always drink coffee. I don't like mornings but I love the first coffee…"></div>
+    </div>
+
+    <div class="section-divider"><span class="section-divider-label">Afternoon · La tarde</span></div>
+
+    <div class="time-section">
+      <div class="time-header">
+        <div class="time-dot" style="background:#6b3ab5;"></div>
+        <div class="time-title">Afternoon — La tarde</div>
+        <div class="time-emoji">🌤</div>
+      </div>
+      <div class="prompt-list">
+        <div class="prompt-item">What do you do during the day? Work? Study?<div class="prompt-es">¿Qué haces durante el día? ¿Trabajas? ¿Estudias?</div></div>
+        <div class="prompt-item">What do you eat for lunch?<div class="prompt-es">¿Qué comes al almuerzo?</div></div>
+      </div>
+      <div class="write-area" contenteditable="true" data-placeholder="I work from home every day. I usually eat lunch at 1pm. I don't cook much — I order food sometimes…"></div>
+    </div>
+
+    <div class="section-divider"><span class="section-divider-label">Night · La noche</span></div>
+
+    <div class="time-section">
+      <div class="time-header">
+        <div class="time-dot" style="background:#0d7a5f;"></div>
+        <div class="time-title">Night — La noche</div>
+        <div class="time-emoji">🌙</div>
+      </div>
+      <div class="prompt-list">
+        <div class="prompt-item">What do you do to relax at night?<div class="prompt-es">¿Qué haces para relajarte por la noche?</div></div>
+        <div class="prompt-item">What time do you go to sleep?<div class="prompt-es">¿A qué hora te duermes?</div></div>
+        <div class="prompt-item">Is there something you love or hate about your nights?<div class="prompt-es">¿Hay algo que amas u odias de tus noches?</div></div>
+      </div>
+      <div class="write-area" contenteditable="true" data-placeholder="At night I watch TV or read. I love watching series. I never sleep before midnight — I know, I know…"></div>
+    </div>
+
+  </div>
+
+  <div class="color-guide">
+    <div class="guide-label">Guía para la profe — resalta en estos colores</div>
+    <div class="guide-chips">
+      <div class="chip green"><div class="chip-dot"></div>Verde = Afirmativo ("I wake up at 7")</div>
+      <div class="chip orange"><div class="chip-dot"></div>Naranja = Negativo ("I don't cook")</div>
+      <div class="chip violet"><div class="chip-dot"></div>Violeta = Frecuencia ("I always / never")</div>
+    </div>
+    <div class="example-row">
+      <div class="example-pill green">I wake up at 7.<br>I eat breakfast.<br>I work from home.<br>I love coffee.</div>
+      <div class="example-pill orange">I don't cook.<br>I don't like mornings.<br>I never go to the gym.<br>I don't eat lunch late.</div>
+      <div class="example-pill violet">I <u>always</u> drink coffee.<br>I <u>usually</u> work late.<br>I <u>sometimes</u> go out.<br>I <u>never</u> sleep early.</div>
+    </div>
+    <div class="guide-note">Después de que la estudiante lea en voz alta, copia 3–4 frases de cada sección en el tablero y resáltalas. El mapa del Present Simple emerge de sus propias palabras — nada de libros de texto.</div>
+  </div>
+
+</div>
+
+</body>
+</html>

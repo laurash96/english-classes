@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hello, World — Teaching Plan Pre-A1</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #faf8ff;
+    --ink: #1e1a2e;
+    --card: #ffffff;
+    --border: #e0daf0;
+    --violet: #6b3ab5;
+    --violet-light: #f0eaff;
+    --amber: #b86a00;
+    --amber-light: #fff4e0;
+    --rose: #b5445a;
+    --rose-light: #fce8ed;
+    --teal: #0d7a5f;
+    --teal-light: #e0f5ee;
+    --green: #1a7a3c;
+    --green-light: #e3f6e9;
+    --virtual: #2856b6;
+    --virtual-light: #e6eeff;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Outfit', sans-serif; background: var(--bg); color: var(--ink); }
+
+  header {
+    background: linear-gradient(135deg, #1e0a3c 0%, #4a1a8a 60%, #6b3ab5 100%);
+    padding: 64px 40px 56px;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before { content: ''; position: absolute; top: -80px; right: -80px; width: 320px; height: 320px; border-radius: 50%; background: rgba(255,255,255,0.04); }
+  header::after { content: ''; position: absolute; bottom: -40px; left: 15%; width: 180px; height: 180px; border-radius: 50%; background: rgba(255,255,255,0.03); }
+  .eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: rgba(200,180,255,0.7); margin-bottom: 20px; position: relative; }
+  header h1 { font-family: 'Playfair Display', serif; font-size: clamp(38px, 6vw, 68px); font-weight: 800; color: #fff; line-height: 1.05; position: relative; margin-bottom: 20px; }
+  header h1 span { color: #c4a0ff; }
+  .header-meta { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 24px; position: relative; }
+  .meta-pill { border: 1px solid rgba(255,255,255,0.2); border-radius: 100px; padding: 7px 18px; font-size: 13px; color: rgba(255,255,255,0.85); background: rgba(255,255,255,0.07); }
+
+  .tabs-wrapper { background: var(--ink); position: sticky; top: 0; z-index: 100; }
+  .tabs { display: flex; padding: 0 40px; overflow-x: auto; }
+  .tab-btn { background: none; border: none; color: rgba(255,255,255,0.45); padding: 16px 24px; font-size: 13px; font-family: 'Outfit', sans-serif; font-weight: 500; cursor: pointer; border-bottom: 3px solid transparent; transition: all 0.15s ease; white-space: nowrap; letter-spacing: 0.5px; }
+  .tab-btn:hover { color: rgba(255,255,255,0.75); }
+  .tab-btn.active { color: #c4a0ff; border-bottom-color: #c4a0ff; }
+
+  main { max-width: 860px; margin: 0 auto; padding: 48px 40px 80px; }
+  .class-panel { display: none; }
+  .class-panel.active { display: block; }
+
+  .overview { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 40px; }
+  .ov-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 20px; cursor: pointer; transition: transform 0.15s ease, box-shadow 0.15s ease; }
+  .ov-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+  .ov-num { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 800; opacity: 0.15; margin-bottom: 8px; color: var(--violet); }
+  .ov-title { font-size: 14px; font-weight: 600; margin-bottom: 6px; color: var(--ink); }
+  .ov-focus { font-size: 12px; color: #888; line-height: 1.5; }
+
+  .section-block { background: var(--card); border: 1px solid var(--border); border-radius: 18px; margin-bottom: 20px; overflow: hidden; }
+  .section-label { display: flex; align-items: center; gap: 10px; padding: 14px 22px; border-bottom: 1px solid var(--border); }
+  .section-icon { font-size: 18px; }
+  .section-name { font-size: 12px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; }
+  .section-timing { margin-left: auto; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #aaa; background: #f5f5f5; padding: 3px 10px; border-radius: 100px; }
+  .section-body { padding: 22px 26px; font-size: 14.5px; line-height: 1.75; }
+  .section-body p { margin-bottom: 10px; }
+  .section-body p:last-child { margin-bottom: 0; }
+
+  .block-hook { border-top: 3px solid var(--violet); }
+  .block-hook .section-label { background: var(--violet-light); }
+  .block-hook .section-name { color: var(--violet); }
+  .block-task { border-top: 3px solid var(--teal); }
+  .block-task .section-label { background: var(--teal-light); }
+  .block-task .section-name { color: var(--teal); }
+  .block-vocab { border-top: 3px solid var(--virtual); }
+  .block-vocab .section-label { background: var(--virtual-light); }
+  .block-vocab .section-name { color: var(--virtual); }
+  .block-error { border-top: 3px solid var(--rose); }
+  .block-error .section-label { background: var(--rose-light); }
+  .block-error .section-name { color: var(--rose); }
+  .block-wa { border-top: 3px solid var(--green); }
+  .block-wa .section-label { background: var(--green-light); }
+  .block-wa .section-name { color: var(--green); }
+
+  .session-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 28px; padding-bottom: 24px; border-bottom: 1px solid var(--border); }
+  .session-number { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 2px; color: #aaa; text-transform: uppercase; margin-bottom: 8px; }
+  .session-title { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 800; color: var(--ink); margin-bottom: 6px; }
+  .session-subtitle { font-size: 14px; color: #888; }
+  .session-badge { background: var(--violet); color: #fff; font-size: 11px; font-weight: 600; padding: 5px 14px; border-radius: 100px; letter-spacing: 0.5px; white-space: nowrap; margin-top: 4px; font-family: 'JetBrains Mono', monospace; }
+
+  .steps { display: flex; flex-direction: column; gap: 10px; margin: 12px 0; }
+  .step { display: flex; gap: 12px; align-items: flex-start; padding: 12px 14px; border-radius: 12px; }
+  .step-violet { background: var(--violet-light); }
+  .step-teal { background: var(--teal-light); }
+  .step-num { width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: #fff; flex-shrink: 0; margin-top: 2px; }
+  .step-violet .step-num { background: var(--violet); }
+  .step-teal .step-num { background: var(--teal); }
+  .step-text { font-size: 14px; line-height: 1.65; flex: 1; }
+
+  .vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+  .vocab-card { background: var(--virtual-light); border: 1px solid #b0c8f0; border-radius: 12px; padding: 12px 16px; }
+  .vocab-word { font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 500; color: var(--virtual); margin-bottom: 4px; }
+  .vocab-def { font-size: 12.5px; color: #555; line-height: 1.5; }
+
+  .error-list { display: flex; flex-direction: column; gap: 10px; }
+  .error-item { background: #fafafa; border: 1px solid #eee; border-radius: 12px; padding: 14px 16px; }
+  .error-wrong { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #c0606a; text-decoration: line-through; text-decoration-color: rgba(192,96,106,0.4); margin-bottom: 5px; }
+  .error-right { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--green); margin-bottom: 6px; }
+  .error-note { font-size: 12.5px; color: #888; line-height: 1.5; }
+
+  .highlight-box { background: var(--violet-light); border: 1px solid #c0a0f0; border-radius: 12px; padding: 14px 18px; font-size: 13.5px; color: #3a1a6a; line-height: 1.65; margin-top: 14px; }
+  .highlight-box strong { color: #2a0a5a; }
+
+  .warn-box { background: var(--amber-light); border: 1px solid #f5c878; border-radius: 12px; padding: 14px 18px; font-size: 13.5px; color: #5a3000; line-height: 1.65; margin-top: 14px; }
+
+  .wa-card { background: #e9fbe5; border: 1px solid #7dd4a0; border-radius: 14px; padding: 18px 20px; display: flex; gap: 14px; }
+  .wa-icon-wrap { font-size: 28px; flex-shrink: 0; }
+  .wa-content h4 { font-size: 15px; font-weight: 600; margin-bottom: 8px; }
+  .wa-content p { font-size: 14px; line-height: 1.65; color: #333; }
+  .wa-tag { display: inline-block; background: #25d366; color: #fff; font-size: 11px; padding: 3px 10px; border-radius: 100px; margin-top: 10px; font-family: 'JetBrains Mono', monospace; }
+
+  .scaffold-box { background: #fffbf0; border: 1px solid #f5d78e; border-radius: 12px; padding: 14px 18px; margin-top: 12px; }
+  .scaffold-title { font-size: 11px; font-family: 'JetBrains Mono', monospace; letter-spacing: 1.5px; text-transform: uppercase; color: var(--amber); margin-bottom: 10px; }
+  .scaffold-list { display: flex; flex-direction: column; gap: 6px; }
+  .scaffold-item { display: flex; gap: 10px; align-items: flex-start; }
+  .scaffold-en { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--ink); flex: 1; }
+  .scaffold-es { font-size: 12px; color: #888; flex: 1; padding-top: 1px; }
+
+  .pronun-box { background: #f8f0ff; border: 1px solid #d0b0f0; border-radius: 12px; padding: 14px 18px; margin-top: 12px; }
+  .pronun-title { font-size: 11px; font-family: 'JetBrains Mono', monospace; letter-spacing: 1.5px; text-transform: uppercase; color: var(--violet); margin-bottom: 10px; }
+  .pronun-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .pronun-item { padding: 8px 12px; background: #fff; border-radius: 8px; }
+  .pronun-word { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--violet); font-weight: 500; }
+  .pronun-hint { font-size: 11.5px; color: #888; margin-top: 2px; }
+
+  .vtool-label { font-size: 11px; font-family: 'JetBrains Mono', monospace; letter-spacing: 1.5px; text-transform: uppercase; color: var(--virtual); display: block; margin-bottom: 8px; }
+  .virtual-tools { display: flex; gap: 8px; flex-wrap: wrap; }
+  .vtool { background: var(--virtual-light); border: 1px solid #b0c8f0; border-radius: 100px; padding: 5px 14px; font-size: 12px; color: var(--virtual); font-weight: 500; }
+
+  footer { text-align: center; padding: 24px; font-size: 12px; color: #aaa; font-family: 'JetBrains Mono', monospace; letter-spacing: 1px; }
+
+  @media (max-width: 600px) {
+    header { padding: 48px 24px 40px; }
+    main { padding: 32px 20px 60px; }
+    .overview { grid-template-columns: repeat(2, 1fr); }
+    .tabs { padding: 0 16px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">ESL · Andragogy · TBL + Dogme ELT · Level Pre-A1 · 🖥 Online · 1-on-1</div>
+  <h1>Hello, <span>World</span></h1>
+  <p style="color:rgba(220,200,255,0.75); font-size:16px; line-height:1.6; max-width:560px; margin-top:12px;">
+    Four sessions for adults who have never studied English. The goal of class one is simple: they leave feeling like they can do this.
+  </p>
+  <div class="header-meta">
+    <span class="meta-pill"><strong>4 classes</strong> × 60 min</span>
+    <span class="meta-pill">Methodology <strong>TBL + Dogme</strong></span>
+    <span class="meta-pill">Verb To Be · Have · <strong>Present Simple</strong></span>
+    <span class="meta-pill"><strong>1-on-1</strong> · true beginner</span>
+    <span class="meta-pill" style="border-color:rgba(59,91,219,0.5); color:rgba(200,220,255,0.9);">🖥 <strong>Online</strong></span>
+  </div>
+</header>
+
+<div class="tabs-wrapper">
+  <div class="tabs">
+    <button class="tab-btn active" onclick="showTab(0)">Overview</button>
+    <button class="tab-btn" onclick="showTab(1)">Class 1</button>
+    <button class="tab-btn" onclick="showTab(2)">Class 2</button>
+    <button class="tab-btn" onclick="showTab(3)">Class 3</button>
+    <button class="tab-btn" onclick="showTab(4)">Class 4</button>
+  </div>
+</div>
+
+<main>
+
+  <!-- OVERVIEW -->
+  <div class="class-panel active" id="panel-0">
+    <div class="overview">
+      <div class="ov-card" onclick="showTab(1)" style="border-top:3px solid var(--violet);">
+        <div class="ov-num">01</div>
+        <div class="ov-title">Hello, World</div>
+        <div class="ov-focus">I am / You are / She is · First words, first win</div>
+      </div>
+      <div class="ov-card" onclick="showTab(2)" style="border-top:3px solid var(--teal);">
+        <div class="ov-num">02</div>
+        <div class="ov-title">My Things</div>
+        <div class="ov-focus">I have / She has · Numbers · Describing your world</div>
+      </div>
+      <div class="ov-card" onclick="showTab(3)" style="border-top:3px solid var(--virtual);">
+        <div class="ov-num">03</div>
+        <div class="ov-title">Every Day</div>
+        <div class="ov-focus">Present Simple · I eat / I sleep / I work · Daily verbs</div>
+      </div>
+      <div class="ov-card" onclick="showTab(4)" style="border-top:3px solid var(--amber);">
+        <div class="ov-num">04</div>
+        <div class="ov-title">Yes or No?</div>
+        <div class="ov-focus">Do you…? / Are you…? · Short answers · Basic questions</div>
+      </div>
+    </div>
+
+    <div class="section-block">
+      <div class="section-label"><div class="section-icon">🧠</div><span class="section-name" style="color:#555;">Teaching a true beginner — mindset</span></div>
+      <div class="section-body">
+        <p><strong>The first class must end with a win — no exceptions.</strong> A true beginner carries decades of "I can't learn languages" as a self-belief. Your job in Class 1 isn't to teach grammar — it's to break that belief. They need to leave saying: <em>"I said things in English. I understood things. I can do this."</em></p>
+        <p><strong>Silence is not failure — it's processing.</strong> At Pre-A1 level, silence after a question can mean "I'm translating", "I'm afraid", or "I'm trying". Wait at least 8–10 seconds before stepping in. If they still can't answer, model the answer yourself and move on — never make silence awkward.</p>
+        <p><strong>Spanish is your best ally, not your enemy.</strong> Use it to explain meaning, confirm understanding, and reduce anxiety. The goal is never to avoid Spanish — it's to use English as much as possible while ensuring nothing is confusing.</p>
+        <div class="highlight-box">
+          <strong>The Pre-A1 golden rule:</strong> Every class should have at least one moment where the student says something in English and you genuinely react as if it's meaningful — because it is. "I'm María" from someone who has never spoken English before is a breakthrough. Treat it like one.
+        </div>
+        <div class="warn-box" style="margin-top:14px;">
+          <strong>⚠️ What to avoid:</strong> Metalanguage (don't say "third person singular"). Overwhelming vocabulary lists. Comparing them to faster learners. Finishing sentences for them too quickly. Asking "Does that make sense?" — they'll say yes even when it doesn't. Instead ask them to try it: "Can you say it yourself?"
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block">
+      <div class="section-label"><div class="section-icon">🖥</div><span class="section-name" style="color:var(--virtual);">Online setup — Pre-A1</span></div>
+      <div class="section-body">
+        <p>At Pre-A1 level, keep the tech as simple as possible. Every new tool is cognitive load that takes away from language acquisition. The fewer apps they need to manage, the better.</p>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:12px;">
+          <div style="background:var(--virtual-light); border:1px solid #b0c8f0; border-radius:12px; padding:16px;">
+            <div style="font-size:12px; font-weight:700; color:var(--virtual); margin-bottom:10px; text-transform:uppercase; letter-spacing:1px;">Essential only</div>
+            <div class="vtool" style="margin-bottom:6px; display:block; width:fit-content;">🖥 Zoom (camera + mic)</div>
+            <div class="vtool" style="margin-bottom:6px; display:block; width:fit-content;">📄 One shared Google Doc</div>
+            <div class="vtool" style="display:block; width:fit-content;">📱 WhatsApp</div>
+          </div>
+          <div style="background:#f8f0ff; border:1px solid #d0b0f0; border-radius:12px; padding:16px;">
+            <div style="font-size:12px; font-weight:700; color:var(--violet); margin-bottom:10px; text-transform:uppercase; letter-spacing:1px;">Nice to have</div>
+            <div class="vtool" style="background:#f0e8ff; border-color:#c0a0f0; color:var(--violet); margin-bottom:6px; display:block; width:fit-content;">🗒 Jamboard for word lists</div>
+            <div class="vtool" style="background:#f0e8ff; border-color:#c0a0f0; color:var(--violet); display:block; width:fit-content;">⏱ Visible timer</div>
+          </div>
+        </div>
+        <div class="highlight-box" style="margin-top:16px;">
+          <strong>Screen always shows something visual.</strong> At Pre-A1, the student needs an anchor — a word on screen, an image, a sentence frame. Never have a blank screen while speaking. If you're explaining something verbally, type key words in the chat simultaneously.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CLASS 1 -->
+  <div class="class-panel" id="panel-1">
+    <div class="session-header">
+      <div>
+        <div class="session-number">Session 01 · 60 minutes</div>
+        <div class="session-title">Hello, World</div>
+        <div class="session-subtitle">Verb To Be (I am / You are / She is) · First introductions · First win</div>
+      </div>
+      <div class="session-badge">Verb To Be</div>
+    </div>
+
+    <div class="section-block block-hook">
+      <div class="section-label"><div class="section-icon">🔥</div><span class="section-name">The Hook — Warm-up</span><span class="section-timing">10 min</span></div>
+      <div class="section-body">
+        <p><strong>Activity: "You already know English"</strong></p>
+        <p>Most true beginners don't realize how much English they already know passively — from movies, music, social media, technology. This activity proves it and immediately lowers the affective filter.</p>
+        <div class="steps">
+          <div class="step step-violet">
+            <div class="step-num">1</div>
+            <div class="step-text">Ask: <em>"¿Qué palabras en inglés ya conoces? Las que sean."</em> Let them list freely in the chat or verbally. Common answers: OK, coffee, hello, bye, yes, no, sorry, please, Instagram, selfie, email, Google, Netflix, app, zoom, password.</div>
+          </div>
+          <div class="step step-violet">
+            <div class="step-num">2</div>
+            <div class="step-text">Celebrate each word genuinely. Count them together. <em>"Tienes 15 palabras en inglés y ni siquiera lo sabías."</em> Point to the screen: <em>"These are English words. You said them. In English."</em></div>
+          </div>
+          <div class="step step-violet">
+            <div class="step-num">3</div>
+            <div class="step-text">Now model: <em>"My name is [your name]. I'm from [city]. I'm a teacher."</em> Say it slowly, type it on screen. Then: <em>"Now you — just your name and where you're from."</em> They say it. You react as if it's the best thing you've ever heard — because for them, it is.</div>
+          </div>
+        </div>
+        <div class="highlight-box" style="margin-top:14px;">
+          <strong>Why this works:</strong> Evidence beats encouragement. You're not telling them they can do it — you're showing them they already have been doing it. That's a completely different conversation.
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block block-task">
+      <div class="section-label"><div class="section-icon">⚡</div><span class="section-name">The Task — Main Challenge</span><span class="section-timing">22 min</span></div>
+      <div class="section-body">
+        <p><strong>Challenge: "Hello, I'm…"</strong></p>
+        <p>Build their first complete English self-introduction — sentence by sentence, together. By the end, they can say 5 things about themselves in English with no help.</p>
+        <div class="steps">
+          <div class="step step-teal">
+            <div class="step-num">1</div>
+            <div class="step-text"><strong>Build together (10 min):</strong> Start with the sentence on screen: <em>"My name is ___."</em> They fill in the blank aloud. You add the next: <em>"I'm from ___."</em> Then: <em>"I'm ___ years old."</em> Then: <em>"I'm a ___." (job).</em> Then: <em>"I'm [adjective] today."</em> Each time — they say it, you write it on screen.</div>
+          </div>
+          <div class="step step-teal">
+            <div class="step-num">2</div>
+            <div class="step-text"><strong>Read it back (5 min):</strong> All 5 sentences are on screen. They read them aloud — their own words, about themselves. This is the moment. Don't rush it. Let them feel what it's like to speak English.</div>
+          </div>
+          <div class="step step-teal">
+            <div class="step-num">3</div>
+            <div class="step-text"><strong>Hide the screen (5 min):</strong> Turn off screen share. Ask them to say as many of the 5 sentences as they can remember, in any order. What sticks is acquisition. What doesn't — comes back next class.</div>
+          </div>
+        </div>
+        <div class="scaffold-box">
+          <div class="scaffold-title">Sentence frames on screen</div>
+          <div class="scaffold-list">
+            <div class="scaffold-item"><div class="scaffold-en">My name is ___.</div><div class="scaffold-es">Mi nombre es ___.</div></div>
+            <div class="scaffold-item"><div class="scaffold-en">I'm from ___.</div><div class="scaffold-es">Soy de ___.</div></div>
+            <div class="scaffold-item"><div class="scaffold-en">I'm ___ years old.</div><div class="scaffold-es">Tengo ___ años.</div></div>
+            <div class="scaffold-item"><div class="scaffold-en">I'm a ___. (job)</div><div class="scaffold-es">Soy ___.</div></div>
+            <div class="scaffold-item"><div class="scaffold-en">I'm happy / tired / nervous today.</div><div class="scaffold-es">Estoy feliz / cansada / nerviosa hoy.</div></div>
+          </div>
+        </div>
+        <div class="pronun-box">
+          <div class="pronun-title">Pronunciation — just 2 words this class</div>
+          <div class="pronun-grid">
+            <div class="pronun-item"><div class="pronun-word">I'm</div><div class="pronun-hint">Suena como "aim" — no es "I am" separado en conversación</div></div>
+            <div class="pronun-item"><div class="pronun-word">from</div><div class="pronun-hint">La "o" suena como en "frm" — no "from" con "o" abierta</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block block-vocab">
+      <div class="section-label"><div class="section-icon">✨</div><span class="section-name">Vocabulary — Class 1</span><span class="section-timing">8 min</span></div>
+      <div class="section-body">
+        <p style="margin-bottom:14px; color:#888; font-size:13px;">Only words they will actually use today. No lists — introduce each one in context during the task.</p>
+        <div class="vocab-grid">
+          <div class="vocab-card"><div class="vocab-word">nice to meet you</div><div class="vocab-def">Mucho gusto — social phrase, use immediately</div></div>
+          <div class="vocab-card"><div class="vocab-word">me too</div><div class="vocab-def">Yo también — the most useful reaction</div></div>
+          <div class="vocab-card"><div class="vocab-word">really?</div><div class="vocab-def">¿De verdad? — shows interest</div></div>
+          <div class="vocab-card"><div class="vocab-word">I'm sorry?</div><div class="vocab-def">¿Cómo? / Perdón — when they don't understand</div></div>
+          <div class="vocab-card"><div class="vocab-word">please</div><div class="vocab-def">Por favor — they already know this one</div></div>
+          <div class="vocab-card"><div class="vocab-word">thank you</div><div class="vocab-def">Gracias — practice natural response: "You're welcome"</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block block-error">
+      <div class="section-label"><div class="section-icon">🔍</div><span class="section-name">Error Spotting — Gentle version</span><span class="section-timing">8 min</span></div>
+      <div class="section-body">
+        <p>At Pre-A1, error spotting is NOT about fixing mistakes — it's about hearing the difference. Show two options on screen and ask: <em>"Which sounds right to you?"</em> No pressure, no grades.</p>
+        <div class="error-list">
+          <div class="error-item">
+            <div class="error-wrong">I am have 30 years.</div>
+            <div class="error-right">✓ I'm 30. / I'm 30 years old.</div>
+            <div class="error-note">In English, age uses "be" — not "have". Say: <em>"En inglés la edad se dice con 'am/is/are', no con 'have'."</em></div>
+          </div>
+          <div class="error-item">
+            <div class="error-wrong">My name is María, I am teacher.</div>
+            <div class="error-right">✓ My name is María. I'm a teacher.</div>
+            <div class="error-note">Jobs need "a" before them in English. Just model it — don't explain "articles" yet.</div>
+          </div>
+        </div>
+        <div class="highlight-box" style="margin-top:12px;">
+          <strong>At Pre-A1, the correction is always positive:</strong> <em>"Almost! Here's the English version:"</em> — then model the correct sentence and ask them to repeat it once. That's enough. Move on.
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block block-wa">
+      <div class="section-label"><div class="section-icon">📱</div><span class="section-name">WhatsApp Challenge</span><span class="section-timing">Homework</span></div>
+      <div class="section-body">
+        <div class="wa-card">
+          <div class="wa-icon-wrap">🎙</div>
+          <div class="wa-content">
+            <h4>Voice note · 20–30 seconds · from memory</h4>
+            <p>Record themselves saying their 5 sentences from today — <strong>no notes, no screen.</strong> Just: name, where from, age, job, how they feel today.</p>
+            <p style="margin-top:8px; color:#666;">It will be imperfect. That's the point. They send it, you reply with a warm reaction in English + one sentence they said correctly highlighted.</p>
+            <span class="wa-tag">🎙 20–30s · no notes</span>
+          </div>
+        </div>
+        <div class="highlight-box" style="margin-top:14px;">
+          <strong>Your reply matters more than theirs.</strong> Listen to their voice note and reply: <em>"You said: 'I'm a teacher' — perfect! See you next class."</em> Quoting their own correct English back at them is extremely powerful at Pre-A1.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CLASS 2 -->
+  <div class="class-panel" id="panel-2">
+    <div class="session-header">
+      <div>
+        <div class="session-number">Session 02 · 60 minutes</div>
+        <div class="session-title">My Things</div>
+        <div class="session-subtitle">I have / She has · Numbers · Describing objects and people around you</div>
+      </div>
+      <div class="session-badge">Have / Has</div>
+    </div>
+
+    <div class="section-block block-hook">
+      <div class="section-label"><div class="section-icon">🔥</div><span class="section-name">The Hook — Warm-up</span><span class="section-timing">8 min</span></div>
+      <div class="section-body">
+        <p><strong>Activity: "What do you see?"</strong></p>
+        <div class="steps">
+          <div class="step step-violet">
+            <div class="step-num">1</div>
+            <div class="step-text">Ask them to look around and describe 5 objects they see — in English if possible, Spanish if not. For each Spanish word, you give them the English equivalent and type it on screen. They say it back. <em>"Tengo un vaso → I have a glass."</em></div>
+          </div>
+          <div class="step step-violet">
+            <div class="step-num">2</div>
+            <div class="step-text">Review their WhatsApp voice note from last class. Read back one sentence they said correctly: <em>"Last week you said 'I'm a teacher' — perfect. Today we add more."</em></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block block-task">
+      <div class="section-label"><div class="section-icon">⚡</div><span class="section-name">The Task — Main Challenge</span><span class="section-timing">24 min</span></div>
+      <div class="section-body">
+        <p><strong>Challenge: "My Profile"</strong></p>
+        <p>Fill in a simple profile card — in English — about themselves. Then describe a person they know using "She/He has" and "She/He is". The profile is in the shared Google Doc.</p>
+        <div class="steps">
+          <div class="step step-teal">
+            <div class="step-num">1</div>
+            <div class="step-text"><strong>My section (8 min):</strong> Open the shared doc. Fill in: name, age, city, one thing I have (pet, car, house…), one thing I like. Do it together — you type, they dictate in any language, you translate and model the English version.</div>
+          </div>
+          <div class="step step-teal">
+            <div class="step-num">2</div>
+            <div class="step-text"><strong>My person (10 min):</strong> Pick one person important to them. Describe them using: "Her name is…", "She is ___ years old.", "She has ___.", "She is ___." Sentence frames on screen. They dictate, you model and write.</div>
+          </div>
+          <div class="step step-teal">
+            <div class="step-num">3</div>
+            <div class="step-text"><strong>Read aloud (5 min):</strong> They read both sections aloud. You listen for fluency — not perfection. React naturally to what they share.</div>
+          </div>
+        </div>
+        <div class="scaffold-box">
+          <div class="scaffold-title">Sentence frames</div>
+          <div class="scaffold-list">
+            <div class="scaffold-item"><div class="scaffold-en">I have a ___.</div><div class="scaffold-es">Tengo un/una ___.</div></div>
+            <div class="scaffold-item"><div class="scaffold-en">I don't have a ___.</div><div class="scaffold-es">No tengo ___.</div></div>
+            <div class="scaffold-item"><div class="scaffold-en">She / He has ___.</div><div class="scaffold-es">Ella / Él tiene ___.</div></div>
+            <div class="scaffold-item"><div class="scaffold-en">She / He is ___ years old.</div><div class="scaffold-es">Ella / Él tiene ___ años.</div></div>
+            <div class="scaffold-item"><div class="scaffold-en">She / He is very ___.</div><div class="scaffold-es">Ella / Él es muy ___.</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block block-vocab">
+      <div class="section-label"><div class="section-icon">✨</div><span class="section-name">Vocabulary — Class 2</span><span class="section-timing">8 min</span></div>
+      <div class="section-body">
+        <div class="vocab-grid">
+          <div class="vocab-card"><div class="vocab-word">I have / she has</div><div class="vocab-def">tengo / ella tiene — key grammar distinction</div></div>
+          <div class="vocab-card"><div class="vocab-word">house / apartment</div><div class="vocab-def">casa / apartamento</div></div>
+          <div class="vocab-card"><div class="vocab-word">dog / cat</div><div class="vocab-def">perro / gato — high frequency</div></div>
+          <div class="vocab-card"><div class="vocab-word">kind / funny / serious</div><div class="vocab-def">amable / chistosa / seria</div></div>
+          <div class="vocab-card"><div class="vocab-word">tall / short</div><div class="vocab-def">alta / baja</div></div>
+          <div class="vocab-card"><div class="vocab-word">one, two, three…</div><div class="vocab-def">Numbers 1–10 — always in context</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block block-error">
+      <div class="section-label"><div class="section-icon">🔍</div><span class="section-name">Error Spotting</span><span class="section-timing">8 min</span></div>
+      <div class="section-body">
+        <div class="error-list">
+          <div class="error-item">
+            <div class="error-wrong">She have a dog.</div>
+            <div class="error-right">✓ She has a dog.</div>
+            <div class="error-note">"Have" changes to "has" for she/he/it. Don't explain grammar — just model: say "She has" slowly, they repeat 3 times in different sentences.</div>
+          </div>
+          <div class="error-item">
+            <div class="error-wrong">I have 35 years.</div>
+            <div class="error-right">✓ I'm 35. / I'm 35 years old.</div>
+            <div class="error-note">Age error from Class 1 — reinforce again. It takes multiple exposures to replace.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block block-wa">
+      <div class="section-label"><div class="section-icon">📱</div><span class="section-name">WhatsApp Challenge</span><span class="section-timing">Homework</span></div>
+      <div class="section-body">
+        <div class="wa-card">
+          <div class="wa-icon-wrap">🖼</div>
+          <div class="wa-content">
+            <h4>Photo + 1 sentence</h4>
+            <p>Send a photo of something they have — pet, coffee, plant, anything — and record a voice note saying <strong>one sentence about it in English.</strong> Just one: <em>"I have a cat. Her name is Luna."</em></p>
+            <span class="wa-tag">🖼 Photo + 🎙 1–2 sentences</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CLASS 3 -->
+  <div class="class-panel" id="panel-3">
+    <div class="session-header">
+      <div>
+        <div class="session-number">Session 03 · 60 minutes</div>
+        <div class="session-title">Every Day</div>
+        <div class="session-subtitle">Present Simple · Daily verbs · What you do, every single day</div>
+      </div>
+      <div class="session-badge">Present Simple</div>
+    </div>
+
+    <div class="section-block block-hook">
+      <div class="section-label"><div class="section-icon">🔥</div><span class="section-name">The Hook — Warm-up</span><span class="section-timing">8 min</span></div>
+      <div class="section-body">
+        <p><strong>Activity: "Emoji Day"</strong></p>
+        <div class="steps">
+          <div class="step step-violet">
+            <div class="step-num">1</div>
+            <div class="step-text">Ask them to send 5 emojis in the Zoom chat that represent their typical day — in order. No words yet. ☕ 💻 🍕 📺 😴</div>
+          </div>
+          <div class="step step-violet">
+            <div class="step-num">2</div>
+            <div class="step-text">You point to each emoji and together build the sentence: <em>"☕ → Every morning I drink coffee."</em> Type it on screen as they say it. You're co-authoring their day in English.</div>
+          </div>
+        </div>
+        <div class="highlight-box" style="margin-top:12px;">
+          <strong>5 emojis = 5 English sentences.</strong> They've already produced their first Present Simple paragraph without realizing it.
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block block-task">
+      <div class="section-label"><div class="section-icon">⚡</div><span class="section-name">The Task — Main Challenge</span><span class="section-timing">24 min</span></div>
+      <div class="section-body">
+        <p><strong>Challenge: "My Day" — shared doc</strong></p>
+        <p>Write a short description of their typical day in the shared Google Doc. They use sentence frames. You help translate any Spanish words they get stuck on. Then they read it aloud.</p>
+        <div class="steps">
+          <div class="step step-teal">
+            <div class="step-num">1</div>
+            <div class="step-text"><strong>Write (12 min):</strong> Open the class 3 template. Fill in their daily routine — morning, afternoon, night. Minimum 6 sentences. Spanish words in parentheses are fine. You watch and help in real time via the shared doc.</div>
+          </div>
+          <div class="step step-teal">
+            <div class="step-num">2</div>
+            <div class="step-text"><strong>Read aloud (6 min):</strong> They read the whole thing out loud. Don't interrupt for errors — let them finish. Then highlight 2 sentences they said perfectly.</div>
+          </div>
+          <div class="step step-teal">
+            <div class="step-num">3</div>
+            <div class="step-text"><strong>Quick swap (5 min):</strong> You describe your day with the same structure. They listen and try to understand. Ask one Yes/No question to check comprehension: <em>"Do I drink coffee?" "Yes!"</em></div>
+          </div>
+        </div>
+        <div class="scaffold-box">
+          <div class="scaffold-title">Daily verb list — keep on screen</div>
+          <div class="scaffold-list">
+            <div class="scaffold-item"><div class="scaffold-en">wake up · eat · drink</div><div class="scaffold-es">despertarse · comer · tomar/beber</div></div>
+            <div class="scaffold-item"><div class="scaffold-en">work · study · go to</div><div class="scaffold-es">trabajar · estudiar · ir a</div></div>
+            <div class="scaffold-item"><div class="scaffold-en">watch · read · cook</div><div class="scaffold-es">ver · leer · cocinar</div></div>
+            <div class="scaffold-item"><div class="scaffold-en">sleep · relax · talk</div><div class="scaffold-es">dormir · relajarse · hablar</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block block-vocab">
+      <div class="section-label"><div class="section-icon">✨</div><span class="section-name">Vocabulary — Class 3</span><span class="section-timing">8 min</span></div>
+      <div class="section-body">
+        <div class="vocab-grid">
+          <div class="vocab-card"><div class="vocab-word">every day</div><div class="vocab-def">todos los días — frequency marker</div></div>
+          <div class="vocab-card"><div class="vocab-word">in the morning</div><div class="vocab-def">por la mañana</div></div>
+          <div class="vocab-card"><div class="vocab-word">at night</div><div class="vocab-def">por la noche / de noche</div></div>
+          <div class="vocab-card"><div class="vocab-word">always / never</div><div class="vocab-def">siempre / nunca</div></div>
+          <div class="vocab-card"><div class="vocab-word">I like / I love / I hate</div><div class="vocab-def">me gusta / me encanta / odio</div></div>
+          <div class="vocab-card"><div class="vocab-word">I don't (+ verb)</div><div class="vocab-def">No (+ verbo) — negation</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block block-error">
+      <div class="section-label"><div class="section-icon">🔍</div><span class="section-name">Error Spotting</span><span class="section-timing">8 min</span></div>
+      <div class="section-body">
+        <p>Use sentences from their own doc (anonymized or with permission). Show them on screen.</p>
+        <div class="error-list">
+          <div class="error-item">
+            <div class="error-wrong">Every day I no drink coffee.</div>
+            <div class="error-right">✓ Every day I don't drink coffee.</div>
+            <div class="error-note">"No" doesn't negate a verb in English. "Don't" does. This is the most important thing to fix at Pre-A1.</div>
+          </div>
+          <div class="error-item">
+            <div class="error-wrong">I working at home.</div>
+            <div class="error-right">✓ I work at home.</div>
+            <div class="error-note">Present Simple uses the base verb (no -ing). The -ing form (Present Continuous) comes much later.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block block-wa">
+      <div class="section-label"><div class="section-icon">📱</div><span class="section-name">WhatsApp Challenge</span><span class="section-timing">Homework</span></div>
+      <div class="section-body">
+        <div class="wa-card">
+          <div class="wa-icon-wrap">☀️</div>
+          <div class="wa-content">
+            <h4>Morning note · 20–30 seconds</h4>
+            <p>Tomorrow morning, send a voice note with <strong>3 sentences</strong> about what they're doing right now or what their morning looks like. No script — just say it.</p>
+            <span class="wa-tag">☀️ 3 sentences · morning</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CLASS 4 -->
+  <div class="class-panel" id="panel-4">
+    <div class="session-header">
+      <div>
+        <div class="session-number">Session 04 · 60 minutes</div>
+        <div class="session-title">Yes or No?</div>
+        <div class="session-subtitle">Do you…? / Are you…? · Short answers · The joy of asking and answering</div>
+      </div>
+      <div class="session-badge">Questions</div>
+    </div>
+
+    <div class="section-block block-hook">
+      <div class="section-label"><div class="section-icon">🔥</div><span class="section-name">The Hook — Warm-up</span><span class="section-timing">8 min</span></div>
+      <div class="section-body">
+        <p><strong>Activity: "True or False?"</strong></p>
+        <div class="steps">
+          <div class="step step-violet">
+            <div class="step-num">1</div>
+            <div class="step-text">You say 3 things about yourself — 2 true, 1 false. Slowly and simply. They listen and guess which is false. They answer: <em>"Number 2 is false!"</em></div>
+          </div>
+          <div class="step step-violet">
+            <div class="step-num">2</div>
+            <div class="step-text">Now they do the same — 3 sentences about themselves. You guess. The goal: they produce 3 English sentences from memory, under zero pressure, because the game makes it fun.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block block-task">
+      <div class="section-label"><div class="section-icon">⚡</div><span class="section-name">The Task — Main Challenge</span><span class="section-timing">24 min</span></div>
+      <div class="section-body">
+        <p><strong>Challenge: "Ask me anything"</strong></p>
+        <p>They ask you 5 questions in English using the question frames on screen. You answer truthfully. Then you ask them 5 questions — they answer with short answers.</p>
+        <div class="steps">
+          <div class="step step-teal">
+            <div class="step-num">1</div>
+            <div class="step-text"><strong>Their turn (10 min):</strong> Question frames are on screen. They pick 5 and ask you. You answer in full sentences so they hear natural English. They can look at the screen throughout — reading a question aloud counts as speaking.</div>
+          </div>
+          <div class="step step-teal">
+            <div class="step-num">2</div>
+            <div class="step-text"><strong>Your turn (10 min):</strong> You ask them the same questions. They answer with short answers. Prompt: <em>"Just say 'Yes, I do' or 'No, I don't' — that's a complete sentence in English."</em></div>
+          </div>
+          <div class="step step-teal">
+            <div class="step-num">3</div>
+            <div class="step-text"><strong>Celebration (4 min):</strong> Count together how many English sentences they've produced across these 4 classes. Give a genuine number — it will be more than they expect. Celebrate it.</div>
+          </div>
+        </div>
+        <div class="scaffold-box">
+          <div class="scaffold-title">Question frames on screen</div>
+          <div class="scaffold-list">
+            <div class="scaffold-item"><div class="scaffold-en">Are you ___?</div><div class="scaffold-es">¿Eres / Estás ___?</div></div>
+            <div class="scaffold-item"><div class="scaffold-en">Do you like ___?</div><div class="scaffold-es">¿Te gusta ___?</div></div>
+            <div class="scaffold-item"><div class="scaffold-en">Do you have ___?</div><div class="scaffold-es">¿Tienes ___?</div></div>
+            <div class="scaffold-item"><div class="scaffold-en">Do you work / live / eat ___?</div><div class="scaffold-es">¿Trabajas / vives / comes ___?</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block block-vocab">
+      <div class="section-label"><div class="section-icon">✨</div><span class="section-name">Vocabulary — Class 4</span><span class="section-timing">8 min</span></div>
+      <div class="section-body">
+        <div class="vocab-grid">
+          <div class="vocab-card"><div class="vocab-word">yes, I do / no, I don't</div><div class="vocab-def">sí / no — short answers, always complete</div></div>
+          <div class="vocab-card"><div class="vocab-word">yes, I am / no, I'm not</div><div class="vocab-def">sí / no — for "Are you...?" questions</div></div>
+          <div class="vocab-card"><div class="vocab-word">I think so</div><div class="vocab-def">creo que sí — softer yes</div></div>
+          <div class="vocab-card"><div class="vocab-word">I'm not sure</div><div class="vocab-def">no estoy segura — honest and useful</div></div>
+          <div class="vocab-card"><div class="vocab-word">can you repeat?</div><div class="vocab-def">¿puedes repetir? — essential survival phrase</div></div>
+          <div class="vocab-card"><div class="vocab-word">what does ___ mean?</div><div class="vocab-def">¿qué significa ___? — learner's power tool</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block block-error">
+      <div class="section-label"><div class="section-icon">🔍</div><span class="section-name">Error Spotting</span><span class="section-timing">8 min</span></div>
+      <div class="section-body">
+        <div class="error-list">
+          <div class="error-item">
+            <div class="error-wrong">You like coffee?</div>
+            <div class="error-right">✓ Do you like coffee?</div>
+            <div class="error-note">Questions in English need "Do/Does" — you can't just raise intonation like in Spanish. Show the difference by saying both versions aloud.</div>
+          </div>
+          <div class="error-item">
+            <div class="error-wrong">Yes, I like.</div>
+            <div class="error-right">✓ Yes, I do! / Yes, I like coffee!</div>
+            <div class="error-note">Short answers can't end on the main verb alone. "Yes, I do" is a complete, natural short answer.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block block-wa">
+      <div class="section-label"><div class="section-icon">📱</div><span class="section-name">WhatsApp Challenge — Final</span><span class="section-timing">Homework</span></div>
+      <div class="section-body">
+        <div class="wa-card">
+          <div class="wa-icon-wrap">🎤</div>
+          <div class="wa-content">
+            <h4>The full introduction · 45–60 seconds</h4>
+            <p>Record a voice note — the longest yet. Their complete English introduction: name, where from, age, job, something they have, something they do every day, something they like and don't like.</p>
+            <p style="margin-top:8px; color:#666;"><strong>No notes. No screen.</strong> Just everything they know — in English.</p>
+            <span class="wa-tag">🎤 45–60s · from memory</span>
+          </div>
+        </div>
+        <div class="highlight-box" style="margin-top:14px;">
+          <strong>End of cycle:</strong> After 4 sessions, a true beginner can introduce themselves, describe people they love, talk about their daily life, and ask basic questions — all in English. The next step: past simple (What did you do yesterday?) or more complex Present Simple (What does your day look like at work?).
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>ESL · Andragogy · Dogme ELT + TBL · Pre-A1 · 4 × 60 min · 1-on-1 · Online · Laura Saldarriaga</footer>
+
+<script>
+  function showTab(n) {
+    document.querySelectorAll('.class-panel').forEach((p, i) => p.classList.toggle('active', i === n));
+    document.querySelectorAll('.tab-btn').forEach((b, i) => b.classList.toggle('active', i === n));
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>
