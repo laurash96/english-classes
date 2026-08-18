@@ -40,6 +40,24 @@ Four classes for intermediate learners ready to sound more natural:
 
 ---
 
+## Personalized courses
+
+Some students don't fit a general level cleanly. When a diagnostic test shows someone is closer to A2/B1 than to true-beginner, they get a course named after them instead of a CEFR label — same methodology, but built directly from their diagnostic results instead of a generic syllabus.
+
+### 🧡 English for Estefi
+Six classes built from her diagnostic (23/30 · 76.7% · Vocabulary & Reading 100%, gaps concentrated in Intermediate Grammar). Each class opens with the exact sentence she got wrong or left blank:
+
+| Class | Topic | Grammar focus | From her diagnostic |
+|-------|-------|---------------|----------------------|
+| 1 | Right Now vs. Every Day | Present Simple vs. Present Continuous | Q10 |
+| 2 | Empty Room, Full Story | There is/are · There was/were | Q13 |
+| 3 | You Should Try This | Modals + base verb | Q14 |
+| 4 | I've Never Told You This | Present Perfect vs. Past Simple | Q15 |
+| 5 | What Were You Doing When…? | Past Simple vs. Past Continuous | Q18 |
+| 6 | The Place Where It Happened | Relative clauses · How often vs. How long | Q20, Q28 |
+
+---
+
 ## Structure
 
 ```
@@ -52,10 +70,14 @@ Four classes for intermediate learners ready to sound more natural:
 │   ├── students.html       # Student-facing interactive doc (A1–A2)
 │   ├── english-plan.html   # Teacher's detailed session plan
 │   └── class3-template.html  # Shared writing template · Class 3
-└── A2B1/
-    ├── students.html       # Student-facing interactive doc (A2–B1)
+├── A2B1/
+│   ├── students.html       # Student-facing interactive doc (A2–B1)
+│   ├── english-plan.html   # Teacher's detailed session plan
+│   └── class2-template.html  # Shared writing template · Class 2
+└── Estefi/
+    ├── students.html       # Student-facing interactive doc (personalized)
     ├── english-plan.html   # Teacher's detailed session plan
-    └── class2-template.html  # Shared writing template · Class 2
+    └── class5-template.html  # Shared writing template · Class 5
 ```
 
 ---

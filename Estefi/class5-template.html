@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Class 5 — Interrupted</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #137333;
+    --green-bg: #e6f4ea;
+    --coral: #c1502f;
+    --coral-bg: #fbe4d8;
+    --blue: #1a73e8;
+    --blue-bg: #e8f0fe;
+    --border: #e0e0e0;
+    --ink: #202124;
+    --muted: #5f6368;
+    --placeholder: #bdbdbd;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: #f8f9fa;
+    color: var(--ink);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px 80px;
+  }
+
+  /* ===== TOOLBAR ===== */
+  .toolbar {
+    width: 100%;
+    max-width: 820px;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .toolbar-left { display: flex; align-items: center; gap: 12px; }
+  .file-icon { font-size: 22px; }
+  .file-name { font-size: 16px; font-weight: 600; color: var(--ink); }
+  .file-sub { font-size: 12px; color: var(--muted); margin-top: 1px; }
+  .print-btn {
+    background: var(--coral); color: #fff; border: none; border-radius: 8px;
+    padding: 8px 18px; font-size: 13px; font-family: 'Outfit', sans-serif;
+    font-weight: 500; cursor: pointer; display: flex; align-items: center; gap: 6px;
+  }
+  .print-btn:hover { background: #a5431f; }
+  .tip-label {
+    font-size: 12px; color: var(--muted); background: #f1f3f4;
+    padding: 5px 12px; border-radius: 100px; font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* ===== DOC ===== */
+  .doc {
+    width: 100%; max-width: 820px; background: #fff; border: 1px solid var(--border);
+    border-radius: 12px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
+
+  .doc-header { padding: 36px 56px 28px; border-bottom: 2px solid #f1f3f4; }
+  .doc-class-tag {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--coral); margin-bottom: 10px;
+  }
+  .doc-title { font-size: 28px; font-weight: 600; color: var(--ink); margin-bottom: 6px; }
+  .doc-subtitle { font-size: 14px; color: var(--muted); line-height: 1.5; margin-bottom: 18px; }
+  .doc-meta { display: flex; gap: 20px; flex-wrap: wrap; }
+  .doc-meta-item { font-size: 12px; color: var(--muted); display: flex; align-items: center; gap: 5px; }
+  .doc-meta-item span { font-weight: 600; color: var(--ink); }
+
+  /* ===== INSTRUCTIONS ===== */
+  .instructions {
+    padding: 20px 56px; background: #f8f9fa; border-bottom: 1px solid var(--border);
+    display: flex; gap: 24px; flex-wrap: wrap;
+  }
+  .instr-item { display: flex; align-items: flex-start; gap: 10px; flex: 1; min-width: 220px; }
+  .instr-num {
+    width: 22px; height: 22px; border-radius: 50%; background: var(--ink); color: #fff;
+    font-size: 12px; font-weight: 600; display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; margin-top: 1px;
+  }
+  .instr-text { font-size: 13px; color: var(--muted); line-height: 1.5; }
+  .instr-text strong { color: var(--ink); }
+
+  /* ===== SECTIONS ===== */
+  .doc-body { padding: 36px 56px; }
+  .section { margin-bottom: 36px; }
+  .section-header {
+    display: flex; align-items: center; gap: 10px; margin-bottom: 14px;
+    padding-bottom: 10px; border-bottom: 2px solid var(--border);
+  }
+  .section-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; background: var(--coral); }
+  .section-title { font-size: 16px; font-weight: 600; color: var(--ink); }
+  .section-owner {
+    margin-left: auto; font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    letter-spacing: 1px; text-transform: uppercase; color: var(--muted);
+    background: #f1f3f4; padding: 3px 10px; border-radius: 100px;
+  }
+
+  .prompt-en { font-size: 13.5px; color: var(--muted); line-height: 1.5; font-style: italic; margin-bottom: 12px; }
+
+  .write-area {
+    width: 100%; min-height: 90px; border: 1.5px solid var(--border); border-radius: 10px;
+    padding: 14px 16px; font-size: 15px; font-family: 'Outfit', sans-serif; color: var(--ink);
+    line-height: 1.7; resize: vertical; outline: none; transition: border-color 0.15s ease; background: #fff;
+  }
+  .write-area:focus { border-color: var(--coral); }
+  .write-area:empty::before {
+    content: attr(data-placeholder); color: var(--placeholder); pointer-events: none; font-style: italic;
+  }
+
+  /* ===== COLOR GUIDE ===== */
+  .color-guide { padding: 20px 56px 28px; border-top: 1px solid var(--border); background: #fafafa; }
+  .guide-label {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--muted); margin-bottom: 12px;
+  }
+  .guide-chips { display: flex; gap: 10px; flex-wrap: wrap; }
+  .chip { display: flex; align-items: center; gap: 7px; padding: 6px 14px; border-radius: 100px; font-size: 13px; font-weight: 500; }
+  .chip-dot { width: 8px; height: 8px; border-radius: 50%; }
+  .chip.green { background: var(--green-bg); color: var(--green); }
+  .chip.green .chip-dot { background: var(--green); }
+  .chip.coral { background: var(--coral-bg); color: var(--coral); }
+  .chip.coral .chip-dot { background: var(--coral); }
+  .chip.blue { background: var(--blue-bg); color: var(--blue); }
+  .chip.blue .chip-dot { background: var(--blue); }
+  .guide-note { font-size: 12px; color: var(--muted); margin-top: 10px; line-height: 1.5; }
+
+  .example-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 14px; }
+  .example-pill { padding: 8px 12px; border-radius: 8px; font-size: 12.5px; line-height: 1.4; font-family: 'JetBrains Mono', monospace; }
+  .example-pill.green { background: var(--green-bg); color: var(--green); }
+  .example-pill.coral { background: var(--coral-bg); color: var(--coral); }
+
+  @media print {
+    body { background: #fff; padding: 0; }
+    .toolbar { display: none; }
+    .doc { border: none; box-shadow: none; border-radius: 0; }
+    .write-area { border: 1px dashed #ccc; min-height: 70px; }
+  }
+
+  @media (max-width: 600px) {
+    .doc-header, .doc-body, .color-guide, .instructions { padding-left: 24px; padding-right: 24px; }
+    .example-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <div class="toolbar-left">
+    <div class="file-icon">📄</div>
+    <div>
+      <div class="file-name">Class 5 — Interrupted</div>
+      <div class="file-sub">Shared template · Past Simple vs. Past Continuous</div>
+    </div>
+  </div>
+  <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+    <span class="tip-label">✏️ Click to write</span>
+    <button class="print-btn" onclick="window.print()">🖨 Print / Save PDF</button>
+  </div>
+</div>
+
+<div class="doc">
+
+  <!-- HEADER -->
+  <div class="doc-header">
+    <div class="doc-class-tag">English for Estefi · Class 5 · Past Simple vs. Past Continuous</div>
+    <div class="doc-title">Interrupted</div>
+    <div class="doc-subtitle">Four real moments from your life where something interrupted what you were doing. Write them here, then read two aloud and tell a third one from memory.</div>
+    <div class="doc-meta">
+      <div class="doc-meta-item">⏱ Writing time: <span>15 minutes</span></div>
+      <div class="doc-meta-item">🎯 Goal: <span>was/were + -ing → interrupted by a Past Simple action</span></div>
+      <div class="doc-meta-item">✅ Real stories &gt; invented ones</div>
+    </div>
+  </div>
+
+  <!-- INSTRUCTIONS -->
+  <div class="instructions">
+    <div class="instr-item">
+      <div class="instr-num">1</div>
+      <div class="instr-text"><strong>Every story needs two parts:</strong> what you were doing (the long background action) and what interrupted it (the short, sudden one).</div>
+    </div>
+    <div class="instr-item">
+      <div class="instr-num">2</div>
+      <div class="instr-text"><strong>Real beats invented.</strong> A phone call during a shower, the power cutting out mid-movie — the more specific, the easier it is to remember and retell.</div>
+    </div>
+    <div class="instr-item">
+      <div class="instr-num">3</div>
+      <div class="instr-text"><strong>Stuck on a word?</strong> Write it in Spanish and keep going — Laura will sort it out with you live.</div>
+    </div>
+  </div>
+
+  <!-- BODY -->
+  <div class="doc-body">
+
+    <div class="section">
+      <div class="section-header">
+        <div class="section-dot"></div>
+        <div class="section-title">Story 1 — Something ordinary, interrupted</div>
+        <div class="section-owner">Estefi</div>
+      </div>
+      <div class="prompt-en">What were you doing on an ordinary day when something unexpected happened — a call, a knock, a noise?</div>
+      <div class="write-area" contenteditable="true" data-placeholder="I was cooking dinner when the power went out. I was in the shower when my phone rang three times…"></div>
+    </div>
+
+    <div class="section">
+      <div class="section-header">
+        <div class="section-dot"></div>
+        <div class="section-title">Story 2 — Interrupted while working or studying</div>
+        <div class="section-owner">Estefi</div>
+      </div>
+      <div class="prompt-en">Think of a moment you were focused on work, class, or a task, and someone or something broke your concentration.</div>
+      <div class="write-area" contenteditable="true" data-placeholder="I was writing an email when my boss walked into my office…"></div>
+    </div>
+
+    <div class="section">
+      <div class="section-header">
+        <div class="section-dot"></div>
+        <div class="section-title">Story 3 — Interrupted while relaxing</div>
+        <div class="section-owner">Estefi</div>
+      </div>
+      <div class="prompt-en">A movie, a nap, a quiet moment — what cut it short?</div>
+      <div class="write-area" contenteditable="true" data-placeholder="I was watching a movie when my dog started barking at the door…"></div>
+    </div>
+
+    <div class="section">
+      <div class="section-header">
+        <div class="section-dot"></div>
+        <div class="section-title">Story 4 — Your choice</div>
+        <div class="section-owner">Estefi</div>
+      </div>
+      <div class="prompt-en">Any other real "I was ___-ing when ___" moment — the funnier or more dramatic, the better for retelling.</div>
+      <div class="write-area" contenteditable="true" data-placeholder="I was driving to work when I suddenly remembered…"></div>
+    </div>
+
+  </div>
+
+  <!-- COLOR GUIDE -->
+  <div class="color-guide">
+    <div class="guide-label">Teacher debrief guide — highlight her sentences in these colors</div>
+    <div class="guide-chips">
+      <div class="chip coral"><div class="chip-dot"></div>Coral = background action ("I was cooking…")</div>
+      <div class="chip green"><div class="chip-dot"></div>Green = interrupting action ("…when the power went out")</div>
+      <div class="chip blue"><div class="chip-dot"></div>Blue = connector ("while", "when", "suddenly")</div>
+    </div>
+    <div class="example-row">
+      <div class="example-pill coral">I was cooking dinner<br>I was in the shower<br>I was writing an email</div>
+      <div class="example-pill green">…when the power went out.<br>…when my phone rang.<br>…when my boss walked in.</div>
+    </div>
+    <div class="guide-note">After she reads a story aloud, copy the sentence here and highlight it live — seeing her own words split into the two colors makes the pattern visible instead of abstract.</div>
+  </div>
+
+</div>
+
+</body>
+</html>

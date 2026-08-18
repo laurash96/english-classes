@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>English for Estefi — Teaching Plan</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1b2a2f;
+    --bg: #f7f3ee;
+    --card: #ffffff;
+    --border: #e8ddd0;
+    --coral: #c1502f;
+    --coral-light: #fbe4d8;
+    --sage: #4f7d5e;
+    --sage-light: #e3f0e5;
+    --gold: #b8873a;
+    --gold-light: #faf0dc;
+    --rose: #b8455c;
+    --rose-light: #fce8ed;
+    --green: #2f7d4f;
+    --green-light: #e3f6e9;
+    --virtual: #2856b6;
+    --virtual-light: #e6eeff;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Outfit', sans-serif; background: var(--bg); color: var(--ink); }
+
+  header { background: linear-gradient(135deg, #101b1e 0%, #1b2a2f 55%, #2f4a45 100%); padding: 60px 40px 52px; position: relative; overflow: hidden; }
+  header::before { content: ''; position: absolute; top: -70px; right: -70px; width: 300px; height: 300px; border-radius: 50%; background: rgba(255,255,255,0.04); }
+  header::after { content: ''; position: absolute; bottom: -50px; left: 12%; width: 170px; height: 170px; border-radius: 50%; background: rgba(255,255,255,0.03); }
+  .eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,190,150,0.75); margin-bottom: 18px; position: relative; }
+  header h1 { font-family: 'Playfair Display', serif; font-size: clamp(36px, 6vw, 62px); font-weight: 800; color: #fff; line-height: 1.05; margin-bottom: 18px; position: relative; }
+  header h1 span { color: #f0a582; }
+  .header-meta { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 22px; position: relative; }
+  .meta-pill { border: 1px solid rgba(255,255,255,0.2); border-radius: 100px; padding: 7px 18px; font-size: 13px; color: rgba(255,255,255,0.85); background: rgba(255,255,255,0.07); }
+
+  .tabs-wrapper { background: var(--ink); position: sticky; top: 0; z-index: 100; }
+  .tabs { display: flex; padding: 0 40px; overflow-x: auto; }
+  .tab-btn { background: none; border: none; color: rgba(255,255,255,0.45); padding: 16px 20px; font-size: 13px; font-family: 'Outfit', sans-serif; font-weight: 500; cursor: pointer; border-bottom: 3px solid transparent; transition: all 0.15s ease; white-space: nowrap; letter-spacing: 0.4px; }
+  .tab-btn:hover { color: rgba(255,255,255,0.75); }
+  .tab-btn.active { color: #f0a582; border-bottom-color: #f0a582; }
+
+  main { max-width: 900px; margin: 0 auto; padding: 48px 40px 80px; }
+  .class-panel { display: none; }
+  .class-panel.active { display: block; }
+
+  .overview { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 40px; }
+  .ov-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 20px; cursor: pointer; transition: transform 0.15s ease, box-shadow 0.15s ease; }
+  .ov-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+  .ov-num { font-family: 'Playfair Display', serif; font-size: 30px; font-weight: 800; opacity: 0.18; margin-bottom: 8px; }
+  .ov-title { font-size: 14px; font-weight: 600; margin-bottom: 6px; color: var(--ink); }
+  .ov-focus { font-size: 12px; color: #888; line-height: 1.5; }
+  .ov-diag { font-size: 11px; color: var(--coral); margin-top: 8px; font-family: 'JetBrains Mono', monospace; }
+
+  .section-block { background: var(--card); border: 1px solid var(--border); border-radius: 18px; margin-bottom: 20px; overflow: hidden; }
+  .section-label { display: flex; align-items: center; gap: 10px; padding: 14px 22px; border-bottom: 1px solid var(--border); }
+  .section-icon { font-size: 18px; }
+  .section-name { font-size: 12px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; }
+  .section-timing { margin-left: auto; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #aaa; background: #f5f2ee; padding: 3px 10px; border-radius: 100px; }
+  .section-body { padding: 22px 26px; font-size: 14.5px; line-height: 1.75; }
+  .section-body p { margin-bottom: 10px; }
+  .section-body p:last-child { margin-bottom: 0; }
+
+  .block-hook { border-top: 3px solid var(--coral); }
+  .block-hook .section-label { background: var(--coral-light); }
+  .block-hook .section-name { color: var(--coral); }
+  .block-task { border-top: 3px solid var(--sage); }
+  .block-task .section-label { background: var(--sage-light); }
+  .block-task .section-name { color: var(--sage); }
+  .block-vocab { border-top: 3px solid var(--virtual); }
+  .block-vocab .section-label { background: var(--virtual-light); }
+  .block-vocab .section-name { color: var(--virtual); }
+  .block-error { border-top: 3px solid var(--rose); }
+  .block-error .section-label { background: var(--rose-light); }
+  .block-error .section-name { color: var(--rose); }
+  .block-wa { border-top: 3px solid var(--green); }
+  .block-wa .section-label { background: var(--green-light); }
+  .block-wa .section-name { color: var(--green); }
+
+  .session-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 28px; padding-bottom: 24px; border-bottom: 1px solid var(--border); gap: 16px; }
+  .session-number { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 2px; color: #aaa; text-transform: uppercase; margin-bottom: 8px; }
+  .session-title { font-family: 'Playfair Display', serif; font-size: 30px; font-weight: 800; color: var(--ink); margin-bottom: 6px; }
+  .session-subtitle { font-size: 14px; color: #888; }
+  .session-badge { background: var(--coral); color: #fff; font-size: 11px; font-weight: 600; padding: 5px 14px; border-radius: 100px; letter-spacing: 0.5px; white-space: nowrap; margin-top: 4px; font-family: 'JetBrains Mono', monospace; }
+
+  .steps { display: flex; flex-direction: column; gap: 10px; margin: 12px 0; }
+  .step { display: flex; gap: 12px; align-items: flex-start; padding: 12px 14px; border-radius: 12px; }
+  .step-coral { background: var(--coral-light); }
+  .step-sage { background: var(--sage-light); }
+  .step-num { width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: #fff; flex-shrink: 0; margin-top: 2px; }
+  .step-coral .step-num { background: var(--coral); }
+  .step-sage .step-num { background: var(--sage); }
+  .step-text { font-size: 14px; line-height: 1.65; flex: 1; }
+
+  .diag-box { background: #fff8f0; border: 1px solid #f0c8a8; border-left: 4px solid var(--coral); border-radius: 0 12px 12px 0; padding: 14px 18px; margin-bottom: 16px; }
+  .diag-label { font-size: 10px; font-family: 'JetBrains Mono', monospace; letter-spacing: 1.5px; text-transform: uppercase; color: var(--coral); margin-bottom: 8px; font-weight: 700; }
+  .diag-q { font-size: 13px; color: #5a3a20; margin-bottom: 4px; }
+  .diag-answer { font-family: 'JetBrains Mono', monospace; font-size: 12.5px; }
+  .diag-answer .wrong { color: var(--rose); text-decoration: line-through; text-decoration-color: rgba(184,69,92,0.45); }
+  .diag-answer .right { color: var(--green); margin-left: 10px; }
+
+  .vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+  .vocab-card { background: var(--virtual-light); border: 1px solid #b0c8f0; border-radius: 12px; padding: 12px 16px; }
+  .vocab-word { font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 500; color: var(--virtual); margin-bottom: 4px; }
+  .vocab-def { font-size: 12.5px; color: #555; line-height: 1.5; }
+
+  .error-list { display: flex; flex-direction: column; gap: 10px; }
+  .error-item { background: #fafafa; border: 1px solid #eee; border-radius: 12px; padding: 14px 16px; }
+  .error-wrong { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #c0606a; text-decoration: line-through; text-decoration-color: rgba(192,96,106,0.4); margin-bottom: 5px; }
+  .error-right { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--green); margin-bottom: 6px; }
+  .error-note { font-size: 12.5px; color: #888; line-height: 1.5; }
+
+  .highlight-box { background: var(--coral-light); border: 1px solid #ecc0a0; border-radius: 12px; padding: 14px 18px; font-size: 13.5px; color: #6a3010; line-height: 1.65; margin-top: 14px; }
+  .highlight-box strong { color: #4a2000; }
+
+  .wa-card { background: #e9fbe5; border: 1px solid #7dd4a0; border-radius: 14px; padding: 18px 20px; display: flex; gap: 14px; }
+  .wa-icon-wrap { font-size: 28px; flex-shrink: 0; }
+  .wa-content h4 { font-size: 15px; font-weight: 600; margin-bottom: 8px; }
+  .wa-content p { font-size: 14px; line-height: 1.65; color: #333; }
+  .wa-tag { display: inline-block; background: #25d366; color: #fff; font-size: 11px; padding: 3px 10px; border-radius: 100px; margin-top: 10px; font-family: 'JetBrains Mono', monospace; }
+
+  .scaffold-box { background: #fffbf0; border: 1px solid #f5d78e; border-radius: 12px; padding: 14px 18px; margin-top: 12px; }
+  .scaffold-title { font-size: 11px; font-family: 'JetBrains Mono', monospace; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+  .scaffold-list { display: flex; flex-direction: column; gap: 6px; }
+  .scaffold-item { display: flex; gap: 10px; align-items: flex-start; }
+  .scaffold-en { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--ink); flex: 1; }
+  .scaffold-es { font-size: 12px; color: #888; flex: 1; padding-top: 1px; }
+
+  .vtool-label { font-size: 11px; font-family: 'JetBrains Mono', monospace; letter-spacing: 1.5px; text-transform: uppercase; color: var(--virtual); display: block; margin-bottom: 8px; }
+  .virtual-tools { display: flex; gap: 8px; flex-wrap: wrap; }
+  .vtool { background: var(--virtual-light); border: 1px solid #b0c8f0; border-radius: 100px; padding: 5px 14px; font-size: 12px; color: var(--virtual); font-weight: 500; }
+
+  footer { text-align: center; padding: 24px; font-size: 12px; color: #aaa; font-family: 'JetBrains Mono', monospace; letter-spacing: 1px; }
+
+  @media (max-width: 700px) {
+    header { padding: 48px 24px 40px; }
+    main { padding: 32px 20px 60px; }
+    .overview { grid-template-columns: 1fr 1fr; }
+    .tabs { padding: 0 16px; }
+    .session-header { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">ESL · Andragogy · TBL + Dogme ELT · Diagnostic-driven · 📍 In-person · 1-on-1</div>
+  <h1>English for <span>Estefi</span></h1>
+  <p style="color:rgba(255,235,225,0.75); font-size:16px; line-height:1.6; max-width:600px; margin-top:12px;">
+    Six sessions built directly from her diagnostic test. She's not a beginner — vocabulary and reading came back at 100%, and she already produces First Conditional and Present Perfect with "since" unprompted. This plan closes seven specific structural gaps, not "starts from zero."
+  </p>
+  <div class="header-meta">
+    <span class="meta-pill"><strong>6 classes</strong> × 60 min</span>
+    <span class="meta-pill">Methodology <strong>TBL + Dogme</strong></span>
+    <span class="meta-pill">Diagnostic score: <strong>76.7% · A2 alto → B1 inicial</strong></span>
+    <span class="meta-pill"><strong>1-on-1</strong> · false beginner / consolidation</span>
+    <span class="meta-pill" style="border-color:rgba(59,91,219,0.5); color:rgba(200,220,255,0.9);">📍 <strong>In-person</strong> · 💻 laptop for media</span>
+  </div>
+</header>
+
+<div class="tabs-wrapper">
+  <div class="tabs">
+    <button class="tab-btn active" onclick="showTab(0)">Overview</button>
+    <button class="tab-btn" onclick="showTab(1)">Class 1</button>
+    <button class="tab-btn" onclick="showTab(2)">Class 2</button>
+    <button class="tab-btn" onclick="showTab(3)">Class 3</button>
+    <button class="tab-btn" onclick="showTab(4)">Class 4</button>
+    <button class="tab-btn" onclick="showTab(5)">Class 5</button>
+    <button class="tab-btn" onclick="showTab(6)">Class 6</button>
+  </div>
+</div>
+
+<main>
+
+  <!-- OVERVIEW -->
+  <div class="class-panel active" id="panel-0">
+    <div class="overview">
+      <div class="ov-card" onclick="showTab(1)" style="border-top:3px solid var(--coral);">
+        <div class="ov-num" style="color:var(--coral);">01</div>
+        <div class="ov-title">Right Now vs. Every Day</div>
+        <div class="ov-focus">Present Simple vs. Present Continuous</div>
+        <div class="ov-diag">Q10 · "The children ___ in the garden"</div>
+      </div>
+      <div class="ov-card" onclick="showTab(2)" style="border-top:3px solid var(--sage);">
+        <div class="ov-num" style="color:var(--sage);">02</div>
+        <div class="ov-title">Empty Room, Full Story</div>
+        <div class="ov-focus">There is/are · There was/were</div>
+        <div class="ov-diag">Q13 · "There ___ a lot of people"</div>
+      </div>
+      <div class="ov-card" onclick="showTab(3)" style="border-top:3px solid var(--gold);">
+        <div class="ov-num" style="color:var(--gold);">03</div>
+        <div class="ov-title">You Should Try This</div>
+        <div class="ov-focus">Modals + base verb (can / should / must)</div>
+        <div class="ov-diag">Q14 · "I can ___ swim"</div>
+      </div>
+      <div class="ov-card" onclick="showTab(4)" style="border-top:3px solid var(--virtual);">
+        <div class="ov-num" style="color:var(--virtual);">04</div>
+        <div class="ov-title">I've Never Told You This</div>
+        <div class="ov-focus">Present Perfect vs. Past Simple</div>
+        <div class="ov-diag">Q15 · "I ___ this movie three times"</div>
+      </div>
+      <div class="ov-card" onclick="showTab(5)" style="border-top:3px solid var(--rose);">
+        <div class="ov-num" style="color:var(--rose);">05</div>
+        <div class="ov-title">What Were You Doing When…?</div>
+        <div class="ov-focus">Past Simple vs. Past Continuous</div>
+        <div class="ov-diag">Q18 · "My phone ___" (unanswered)</div>
+      </div>
+      <div class="ov-card" onclick="showTab(6)" style="border-top:3px solid var(--green);">
+        <div class="ov-num" style="color:var(--green);">06</div>
+        <div class="ov-title">The Place Where It Happened</div>
+        <div class="ov-focus">Relative clauses · How often vs. How long</div>
+        <div class="ov-diag">Q20 (unanswered) · Q28 · frequency vs duration</div>
+      </div>
+    </div>
+
+    <div class="section-block">
+      <div class="section-label"><div class="section-icon">🎯</div><span class="section-name" style="color:#555;">Why this plan exists</span></div>
+      <div class="section-body">
+        <p><strong>Estefi is not a true beginner.</strong> Her diagnostic scored 23/30 (76.7%) — Vocabulary 100%, Reading 100%, Situational English 80%. She recognized First Conditional, Present Perfect + "since", and the modal "should" without hesitation. A Pre-A1 "Hello, World" plan would have bored her in the first ten minutes and, worse, would have signaled that her English is worth less than it is.</p>
+        <p><strong>Her gaps are structural, not conceptual.</strong> All seven misses map to specific grammar points, not a lack of vocabulary or comprehension. That means the right approach is targeted consolidation through real tasks — not re-teaching English from the ground up.</p>
+        <p><strong>Every class opens with her own diagnostic answer.</strong> Instead of "today we study Present Perfect," the hook always starts from the exact sentence she got wrong (or left blank). This does two things: it respects that she already tried and got close, and it makes the correction land as "oh, THAT's what that means" instead of a lecture.</p>
+        <div class="highlight-box">
+          <strong>Tone reminder:</strong> Never frame this as remedial. She is closing specific gaps on the way to a fluency she mostly already has. Avoid words like "beginner," "basic," or "level" in front of her — the whole point of naming this course after her instead of a CEFR code is that she should feel like this is bespoke, not corrective.
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block">
+      <div class="section-label"><div class="section-icon">📊</div><span class="section-name" style="color:var(--coral);">Diagnostic snapshot</span></div>
+      <div class="section-body">
+        <p>Full results: Vocabulary 6/6 (100%) · Basic Grammar 6/8 (75%) · Intermediate Grammar 3/6 (50%) · Reading 5/5 (100%) · Situational English 4/5 (80%).</p>
+        <p>The weak spot is concentrated almost entirely in <strong>Intermediate Grammar</strong> — which is exactly where this plan spends most of its time (Classes 1, 4, 5, 6). Classes 2 and 3 patch two Basic Grammar misses that are quick to fix but easy to leave unaddressed forever if nobody targets them directly.</p>
+        <p>Skills the diagnostic could not test — listening, speaking fluency, pronunciation, spontaneous production — should be observed informally throughout these six classes and may reshape the plan for whatever comes after Class 6.</p>
+      </div>
+    </div>
+
+    <div class="section-block" style="border-color:#f0c8a8;">
+      <div class="section-label" style="background:var(--coral-light);"><div class="section-icon">🧵</div><span class="section-name" style="color:var(--coral);">Cohesion thread — connectors</span></div>
+      <div class="section-body">
+        <p>Observed in live classes, not in the written diagnostic: Estefi tends to speak in short, disconnected chunks — accurate words strung together without <em>and, but, because, so</em> holding them into a sentence. This is a fluency/cohesion gap, not a grammar one, so it doesn't get its own class. Instead, a small "connector toolkit" is layered into the four classes that already involve extended storytelling (2, 4, 5, 6), growing in sophistication each time.</p>
+        <table style="width:100%; border-collapse:collapse; margin-top:8px; font-size:13.5px;">
+          <tr style="border-bottom:1px solid var(--border);"><td style="padding:6px 8px; font-weight:600;">Class 2</td><td style="padding:6px 8px;">and · but · because · so</td><td style="padding:6px 8px; color:#888;">basic sentence-glue</td></tr>
+          <tr style="border-bottom:1px solid var(--border);"><td style="padding:6px 8px; font-weight:600;">Class 4</td><td style="padding:6px 8px;">first · then · after that · in the end</td><td style="padding:6px 8px; color:#888;">sequencing a story</td></tr>
+          <tr style="border-bottom:1px solid var(--border);"><td style="padding:6px 8px; font-weight:600;">Class 5</td><td style="padding:6px 8px;">as soon as · right when · that's when</td><td style="padding:6px 8px; color:#888;">precise timing</td></tr>
+          <tr><td style="padding:6px 8px; font-weight:600;">Class 6</td><td style="padding:6px 8px;">although · even though · actually · to be honest</td><td style="padding:6px 8px; color:#888;">contrast & nuance</td></tr>
+        </table>
+        <div class="highlight-box" style="margin-top:14px;">
+          <strong>How to push it live:</strong> Don't pre-teach the list like a vocabulary sheet. Let her tell the story choppy first, then ask "can you connect those two sentences?" and offer the one connector that fits. Praise the connected version specifically — the goal is for her to notice for herself that it sounds more fluent, not to memorize a rule.
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block" style="border-color:#c5d0f8;">
+      <div class="section-label" style="background:var(--virtual-light);"><div class="section-icon">🎒</div><span class="section-name" style="color:var(--virtual);">Class setup — in-person, laptop-ready</span></div>
+      <div class="section-body">
+        <p>These sessions are designed to run face-to-face, with the laptop on hand for anything visual — photos, short videos, the diagnostic screenshots, the shared writing doc. Every "show her a photo" or "play a video" instruction in the plan just means: open it on the laptop and turn the screen toward her.</p>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:12px;">
+          <div style="background:var(--virtual-light); border:1px solid #b0c8f0; border-radius:12px; padding:16px;">
+            <div style="font-size:12px; font-weight:700; color:var(--virtual); margin-bottom:10px; text-transform:uppercase; letter-spacing:1px;">Essential</div>
+            <div class="vtool" style="margin-bottom:6px; display:block; width:fit-content;">💻 Laptop — photos, videos, vocab on screen</div>
+            <div class="vtool" style="margin-bottom:6px; display:block; width:fit-content;">📄 Shared doc or notebook for writing tasks</div>
+            <div class="vtool" style="display:block; width:fit-content;">📱 Phone for WhatsApp missions</div>
+          </div>
+          <div style="background:#fffbf0; border:1px solid #f5d78e; border-radius:12px; padding:16px;">
+            <div style="font-size:12px; font-weight:700; color:var(--gold); margin-bottom:10px; text-transform:uppercase; letter-spacing:1px;">Nice to have</div>
+            <div class="vtool" style="background:#faf0dc; border-color:#f0d8a0; color:var(--gold); margin-bottom:6px; display:block; width:fit-content;">🖨 Printed vocab cards as backup</div>
+            <div class="vtool" style="background:#faf0dc; border-color:#f0d8a0; color:var(--gold); display:block; width:fit-content;">⏱ Visible timer</div>
+          </div>
+        </div>
+        <div class="highlight-box" style="margin-top:16px;">
+          <strong>Talk-time rule:</strong> At this level she can carry far more of the conversation than a true beginner. Aim for the teacher speaking under 35% of class time — most of the value is in producing language under light pressure, not in receiving explanations.
+        </div>
+        <div class="highlight-box" style="margin-top:12px; background:#fffbf0; border-color:#f5d78e; color:#5a3f0a;">
+          <strong>🖥 If it's a virtual day:</strong> Nothing in this plan needs to be rebuilt. Every photo, video, and the shared doc already live on the laptop — swap the in-person screen-turn for a Zoom screen-share, and run the role-plays and interviews over camera instead of across the table. The WhatsApp missions don't change at all either way.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CLASS 1 -->
+  <div class="class-panel" id="panel-1">
+    <div class="session-header">
+      <div>
+        <div class="session-number">Session 01 · 60 minutes</div>
+        <div class="session-title">Right Now vs. Every Day</div>
+        <div class="session-subtitle">Present Simple vs. Present Continuous</div>
+      </div>
+      <div class="session-badge">Simple vs. Continuous</div>
+    </div>
+
+    <div class="diag-box">
+      <div class="diag-label">From her diagnostic — Q10</div>
+      <div class="diag-q">"Look! The children ___ in the garden."</div>
+      <div class="diag-answer"><span class="wrong">She chose: plays (B)</span><span class="right">Correct: are playing (C)</span></div>
+    </div>
+
+    <div class="section-block block-hook">
+      <div class="section-label"><div class="section-icon">🔥</div><span class="section-name">The Hook — Warm-up</span><span class="section-timing">8 min</span></div>
+      <div class="section-body">
+        <p><strong>Activity: "Caught on Camera"</strong></p>
+        <div class="steps">
+          <div class="step step-coral">
+            <div class="step-num">1</div>
+            <div class="step-text">Ask her to describe what's happening in the room around her <em>right now</em>: "My dog is sleeping." "The neighbor is drilling something." Push for 3–4 sentences before explaining anything.</div>
+          </div>
+          <div class="step step-coral">
+            <div class="step-num">2</div>
+            <div class="step-text">Show her the Q10 sentence from her diagnostic: "Look! The children ___ in the garden." Ask: "Why 'are playing' and not 'play'? What's the difference?" Let her theorize before confirming — she has the intuition, she just needs the label.</div>
+          </div>
+          <div class="step step-coral">
+            <div class="step-num">3</div>
+            <div class="step-text">Land the rule in one line: <em>"Right now → be + -ing. Always / usually / every day → base verb."</em> No further metalanguage needed.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block block-task">
+      <div class="section-label"><div class="section-icon">⚡</div><span class="section-name">The Task — Main Challenge</span><span class="section-timing">30 min</span></div>
+      <div class="section-body">
+        <p><strong>Challenge: "Narrate My Life"</strong></p>
+        <p>Two rounds that force the two tenses to compete for airtime, so the contrast has to become automatic rather than memorized.</p>
+        <div class="steps">
+          <div class="step step-sage">
+            <div class="step-num">1</div>
+            <div class="step-text"><strong>Round 1 — live narration (12 min):</strong> Open her page (students.html) to the scene deck and hit random together — she narrates what's happening as if commentating live: "A man is crossing the street. Two kids are running." Push for at least 8 sentences, all Present Continuous.</div>
+          </div>
+          <div class="step step-sage">
+            <div class="step-num">2</div>
+            <div class="step-text"><strong>Round 2 — the swap (12 min):</strong> Same photo, new question: "Does this happen every day in this city, or is it unusual?" She now has to switch into Present Simple to generalize: "People usually walk fast here. Kids don't normally run in the street." Flag every accidental switch back to -ing without correcting mid-sentence — collect them for the error round.</div>
+          </div>
+          <div class="step step-sage">
+            <div class="step-num">3</div>
+            <div class="step-text"><strong>Debrief (6 min):</strong> Ask her directly: "When do you reach for -ing without thinking, and when do you reach for the base verb?" Naming her own pattern sticks better than being told the rule twice.</div>
+          </div>
+        </div>
+        <div class="highlight-box">
+          <strong>Stative verb trap to watch for:</strong> Because she's about to get comfortable with -ing, watch for overcorrection into verbs that never take it: "I'm liking this," "I'm knowing him." A quick contrast is enough: <em>"like, know, want, need, love — these verbs don't wear -ing. Ever."</em>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block block-vocab">
+      <div class="section-label"><div class="section-icon">✨</div><span class="section-name">Language Boost</span><span class="section-timing">8 min</span></div>
+      <div class="section-body">
+        <div class="vocab-grid">
+          <div class="vocab-card"><div class="vocab-word">right now / at the moment</div><div class="vocab-def">Signal words for Present Continuous</div></div>
+          <div class="vocab-card"><div class="vocab-word">these days</div><div class="vocab-def">A temporary "every day" — bridges both tenses</div></div>
+          <div class="vocab-card"><div class="vocab-word">usually / normally</div><div class="vocab-def">Signal words for Present Simple</div></div>
+          <div class="vocab-card"><div class="vocab-word">these verbs never take -ing</div><div class="vocab-def">like, love, hate, know, want, need, believe</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block" style="border-color:#e0d0c0;">
+      <div class="section-label" style="background:#fdf6ee;"><div class="section-icon">🎬</div><span class="section-name" style="color:#a86a2a;">Video reference — optional</span></div>
+      <div class="section-body">
+        <p>Not for class time — the 3 videos (2 English, 1 Spanish) live in her page (students.html) so she can watch them on her own before/after the session, or you can pull one up there together as backup if the contrast isn't landing live.</p>
+      </div>
+    </div>
+
+    <div class="section-block block-error">
+      <div class="section-label"><div class="section-icon">🔍</div><span class="section-name">Error Spotting</span><span class="section-timing">8 min</span></div>
+      <div class="section-body">
+        <div class="error-list">
+          <div class="error-item">
+            <div class="error-wrong">Look! The children play in the garden.</div>
+            <div class="error-right">✓ Look! The children are playing in the garden.</div>
+            <div class="error-note">Her Q10 answer. "Look!" is the giveaway word — it always signals something happening at this exact moment.</div>
+          </div>
+          <div class="error-item">
+            <div class="error-wrong">I'm knowing the answer.</div>
+            <div class="error-right">✓ I know the answer.</div>
+            <div class="error-note">Likely overcorrection risk this class — stative verbs stay in Present Simple even when something is happening right now.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block block-wa">
+      <div class="section-label"><div class="section-icon">📱</div><span class="section-name">WhatsApp Challenge</span><span class="section-timing">Homework</span></div>
+      <div class="section-body">
+        <div class="wa-card">
+          <div class="wa-icon-wrap">🎙</div>
+          <div class="wa-content">
+            <h4>Voice note · one "right now," one "every day"</h4>
+            <p>Send a voice note with two parts: (1) what she's doing at the exact moment she's recording, and (2) whether that's something she does every day or not. E.g. "I'm drinking coffee right now. I usually drink tea, actually."</p>
+            <span class="wa-tag">🎙 2 sentences · contrast required</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CLASS 2 -->
+  <div class="class-panel" id="panel-2">
+    <div class="session-header">
+      <div>
+        <div class="session-number">Session 02 · 60 minutes</div>
+        <div class="session-title">Empty Room, Full Story</div>
+        <div class="session-subtitle">There is / There are · There was / There were</div>
+      </div>
+      <div class="session-badge">There is/was</div>
+    </div>
+
+    <div class="diag-box">
+      <div class="diag-label">From her diagnostic — Q13</div>
+      <div class="diag-q">"There ___ a lot of people at the party."</div>
+      <div class="diag-answer"><span class="wrong">She chose: be (D)</span><span class="right">Correct: were (B)</span></div>
+    </div>
+
+    <div class="section-block block-hook">
+      <div class="section-label"><div class="section-icon">🔥</div><span class="section-name">The Hook — Warm-up</span><span class="section-timing">8 min</span></div>
+      <div class="section-body">
+        <p><strong>Activity: "Then and Now"</strong></p>
+        <div class="steps">
+          <div class="step step-coral">
+            <div class="step-num">1</div>
+            <div class="step-text">Open her page to the venue deck and hit random together. Ask: "What's in this picture?" Build 3–4 sentences with "there is / there are."</div>
+          </div>
+          <div class="step step-coral">
+            <div class="step-num">2</div>
+            <div class="step-text">Reveal her Q13 sentence: "There ___ a lot of people at the party." Ask her to fix it herself first, then confirm: past plural needs "were," not "be." "Be" is the infinitive — it never goes alone in a real sentence.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block block-task">
+      <div class="section-label"><div class="section-icon">⚡</div><span class="section-name">The Task — Main Challenge</span><span class="section-timing">30 min</span></div>
+      <div class="section-body">
+        <p><strong>Challenge: "The Best Party You've Been To"</strong></p>
+        <div class="steps">
+          <div class="step step-sage">
+            <div class="step-num">1</div>
+            <div class="step-text"><strong>Present description (8 min):</strong> Describe her current living room or workspace using "there is / there are / there isn't / there aren't." Push past the obvious objects into detail: "There's a plant that's always dying."</div>
+          </div>
+          <div class="step step-sage">
+            <div class="step-num">2</div>
+            <div class="step-text"><strong>Past narrative (16 min):</strong> She describes the best party, concert, or event she's ever been to, using "there was / there were" throughout: "There were a lot of people. There was really good music. There wasn't enough food." Let her run long here — this is real storytelling, not a drill. The first pass will likely come out as disconnected fragments — that's expected, and it's exactly what step 3 is for.</div>
+          </div>
+          <div class="step step-sage">
+            <div class="step-num">3</div>
+            <div class="step-text"><strong>Connect it (6 min):</strong> Play back two of her fragment sentences and ask: "Can you connect those with 'and,' 'but,' 'because,' or 'so'?" — e.g. "There were a lot of people, <em>but</em> the music was too loud, <em>so</em> we left early." Don't pre-teach the four words as a list; pull them out one at a time, only when a real sentence needs one.</div>
+          </div>
+        </div>
+        <div class="scaffold-box">
+          <div class="scaffold-title">Connector toolkit — Class 2</div>
+          <div class="scaffold-list">
+            <div class="scaffold-item"><div class="scaffold-en">and</div><div class="scaffold-es">adds a second idea</div></div>
+            <div class="scaffold-item"><div class="scaffold-en">but</div><div class="scaffold-es">contrast</div></div>
+            <div class="scaffold-item"><div class="scaffold-en">because</div><div class="scaffold-es">reason</div></div>
+            <div class="scaffold-item"><div class="scaffold-en">so</div><div class="scaffold-es">result</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block block-vocab">
+      <div class="section-label"><div class="section-icon">✨</div><span class="section-name">Language Boost</span><span class="section-timing">8 min</span></div>
+      <div class="section-body">
+        <div class="vocab-grid">
+          <div class="vocab-card"><div class="vocab-word">there is / there's</div><div class="vocab-def">singular, present</div></div>
+          <div class="vocab-card"><div class="vocab-word">there are</div><div class="vocab-def">plural, present</div></div>
+          <div class="vocab-card"><div class="vocab-word">there was</div><div class="vocab-def">singular, past</div></div>
+          <div class="vocab-card"><div class="vocab-word">there were</div><div class="vocab-def">plural, past</div></div>
+          <div class="vocab-card"><div class="vocab-word">a lot of / several / too many</div><div class="vocab-def">Quantity words that pair with "there"</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block block-error">
+      <div class="section-label"><div class="section-icon">🔍</div><span class="section-name">Error Spotting</span><span class="section-timing">6 min</span></div>
+      <div class="section-body">
+        <div class="error-list">
+          <div class="error-item">
+            <div class="error-wrong">There be a lot of people at the party.</div>
+            <div class="error-right">✓ There were a lot of people at the party.</div>
+            <div class="error-note">Her Q13 answer. "Be" never conjugates on its own — it needs to become am/is/are/was/were depending on tense and number.</div>
+          </div>
+          <div class="error-item">
+            <div class="error-wrong">There is many people.</div>
+            <div class="error-right">✓ There are many people.</div>
+            <div class="error-note">Common secondary trap: "there is" agrees with the noun that follows, not with "there."</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block block-wa">
+      <div class="section-label"><div class="section-icon">📱</div><span class="section-name">WhatsApp Challenge</span><span class="section-timing">Homework</span></div>
+      <div class="section-body">
+        <div class="wa-card">
+          <div class="wa-icon-wrap">🖼</div>
+          <div class="wa-content">
+            <h4>Photo + voice note</h4>
+            <p>Send a photo of any room and describe it with "there is/are." Then add one sentence about how it looked in the past, with "there was/were," joined with <strong>and/but/because/so</strong> — e.g. "There's a big TV now, but there wasn't one here two years ago."</p>
+            <span class="wa-tag">🖼 Photo · 🎙 present + past + connector</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CLASS 3 -->
+  <div class="class-panel" id="panel-3">
+    <div class="session-header">
+      <div>
+        <div class="session-number">Session 03 · 60 minutes</div>
+        <div class="session-title">You Should Try This</div>
+        <div class="session-subtitle">Modal verbs + base verb (can / should / must / have to)</div>
+      </div>
+      <div class="session-badge">Modals</div>
+    </div>
+
+    <div class="diag-box">
+      <div class="diag-label">From her diagnostic — Q14</div>
+      <div class="diag-q">Choose the correct sentence.</div>
+      <div class="diag-answer"><span class="wrong">She chose: I can to swim. (A)</span><span class="right">Correct: I can swim. (C)</span></div>
+    </div>
+
+    <div class="section-block block-hook">
+      <div class="section-label"><div class="section-icon">🔥</div><span class="section-name">The Hook — Warm-up</span><span class="section-timing">8 min</span></div>
+      <div class="section-body">
+        <p><strong>Activity: "Modal or Not?"</strong></p>
+        <div class="steps">
+          <div class="step step-coral">
+            <div class="step-num">1</div>
+            <div class="step-text">Rapid-fire: say pairs of sentences aloud ("I can to dance" / "I can dance") and ask her to point at the correct one, no thinking time. This surfaces the intuition before naming the rule.</div>
+          </div>
+          <div class="step step-coral">
+            <div class="step-num">2</div>
+            <div class="step-text">Show her Q14. State the rule once, cleanly: <em>"Modal + base verb. No 'to.' No exceptions — can, should, must, will, would."</em></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block block-task">
+      <div class="section-label"><div class="section-icon">⚡</div><span class="section-name">The Task — Main Challenge</span><span class="section-timing">30 min</span></div>
+      <div class="section-body">
+        <p><strong>Challenge: "Dear Estefi" — the advice column</strong></p>
+        <div class="steps">
+          <div class="step step-sage">
+            <div class="step-num">1</div>
+            <div class="step-text"><strong>Set-up (4 min):</strong> Explain she's now an advice columnist. You'll pull real-sounding problems from the deck in her page and she answers each one on the spot, out loud.</div>
+          </div>
+          <div class="step step-sage">
+            <div class="step-num">2</div>
+            <div class="step-text"><strong>Give advice, 4 rounds (18 min):</strong> Draw 4 problems from her page's deck (random or picked). For each one she must use at least one modal: "You should talk to your boss." "You must get more sleep." "You don't have to say yes every time." Push for variety across should / must / have to / don't have to across the four rounds.</div>
+          </div>
+          <div class="step step-sage">
+            <div class="step-num">3</div>
+            <div class="step-text"><strong>Her turn to ask (8 min):</strong> She brings a real (or invented) problem of her own and you answer using modals, modeling natural register: "Honestly? You should just tell her directly."</div>
+          </div>
+        </div>
+        <div class="scaffold-box">
+          <div class="scaffold-title">Meaning map — keep on screen</div>
+          <div class="scaffold-list">
+            <div class="scaffold-item"><div class="scaffold-en">should / shouldn't</div><div class="scaffold-es">advice — a good idea, not an obligation</div></div>
+            <div class="scaffold-item"><div class="scaffold-en">must / have to</div><div class="scaffold-es">obligation — no real choice</div></div>
+            <div class="scaffold-item"><div class="scaffold-en">don't have to</div><div class="scaffold-es">no obligation — but you still can</div></div>
+            <div class="scaffold-item"><div class="scaffold-en">can / can't</div><div class="scaffold-es">ability or permission</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block block-vocab">
+      <div class="section-label"><div class="section-icon">✨</div><span class="section-name">Language Boost</span><span class="section-timing">6 min</span></div>
+      <div class="section-body">
+        <div class="vocab-grid">
+          <div class="vocab-card"><div class="vocab-word">you should</div><div class="vocab-def">friendly advice</div></div>
+          <div class="vocab-card"><div class="vocab-word">you must / have to</div><div class="vocab-def">strong obligation</div></div>
+          <div class="vocab-card"><div class="vocab-word">you don't have to</div><div class="vocab-def">it's optional</div></div>
+          <div class="vocab-card"><div class="vocab-word">maybe you could…</div><div class="vocab-def">a softer suggestion than "should"</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block block-error">
+      <div class="section-label"><div class="section-icon">🔍</div><span class="section-name">Error Spotting</span><span class="section-timing">6 min</span></div>
+      <div class="section-body">
+        <div class="error-list">
+          <div class="error-item">
+            <div class="error-wrong">I can to swim.</div>
+            <div class="error-right">✓ I can swim.</div>
+            <div class="error-note">Her Q14 answer. This is the single most common modal error for Spanish speakers, because "poder" is followed by an infinitive in Spanish.</div>
+          </div>
+          <div class="error-item">
+            <div class="error-wrong">You should to talk to her.</div>
+            <div class="error-right">✓ You should talk to her.</div>
+            <div class="error-note">Same trap, different modal. Watch for it resurfacing with "should," "must," and "could" today.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block block-wa">
+      <div class="section-label"><div class="section-icon">📱</div><span class="section-name">WhatsApp Challenge</span><span class="section-timing">Homework</span></div>
+      <div class="section-body">
+        <div class="wa-card">
+          <div class="wa-icon-wrap">🎙</div>
+          <div class="wa-content">
+            <h4>Voice note · give real advice</h4>
+            <p>Think of someone she knows with an actual problem right now, and record herself giving advice using at least 2 different modals — no "to" after any of them.</p>
+            <span class="wa-tag">🎙 2+ modals · no "to"</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CLASS 4 -->
+  <div class="class-panel" id="panel-4">
+    <div class="session-header">
+      <div>
+        <div class="session-number">Session 04 · 60 minutes</div>
+        <div class="session-title">I've Never Told You This</div>
+        <div class="session-subtitle">Present Perfect (experience) vs. Past Simple (specific story)</div>
+      </div>
+      <div class="session-badge">Present Perfect</div>
+    </div>
+
+    <div class="diag-box">
+      <div class="diag-label">From her diagnostic — Q15</div>
+      <div class="diag-q">"I ___ this movie three times."</div>
+      <div class="diag-answer"><span class="wrong">She chose: am seeing (D)</span><span class="right">Correct: have seen (B)</span></div>
+    </div>
+
+    <div class="section-block block-hook">
+      <div class="section-label"><div class="section-icon">🔥</div><span class="section-name">The Hook — Warm-up</span><span class="section-timing">8 min</span></div>
+      <div class="section-body">
+        <p><strong>Activity: "Two Truths and a Lie — Perfect edition"</strong></p>
+        <div class="steps">
+          <div class="step step-coral">
+            <div class="step-num">1</div>
+            <div class="step-text">She gives you 3 statements about her life experiences, all starting with "I've": "I've been to three countries." "I've never eaten sushi." "I've met a famous person." You guess the lie.</div>
+          </div>
+          <div class="step step-coral">
+            <div class="step-num">2</div>
+            <div class="step-text">Show her Q15. Point out: she already nailed "since 2020" in Q16 — Present Perfect isn't new to her, it's specifically the "unspecified repeated experience" use ("three times," no date attached) that trips her up. Contrast: <em>"I have seen it three times (we don't know exactly when) vs. I saw it last Friday (exact time, so Past Simple)."</em></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block block-task">
+      <div class="section-label"><div class="section-icon">⚡</div><span class="section-name">The Task — Main Challenge</span><span class="section-timing">30 min</span></div>
+      <div class="section-body">
+        <p><strong>Challenge: "Have You Ever…?" — then tell me about it</strong></p>
+        <div class="steps">
+          <div class="step step-sage">
+            <div class="step-num">1</div>
+            <div class="step-text"><strong>Round 1 — the interview (12 min):</strong> Draw from her page's deck for a rapid series of "Have you ever…?" questions. She answers with "Yes, I have" / "No, I haven't / I never have."</div>
+          </div>
+          <div class="step step-sage">
+            <div class="step-num">2</div>
+            <div class="step-text"><strong>Round 2 — zoom in (14 min):</strong> For every "yes," immediately follow up with a Past Simple question that forces the switch: "When did that happen? What happened?" She now has to tell the specific story in Past Simple. This pairing — Present Perfect to open, Past Simple to narrate — is the exact pattern native speakers use and it's the one her diagnostic showed she doesn't yet control. Push her to sequence the events rather than list them: "What happened first? And then?"</div>
+          </div>
+          <div class="step step-sage">
+            <div class="step-num">3</div>
+            <div class="step-text"><strong>Swap (4 min):</strong> She asks you 2 "Have you ever…?" questions, you answer and let her follow up with the "when/what happened" question herself.</div>
+          </div>
+        </div>
+        <div class="scaffold-box">
+          <div class="scaffold-title">Connector toolkit — Class 4</div>
+          <div class="scaffold-list">
+            <div class="scaffold-item"><div class="scaffold-en">first</div><div class="scaffold-es">opens the sequence</div></div>
+            <div class="scaffold-item"><div class="scaffold-en">then</div><div class="scaffold-es">next event</div></div>
+            <div class="scaffold-item"><div class="scaffold-en">after that</div><div class="scaffold-es">next event, more formal</div></div>
+            <div class="scaffold-item"><div class="scaffold-en">in the end</div><div class="scaffold-es">closes the story</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block block-vocab">
+      <div class="section-label"><div class="section-icon">✨</div><span class="section-name">Language Boost</span><span class="section-timing">6 min</span></div>
+      <div class="section-body">
+        <div class="vocab-grid">
+          <div class="vocab-card"><div class="vocab-word">have you ever…?</div><div class="vocab-def">opens the topic — no specific time</div></div>
+          <div class="vocab-card"><div class="vocab-word">I've never…</div><div class="vocab-def">experience that never happened</div></div>
+          <div class="vocab-card"><div class="vocab-word">three times / a few times</div><div class="vocab-def">repeated experience, no date → Present Perfect</div></div>
+          <div class="vocab-card"><div class="vocab-word">when did that happen?</div><div class="vocab-def">forces the switch into Past Simple</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block block-error">
+      <div class="section-label"><div class="section-icon">🔍</div><span class="section-name">Error Spotting</span><span class="section-timing">6 min</span></div>
+      <div class="section-body">
+        <div class="error-list">
+          <div class="error-item">
+            <div class="error-wrong">I am seeing this movie three times.</div>
+            <div class="error-right">✓ I have seen this movie three times.</div>
+            <div class="error-note">Her Q15 answer. "Three times" with no date is a Present Perfect signal, not Present Continuous — nothing is happening right now.</div>
+          </div>
+          <div class="error-item">
+            <div class="error-wrong">I have seen it last Friday.</div>
+            <div class="error-right">✓ I saw it last Friday.</div>
+            <div class="error-note">The reverse trap — a specific past time word ("last Friday," "in 2019," "yesterday") always forces Past Simple, never Present Perfect.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block block-wa">
+      <div class="section-label"><div class="section-icon">📱</div><span class="section-name">WhatsApp Challenge</span><span class="section-timing">Homework</span></div>
+      <div class="section-body">
+        <div class="wa-card">
+          <div class="wa-icon-wrap">🎙</div>
+          <div class="wa-content">
+            <h4>Voice note · experience + story</h4>
+            <p>One "I've never…" sentence, then pick a true "I have + past participle" experience and tell the specific story behind it in Past Simple — 4–5 sentences, sequenced with <strong>first / then / after that / in the end</strong>.</p>
+            <span class="wa-tag">🎙 Present Perfect → Past Simple · sequenced</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CLASS 5 -->
+  <div class="class-panel" id="panel-5">
+    <div class="session-header">
+      <div>
+        <div class="session-number">Session 05 · 60 minutes</div>
+        <div class="session-title">What Were You Doing When…?</div>
+        <div class="session-subtitle">Past Simple vs. Past Continuous — interrupted actions</div>
+      </div>
+      <div class="session-badge">Past Continuous</div>
+    </div>
+
+    <div class="diag-box">
+      <div class="diag-label">From her diagnostic — Q18</div>
+      <div class="diag-q">"I was watching TV when my phone ___."</div>
+      <div class="diag-answer"><span class="wrong">She left this unanswered</span><span class="right">Correct: rang (B)</span></div>
+    </div>
+
+    <div class="section-block block-hook">
+      <div class="section-label"><div class="section-icon">🔥</div><span class="section-name">The Hook — Warm-up</span><span class="section-timing">8 min</span></div>
+      <div class="section-body">
+        <p><strong>Activity: "Where Were You When…?"</strong></p>
+        <div class="steps">
+          <div class="step step-coral">
+            <div class="step-num">1</div>
+            <div class="step-text">Ask her a classic "where were you when X happened" question about something memorable (a big news event, hearing important personal news). Model the answer shape first: "I was having lunch when I heard about it."</div>
+          </div>
+          <div class="step step-coral">
+            <div class="step-num">2</div>
+            <div class="step-text">Show her Q18. Since she left it blank rather than guessing wrong, treat this gently as "let's build the pattern from scratch, no correction needed" — she avoided the mistake, she just needs the tool. Give the shape once: <em>"long background action (was/were + -ing) + short action that interrupts it (Past Simple)."</em></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block block-task">
+      <div class="section-label"><div class="section-icon">⚡</div><span class="section-name">The Task — Main Challenge</span><span class="section-timing">30 min</span></div>
+      <div class="section-body">
+        <p><strong>Challenge: "Interrupted" — shared doc narrative</strong></p>
+        <p>Uses the shared <em>class5-template.html</em> writing template.</p>
+        <div class="steps">
+          <div class="step step-sage">
+            <div class="step-num">1</div>
+            <div class="step-text"><strong>Brainstorm (5 min):</strong> Together, list 4–5 real interrupted moments from her life. If she blanks, hit random on the idea jogger in her page for a nudge — swap in her own real version of whatever it jogs loose.</div>
+          </div>
+          <div class="step step-sage">
+            <div class="step-num">2</div>
+            <div class="step-text"><strong>Write (15 min):</strong> In the shared doc, she writes 4 short "interrupted moment" stories using "I was ___-ing when ___." Real events land better than invented ones — encourage specificity (what exactly interrupted it, how she reacted).</div>
+          </div>
+          <div class="step step-sage">
+            <div class="step-num">3</div>
+            <div class="step-text"><strong>Read aloud + oral retelling (10 min):</strong> She reads two stories aloud, then retells a third one from memory with the doc closed — this is where the structure moves from "written and checked" to "spoken and automatic." Once "while/when" feel solid, offer the sharper variants from the connector toolkit for the retelling — "that's when" and "as soon as" make the story sound noticeably less choppy.</div>
+          </div>
+        </div>
+        <div class="scaffold-box">
+          <div class="scaffold-title">Connector toolkit — Class 5</div>
+          <div class="scaffold-list">
+            <div class="scaffold-item"><div class="scaffold-en">as soon as</div><div class="scaffold-es">immediately after — sharper than "when"</div></div>
+            <div class="scaffold-item"><div class="scaffold-en">right when</div><div class="scaffold-es">emphasizes the exact moment</div></div>
+            <div class="scaffold-item"><div class="scaffold-en">that's when…</div><div class="scaffold-es">natural way to land the punchline of a story</div></div>
+          </div>
+        </div>
+        <div class="highlight-box">
+          <strong>Watch for:</strong> "When my phone was ringing, I answered it" (backwards) instead of "While my phone was ringing" / "My phone rang while I was cooking." Gently flip word order rather than re-explaining the whole rule each time.
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block block-vocab">
+      <div class="section-label"><div class="section-icon">✨</div><span class="section-name">Language Boost</span><span class="section-timing">6 min</span></div>
+      <div class="section-body">
+        <div class="vocab-grid">
+          <div class="vocab-card"><div class="vocab-word">while</div><div class="vocab-def">pairs with the -ing action</div></div>
+          <div class="vocab-card"><div class="vocab-word">when</div><div class="vocab-def">pairs with the interrupting action</div></div>
+          <div class="vocab-card"><div class="vocab-word">suddenly</div><div class="vocab-def">signals the interruption is coming</div></div>
+          <div class="vocab-card"><div class="vocab-word">right in the middle of…</div><div class="vocab-def">natural way to set the scene</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block block-error">
+      <div class="section-label"><div class="section-icon">🔍</div><span class="section-name">Error Spotting</span><span class="section-timing">6 min</span></div>
+      <div class="section-body">
+        <div class="error-list">
+          <div class="error-item">
+            <div class="error-wrong">I was watching TV when my phone rings.</div>
+            <div class="error-right">✓ I was watching TV when my phone rang.</div>
+            <div class="error-note">Her Q18 gap. The interrupting action is always Past Simple — it's a single completed moment, not a habit.</div>
+          </div>
+          <div class="error-item">
+            <div class="error-wrong">When my phone was ringing, I was answering it.</div>
+            <div class="error-right">✓ When my phone rang, I answered it.</div>
+            <div class="error-note">Two short, completed actions in sequence use Past Simple for both — Past Continuous is only for the longer background action.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block block-wa">
+      <div class="section-label"><div class="section-icon">📱</div><span class="section-name">WhatsApp Challenge</span><span class="section-timing">Homework</span></div>
+      <div class="section-body">
+        <div class="wa-card">
+          <div class="wa-icon-wrap">🎙</div>
+          <div class="wa-content">
+            <h4>Voice note · one interrupted story</h4>
+            <p>Tell one more real "I was ___-ing when ___" story — something that happened this week, no notes. Try landing it with "that's when…" or "as soon as…" instead of only "when."</p>
+            <span class="wa-tag">🎙 real story · this week · sharper connector</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CLASS 6 -->
+  <div class="class-panel" id="panel-6">
+    <div class="session-header">
+      <div>
+        <div class="session-number">Session 06 · 60 minutes</div>
+        <div class="session-title">The Place Where It Happened</div>
+        <div class="session-subtitle">Relative clauses (where / who / which) · How often vs. How long</div>
+      </div>
+      <div class="session-badge">Wrap-up</div>
+    </div>
+
+    <div class="diag-box">
+      <div class="diag-label">From her diagnostic — Q20 and Q28</div>
+      <div class="diag-q">Q20: "This is the restaurant ___ we had dinner last week." (unanswered, correct: where)</div>
+      <div class="diag-q" style="margin-top:8px;">Q28: "How often do you exercise?" </div>
+      <div class="diag-answer"><span class="wrong">She chose: For two hours (A)</span><span class="right">Correct: Three times a week (C)</span></div>
+    </div>
+
+    <div class="section-block block-hook">
+      <div class="section-label"><div class="section-icon">🔥</div><span class="section-name">The Hook — Warm-up</span><span class="section-timing">8 min</span></div>
+      <div class="section-body">
+        <p><strong>Activity: "Frequency or Duration?"</strong></p>
+        <div class="steps">
+          <div class="step step-coral">
+            <div class="step-num">1</div>
+            <div class="step-text">Fire quick questions at her: "How often do you check your phone?" vs. "How long have you had that phone?" Have her notice out loud that one asks "how many times" and the other asks "for what span of time."</div>
+          </div>
+          <div class="step step-coral">
+            <div class="step-num">2</div>
+            <div class="step-text">Show her Q28 and Q20 together. For Q20, point out this is the same relative pronoun family as "who" (people) and "which" (things) — "where" is just the version for places, and it replaces having to say "in that restaurant" a second time.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block block-task">
+      <div class="section-label"><div class="section-icon">⚡</div><span class="section-name">The Task — Main Challenge</span><span class="section-timing">28 min</span></div>
+      <div class="section-body">
+        <p><strong>Challenge: "The Place Where…" + rapid-fire interview</strong></p>
+        <div class="steps">
+          <div class="step step-sage">
+            <div class="step-num">1</div>
+            <div class="step-text"><strong>Relative clause storytelling (14 min):</strong> She describes 3 meaningful places using "This is the place where…": where she grew up, where she met someone important, where something memorable happened. Push her to also try one "who" (a person who…) and one "which" (a thing which…) for full coverage.</div>
+          </div>
+          <div class="step step-sage">
+            <div class="step-num">2</div>
+            <div class="step-text"><strong>Frequency vs. duration interview (14 min):</strong> Rapid back-and-forth interview drawing from her page's deck — mixed "How often…?" and "How long…?" questions, each tagged 🔁/⏳. She must answer each with the matching answer type (a count vs. a span). Push at least one answer into a contrast: "I call her every day, <em>although</em> we don't always have much to say."</div>
+          </div>
+        </div>
+        <div class="scaffold-box">
+          <div class="scaffold-title">Connector toolkit — Class 6 (final set)</div>
+          <div class="scaffold-list">
+            <div class="scaffold-item"><div class="scaffold-en">although / even though</div><div class="scaffold-es">contrast within one sentence</div></div>
+            <div class="scaffold-item"><div class="scaffold-en">actually</div><div class="scaffold-es">correcting or adding a surprising detail</div></div>
+            <div class="scaffold-item"><div class="scaffold-en">to be honest</div><div class="scaffold-es">softens an opinion, very natural in speech</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block block-vocab">
+      <div class="section-label"><div class="section-icon">✨</div><span class="section-name">Language Boost</span><span class="section-timing">6 min</span></div>
+      <div class="section-body">
+        <div class="vocab-grid">
+          <div class="vocab-card"><div class="vocab-word">the place where…</div><div class="vocab-def">relative clause for places</div></div>
+          <div class="vocab-card"><div class="vocab-word">the person who…</div><div class="vocab-def">relative clause for people</div></div>
+          <div class="vocab-card"><div class="vocab-word">how often → a count</div><div class="vocab-def">once a week, twice a month, every day</div></div>
+          <div class="vocab-card"><div class="vocab-word">how long → a span</div><div class="vocab-def">for two years, since 2020, all my life</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block block-error">
+      <div class="section-label"><div class="section-icon">🔍</div><span class="section-name">Error Spotting</span><span class="section-timing">6 min</span></div>
+      <div class="section-body">
+        <div class="error-list">
+          <div class="error-item">
+            <div class="error-wrong">This is the restaurant which we had dinner.</div>
+            <div class="error-right">✓ This is the restaurant where we had dinner.</div>
+            <div class="error-note">Her Q20 gap. "Which" is for things you can hold or point to — a location that a preposition ("in," "at") would normally attach to needs "where" instead.</div>
+          </div>
+          <div class="error-item">
+            <div class="error-wrong">"How often do you exercise?" — "For two hours."</div>
+            <div class="error-right">✓ "How often do you exercise?" — "Three times a week."</div>
+            <div class="error-note">Her Q28 answer. "For two hours" answers "how long does each session last," not "how often." Same question word family as Class 4's Present Perfect "for," easy to mix up.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block block-wa">
+      <div class="section-label"><div class="section-icon">📱</div><span class="section-name">WhatsApp Challenge — The Capstone</span><span class="section-timing">Homework</span></div>
+      <div class="section-body">
+        <div class="wa-card">
+          <div class="wa-icon-wrap">🎤</div>
+          <div class="wa-content">
+            <h4>The full monologue · 60–90 seconds, no notes</h4>
+            <p>One voice note that touches all six classes: something happening right now, a place with "there is/are," a piece of advice with a modal, an experience with Present Perfect, a short interrupted story, and one sentence with "the place where…" or a "how often / how long" answer. This time, require at least <strong>4 different connectors</strong> from across the course (and/but/because/so, first/then/after that, as soon as/that's when, although/actually) — the monologue should flow as one connected piece, not a list of correct but separate sentences.</p>
+            <span class="wa-tag">🎤 all 6 structures · 4+ connectors · one recording</span>
+          </div>
+        </div>
+        <div class="highlight-box" style="margin-top:14px;">
+          <strong>End of cycle:</strong> After these six sessions, every one of her 7 diagnosed gaps has been targeted through a real task, not a worksheet — plus the connector thread that turns accurate sentences into fluent speech. The natural next step is a short informal check on listening and spontaneous speaking — the two skills the written diagnostic couldn't measure — before deciding whether the next block moves toward full B1 or focuses on fluency and pronunciation.
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>ESL · Andragogy · Dogme ELT + TBL · English for Estefi · 6 × 60 min · 1-on-1 · In-person · Laura Saldarriaga</footer>
+
+<script>
+  function showTab(n) {
+    document.querySelectorAll('.class-panel').forEach((p, i) => p.classList.toggle('active', i === n));
+    document.querySelectorAll('.tab-btn').forEach((b, i) => b.classList.toggle('active', i === n));
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>

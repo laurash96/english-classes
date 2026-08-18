@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>English for Estefi</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f7f3ee;
+    --ink: #1b2a2f;
+    --coral: #c1502f;
+    --coral-light: #fbe4d8;
+    --coral-mid: #f0b590;
+    --sage: #4f7d5e;
+    --sage-light: #e3f0e5;
+    --gold: #b8873a;
+    --gold-light: #faf0dc;
+    --green: #2f7d4f;
+    --green-light: #e3f6e9;
+    --blue: #2856b6;
+    --blue-light: #e6eeff;
+    --card: #ffffff;
+    --border: #e8ddd0;
+    --wa-green: #25d366;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Outfit', sans-serif; background: var(--bg); color: var(--ink); }
+
+  header { background: linear-gradient(135deg, #101b1e, #1b2a2f, #2f4a45); padding: 48px 32px 40px; position: relative; overflow: hidden; }
+  .hd { position: absolute; top: -50px; right: -50px; width: 220px; height: 220px; border-radius: 50%; background: rgba(255,255,255,0.05); }
+  .hd2 { position: absolute; bottom: -60px; left: 10%; width: 160px; height: 160px; border-radius: 50%; background: rgba(255,255,255,0.04); }
+  .header-inner { max-width: 680px; margin: 0 auto; position: relative; z-index: 1; }
+  .header-tag { display: inline-block; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25); border-radius: 100px; padding: 5px 14px; font-size: 11px; font-family: 'JetBrains Mono', monospace; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.85); margin-bottom: 20px; }
+  header h1 { font-family: 'Playfair Display', serif; font-size: clamp(30px, 7vw, 50px); font-weight: 800; color: #fff; line-height: 1.1; margin-bottom: 16px; }
+  header h1 em { font-style: normal; color: #f0a582; }
+  .header-sub { font-size: 15px; color: rgba(255,255,255,0.78); line-height: 1.6; max-width: 480px; margin-bottom: 20px; }
+  .teacher-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15); border-radius: 100px; padding: 7px 18px; margin-bottom: 24px; }
+  .teacher-badge span { font-size: 13px; color: rgba(255,255,255,0.8); }
+  .teacher-badge strong { color: #f0a582; }
+  .header-pills { display: flex; gap: 10px; flex-wrap: wrap; }
+  .hpill { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); border-radius: 100px; padding: 6px 16px; font-size: 13px; color: #fff; font-weight: 500; }
+
+  .progress-bar { background: var(--ink); padding: 0 24px; position: sticky; top: 0; z-index: 100; overflow-x: auto; }
+  .progress-inner { display: flex; align-items: center; gap: 0; width: fit-content; margin: 0 auto; }
+  .prog-btn { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 14px 14px; background: none; border: none; cursor: pointer; flex-shrink: 0; }
+  .prog-dot { width: 26px; height: 26px; border-radius: 50%; background: rgba(255,255,255,0.1); border: 2px solid rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.35); font-family: 'JetBrains Mono', monospace; transition: all 0.2s; }
+  .prog-label { font-size: 9.5px; letter-spacing: 1px; text-transform: uppercase; color: rgba(255,255,255,0.3); font-family: 'JetBrains Mono', monospace; transition: color 0.2s; white-space: nowrap; }
+  .prog-btn.active .prog-dot { background: #f0a582; border-color: #f0a582; color: var(--ink); }
+  .prog-btn.active .prog-label { color: #f0a582; }
+  .prog-connector { width: 18px; height: 2px; background: rgba(255,255,255,0.08); flex-shrink: 0; }
+
+  main { max-width: 680px; margin: 0 auto; padding: 40px 24px 80px; }
+  .class-panel { display: none; animation: fadeUp 0.3s ease both; }
+  .class-panel.active { display: block; }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+
+  .s-title { font-family: 'Playfair Display', serif; font-size: clamp(22px, 5vw, 32px); font-weight: 800; line-height: 1.1; margin-bottom: 6px; }
+  .s-sub { font-size: 14px; color: #888; margin-bottom: 24px; }
+
+  .diag-strip { background: var(--coral-light); border: 1px solid var(--coral-mid); border-left: 4px solid var(--coral); border-radius: 0 14px 14px 0; padding: 14px 18px; margin-bottom: 24px; }
+  .diag-strip-label { font-size: 10px; font-family: 'JetBrains Mono', monospace; letter-spacing: 1.5px; text-transform: uppercase; color: var(--coral); margin-bottom: 6px; font-weight: 700; }
+  .diag-strip p { font-size: 13.5px; color: #6a3010; line-height: 1.6; }
+
+  .card { background: var(--card); border-radius: 20px; border: 1px solid var(--border); margin-bottom: 20px; overflow: hidden; }
+  .card-header { padding: 16px 20px 14px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
+  .card-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+  .card-label { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; font-weight: 500; }
+  .card-time { margin-left: auto; font-size: 11px; color: #aaa; background: #f5f2ee; padding: 3px 10px; border-radius: 100px; font-family: 'JetBrains Mono', monospace; }
+  .card-body { padding: 20px; }
+  .card-body p { font-size: 14.5px; line-height: 1.7; color: #3a3a3a; margin-bottom: 10px; }
+
+  .card-mission .card-header { background: var(--sage-light); }
+  .card-mission .card-icon { background: #c5e0cc; }
+  .card-mission .card-label { color: var(--sage); }
+  .card-vocab .card-header { background: var(--blue-light); }
+  .card-vocab .card-icon { background: #c0d4f8; }
+  .card-vocab .card-label { color: var(--blue); }
+  .card-phrases .card-header { background: var(--gold-light); }
+  .card-phrases .card-icon { background: #f0d8a0; }
+  .card-phrases .card-label { color: var(--gold); }
+
+  /* FLIP CARDS */
+  .vocab-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .flip-card { height: 90px; perspective: 800px; cursor: pointer; }
+  .flip-inner { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform 0.45s cubic-bezier(0.4,0,0.2,1); }
+  .flip-card.flipped .flip-inner { transform: rotateY(180deg); }
+  .flip-front, .flip-back { position: absolute; inset: 0; border-radius: 12px; padding: 12px 14px; backface-visibility: hidden; display: flex; flex-direction: column; justify-content: center; }
+  .flip-front { background: var(--blue-light); border: 1px solid #b0c8f0; }
+  .flip-back { background: var(--blue); border: 1px solid var(--blue); transform: rotateY(180deg); }
+  .flip-word { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 500; color: var(--blue); margin-bottom: 3px; }
+  .flip-hint { font-size: 10px; color: #8899cc; font-family: 'JetBrains Mono', monospace; }
+  .flip-def { font-size: 12px; color: #fff; line-height: 1.5; }
+  .flip-example { font-size: 11px; color: rgba(255,255,255,0.65); margin-top: 4px; font-style: italic; }
+
+  /* SENTENCE FRAMES */
+  .frames-list { display: flex; flex-direction: column; gap: 8px; }
+  .frame-item { padding: 10px 12px; background: var(--gold-light); border-radius: 10px; border-left: 3px solid var(--gold); }
+  .frame-en { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #5a3f0a; font-weight: 500; }
+
+  /* CHECKLIST */
+  .checklist { display: flex; flex-direction: column; gap: 8px; }
+  .check-item { display: flex; align-items: flex-start; gap: 12px; padding: 10px 12px; background: var(--coral-light); border-radius: 10px; cursor: pointer; user-select: none; transition: background 0.15s; }
+  .check-item.done { background: var(--green-light); }
+  .check-box { width: 20px; height: 20px; border-radius: 6px; border: 2px solid var(--coral-mid); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 12px; background: #fff; transition: all 0.15s; margin-top: 1px; }
+  .check-item.done .check-box { background: var(--green); border-color: var(--green); color: #fff; }
+  .check-text { font-size: 14px; color: #4a2a10; line-height: 1.4; flex: 1; }
+  .check-item.done .check-text { color: var(--green); text-decoration: line-through; text-decoration-color: rgba(47,125,79,0.4); }
+
+  /* MISSION STEPS */
+  .mission-steps { display: flex; flex-direction: column; gap: 10px; }
+  .m-step { display: flex; gap: 12px; align-items: flex-start; }
+  .m-num { width: 24px; height: 24px; border-radius: 50%; background: var(--sage); color: #fff; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+  .m-text { font-size: 14px; line-height: 1.6; color: #3a3a3a; flex: 1; }
+
+  .example-chip { display: block; background: var(--sage-light); border: 1px solid #c5e0cc; border-left: 3px solid var(--sage); border-radius: 0 8px 8px 0; padding: 6px 12px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #1a4a30; margin: 4px 0; }
+
+  .tip-box { background: var(--coral-light); border: 1px solid var(--coral-mid); border-radius: 12px; padding: 14px 16px; margin-top: 12px; font-size: 13.5px; color: #5a2810; line-height: 1.6; }
+
+  /* ERRORS */
+  .contrast-box { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 0; }
+  .contrast-side { border-radius: 10px; padding: 12px 14px; }
+  .contrast-side.wrong { background: #fff0f1; border: 1px solid #fcc; }
+  .contrast-side.right { background: var(--green-light); border: 1px solid #a7f3c0; }
+  .contrast-label { font-size: 10px; font-family: 'JetBrains Mono', monospace; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 6px; font-weight: 600; }
+  .contrast-side.wrong .contrast-label { color: #c0606a; }
+  .contrast-side.right .contrast-label { color: var(--green); }
+  .contrast-text { font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 1.5; }
+  .contrast-side.wrong .contrast-text { color: #c0606a; text-decoration: line-through; text-decoration-color: rgba(192,96,106,0.4); }
+  .contrast-side.right .contrast-text { color: var(--green); }
+
+  /* WHATSAPP */
+  .wa-wrapper { background: #e5ddd5; border-radius: 16px; overflow: hidden; border: 1px solid #d0c8be; }
+  .wa-bar { background: #075e54; padding: 12px 16px; display: flex; align-items: center; gap: 10px; }
+  .wa-avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--wa-green); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+  .wa-name { font-size: 14px; font-weight: 600; color: #fff; }
+  .wa-status { font-size: 11px; color: rgba(255,255,255,0.65); }
+  .wa-chat { padding: 16px 12px; display: flex; flex-direction: column; gap: 8px; }
+  .wa-bubble { max-width: 85%; padding: 10px 14px; border-radius: 8px; font-size: 14px; line-height: 1.5; }
+  .wa-bubble.from-teacher { background: #fff; align-self: flex-start; border-radius: 0 8px 8px 8px; color: #333; }
+  .wa-bubble.from-you { background: #e9fbe5; align-self: flex-end; border-radius: 8px 0 8px 8px; color: #333; }
+  .wa-time { font-size: 11px; color: #aaa; margin-top: 4px; text-align: right; }
+  .wa-tag-row { padding: 10px 14px; background: #f0f0f0; display: flex; gap: 6px; flex-wrap: wrap; border-top: 1px solid #ddd; }
+  .wa-tag { background: #075e54; color: #fff; font-size: 11px; font-family: 'JetBrains Mono', monospace; padding: 4px 10px; border-radius: 100px; }
+
+  .motivator { background: var(--ink); border-radius: 16px; padding: 20px 22px; margin-bottom: 24px; display: flex; align-items: center; gap: 14px; }
+  .motivator-emoji { font-size: 28px; }
+  .motivator p { font-size: 14px; color: rgba(255,255,255,0.78); line-height: 1.55; }
+  .motivator strong { color: #f0a582; }
+
+  footer { background: var(--ink); text-align: center; padding: 24px; font-size: 12px; color: rgba(255,255,255,0.3); font-family: 'JetBrains Mono', monospace; letter-spacing: 1px; }
+
+  /* ===== DECK WIDGET — scene carousels & shuffle decks ===== */
+  .deck-wrap { margin: 0 0 20px; border: 1px solid var(--border); border-radius: 16px; overflow: hidden; background: var(--card); }
+  .deck-label { display: flex; align-items: center; gap: 8px; padding: 12px 18px; background: #f2ede4; border-bottom: 1px solid var(--border); font-size: 10px; font-family: 'JetBrains Mono', monospace; letter-spacing: 1.5px; text-transform: uppercase; color: #8a7a68; }
+  .deck-counter { margin-left: auto; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #aaa; }
+  .deck-card { padding: 30px 24px; text-align: center; min-height: 76px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; }
+  .deck-emoji { font-size: 36px; letter-spacing: 4px; }
+  .deck-caption { font-size: 16px; font-weight: 600; color: var(--ink); }
+  .deck-text { font-size: 16px; color: var(--ink); line-height: 1.55; max-width: 480px; }
+  .deck-tag { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; padding: 3px 10px; border-radius: 100px; margin-bottom: 8px; }
+  .deck-tag.freq { background: var(--sage-light); color: var(--sage); }
+  .deck-tag.dur { background: var(--blue-light); color: var(--blue); }
+  .deck-controls { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 12px 16px 20px; }
+  .deck-btn { border: 1px solid var(--border); background: #fff; border-radius: 100px; padding: 8px 16px; font-size: 13px; font-family: 'Outfit', sans-serif; color: #666; cursor: pointer; transition: all 0.15s ease; }
+  .deck-btn:hover { background: #f5f2ee; }
+  .deck-btn.deck-random { background: var(--coral); color: #fff; border-color: var(--coral); font-weight: 600; }
+  .deck-btn.deck-random:hover { background: #a5431f; }
+
+  /* ===== VIDEO CAROUSEL — one big video at a time ===== */
+  .video-deck { margin: 0; }
+  .video-stage { position: relative; width: 100%; aspect-ratio: 16/9; border-radius: 10px; overflow: hidden; background: #000; cursor: pointer; }
+  .video-stage img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .video-stage iframe { width: 100%; height: 100%; display: block; border: none; }
+  .video-play-overlay-big { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; z-index: 1; }
+  .video-play-overlay-big::before { content: '▶'; width: 56px; height: 56px; border-radius: 50%; background: rgba(0,0,0,0.55); color: #fff; font-size: 20px; display: flex; align-items: center; justify-content: center; padding-left: 3px; }
+  .video-deck-title { font-size: 14px; font-weight: 600; color: var(--ink); margin-top: 12px; text-align: center; }
+  .video-deck-fallback { text-align: center; margin-top: 4px; }
+  .video-deck-fallback a { font-size: 12px; color: #888; text-decoration: underline; }
+
+  /* ===== QUIZ — multiple choice practice ===== */
+  .quiz-list { display: flex; flex-direction: column; gap: 18px; }
+  .quiz-item { padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+  .quiz-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .quiz-q { font-size: 14.5px; font-weight: 600; color: var(--ink); margin-bottom: 10px; line-height: 1.5; }
+  .quiz-options { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .quiz-opt { text-align: left; border: 1px solid var(--border); background: #fff; border-radius: 10px; padding: 9px 12px; font-size: 13.5px; font-family: 'JetBrains Mono', monospace; color: var(--ink); cursor: pointer; transition: all 0.15s ease; }
+  .quiz-opt:hover:not(:disabled) { background: #f5f2ee; }
+  .quiz-opt:disabled { cursor: default; }
+  .quiz-opt.correct { background: var(--green-light); border-color: var(--green); color: var(--green); font-weight: 600; }
+  .quiz-opt.wrong { background: #fff0f1; border-color: #f0a0a8; color: #c0606a; text-decoration: line-through; }
+  .quiz-note { font-size: 12.5px; color: #888; line-height: 1.5; margin-top: 8px; display: none; }
+  .quiz-note.show { display: block; }
+  .quiz-score { text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #888; padding-top: 14px; margin-top: 4px; border-top: 1px solid var(--border); }
+  .quiz-score strong { color: var(--coral); }
+
+  @media (max-width: 480px) {
+    .quiz-options { grid-template-columns: 1fr; }
+    header { padding: 36px 20px 32px; }
+    main { padding: 28px 16px 60px; }
+    .contrast-box { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hd"></div><div class="hd2"></div>
+  <div class="header-inner">
+    <div class="header-tag">Hecho para ti</div>
+    <h1>English for <em>Estefi</em></h1>
+    <p class="header-sub">Este curso fue diseñado especialmente para ti, para ayudarte a llevar tu inglés al siguiente nivel.</p>
+    <div class="teacher-badge">
+      <span style="font-size:16px;">👩‍🏫</span>
+      <span>Tu profesora: <strong>Laura Saldarriaga</strong></span>
+    </div>
+    <div class="header-pills">
+      <span class="hpill">📍 Presencial</span>
+      <span class="hpill">⏱ 60 min / clase</span>
+      <span class="hpill">📱 Misiones WhatsApp</span>
+      <span class="hpill">✨ Toca las tarjetas</span>
+    </div>
+  </div>
+</header>
+
+<div class="progress-bar">
+  <div class="progress-inner">
+    <button class="prog-btn active" onclick="goTo(0)"><div class="prog-dot">01</div><div class="prog-label">Right Now</div></button>
+    <div class="prog-connector"></div>
+    <button class="prog-btn" onclick="goTo(1)"><div class="prog-dot">02</div><div class="prog-label">Empty Room</div></button>
+    <div class="prog-connector"></div>
+    <button class="prog-btn" onclick="goTo(2)"><div class="prog-dot">03</div><div class="prog-label">Should Try</div></button>
+    <div class="prog-connector"></div>
+    <button class="prog-btn" onclick="goTo(3)"><div class="prog-dot">04</div><div class="prog-label">Never Told</div></button>
+    <div class="prog-connector"></div>
+    <button class="prog-btn" onclick="goTo(4)"><div class="prog-dot">05</div><div class="prog-label">Were You</div></button>
+    <div class="prog-connector"></div>
+    <button class="prog-btn" onclick="goTo(5)"><div class="prog-dot">06</div><div class="prog-label">The Place</div></button>
+  </div>
+</div>
+
+<main>
+
+  <!-- CLASS 1 -->
+  <div class="class-panel active" id="p0">
+    <div class="s-title">Right Now vs. Every Day ⏱</div>
+    <div class="s-sub">Clase 1 · Present Simple vs. Present Continuous</div>
+
+    <div class="diag-strip">
+      <div class="diag-strip-label">De tu examen diagnóstico</div>
+      <p>"Look! The children ___ in the garden." Escogiste <strong>plays</strong> — la respuesta correcta es <strong>are playing</strong>. Hoy vemos exactamente por qué.</p>
+    </div>
+
+    <div class="motivator">
+      <div class="motivator-emoji">🌟</div>
+      <p>No estás empezando de cero — ya usas estas dos formas sin darte cuenta. Hoy afinamos <strong>cuándo usar cada una</strong>, para que dejen de mezclarse.</p>
+    </div>
+
+    <div class="card card-mission">
+      <div class="card-header"><div class="card-icon" style="background:#c5e0cc;">⚡</div><span class="card-label" style="color:var(--sage);">Tu misión hoy</span><span class="card-time">~30 min</span></div>
+      <div class="card-body">
+        <p><strong>Narrate My Life:</strong> vas a narrar lo que está pasando en una foto o video en tiempo real, y luego decir si eso pasa todos los días o no.</p>
+        <div class="mission-steps">
+          <div class="m-step"><div class="m-num">1</div><div class="m-text">Elige una escena de la baraja de abajo (o dale a random) y narras en vivo lo que ves — todo con "is/are + -ing".</div></div>
+          <div class="m-step"><div class="m-num">2</div><div class="m-text">Misma escena, nueva pregunta: ¿esto pasa siempre en esta ciudad? Cambias a Present Simple.</div></div>
+          <div class="m-step"><div class="m-num">3</div><div class="m-text">Hablamos de cuándo usas cada una sin pensarlo.</div></div>
+        </div>
+        <div class="tip-box">
+          <strong>La regla en una línea:</strong>
+          <span class="example-chip">Right now → be + -ing</span>
+          <span class="example-chip">Always / usually / every day → verbo base</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="deck-wrap" id="deck-c1-scenes">
+      <div class="deck-label">🎲 Escena para narrar<span class="deck-counter"></span></div>
+      <div class="deck-body"></div>
+      <div class="deck-controls">
+        <button class="deck-btn" onclick="deckPrev('deck-c1-scenes')">◀ Prev</button>
+        <button class="deck-btn deck-random" onclick="deckRandom('deck-c1-scenes')">🎲 Random</button>
+        <button class="deck-btn" onclick="deckNext('deck-c1-scenes')">Next ▶</button>
+      </div>
+    </div>
+
+    <div class="card card-phrases">
+      <div class="card-header"><div class="card-icon">📝</div><span class="card-label" style="color:var(--gold);">Frases para hoy</span></div>
+      <div class="card-body">
+        <div class="frames-list">
+          <div class="frame-item"><div class="frame-en">I'm ___-ing right now.</div></div>
+          <div class="frame-item"><div class="frame-en">I usually ___ / I don't usually ___.</div></div>
+          <div class="frame-item"><div class="frame-en">These days I'm ___-ing a lot.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-vocab">
+      <div class="card-header"><div class="card-icon" style="background:#c0d4f8;">✨</div><span class="card-label" style="color:var(--blue);">Vocabulario — toca para ver</span></div>
+      <div class="card-body">
+        <div class="vocab-grid">
+          <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-inner"><div class="flip-front"><div class="flip-word">right now</div><div class="flip-hint">tap →</div></div><div class="flip-back"><div class="flip-def">Señal de Present Continuous</div><div class="flip-example">"I'm working right now."</div></div></div></div>
+          <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-inner"><div class="flip-front"><div class="flip-word">these days</div><div class="flip-hint">tap →</div></div><div class="flip-back"><div class="flip-def">Un "todos los días" temporal — puente entre los dos tiempos</div></div></div></div>
+          <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-inner"><div class="flip-front"><div class="flip-word">usually</div><div class="flip-hint">tap →</div></div><div class="flip-back"><div class="flip-def">Señal de Present Simple</div><div class="flip-example">"I usually wake up at 7."</div></div></div></div>
+          <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-inner"><div class="flip-front"><div class="flip-word">like / know / want</div><div class="flip-hint">tap →</div></div><div class="flip-back"><div class="flip-def">Nunca llevan -ing. Nunca.</div><div class="flip-example">"I know" — not "I'm knowing"</div></div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="border-color:#fcc;">
+      <div class="card-header" style="background:#fff0f1;"><div class="card-icon" style="background:#ffe4e6;">🔍</div><span class="card-label" style="color:#c0606a;">Tu error, resuelto</span></div>
+      <div class="card-body">
+        <div class="contrast-box">
+          <div class="contrast-side wrong"><div class="contrast-label">✗ tu respuesta</div><div class="contrast-text">The children play in the garden.</div></div>
+          <div class="contrast-side right"><div class="contrast-label">✓ correcta</div><div class="contrast-text">The children are playing in the garden.</div></div>
+        </div>
+        <p style="font-size:13px; color:#888;">"Look!" es la palabra clave — siempre señala algo que está pasando en este momento exacto.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><div class="card-icon">🎬</div><span class="card-label" style="color:#a86a2a;">Videos</span><span class="card-time" id="videodeck-c1-counter"></span></div>
+      <div class="card-body">
+        <p style="font-size:13px; color:#888; margin-bottom:12px;">No es obligatorio — míralos si quieres otra explicación fuera de la clase. Dos en inglés, uno en español.</p>
+        <div class="video-deck" id="videodeck-c1">
+          <div class="video-stage" id="videodeck-c1-stage"></div>
+          <div class="video-deck-title" id="videodeck-c1-title"></div>
+          <div class="video-deck-fallback" id="videodeck-c1-fallback"></div>
+          <div class="deck-controls">
+            <button class="deck-btn" onclick="videoPrev('c1')">◀ Prev</button>
+            <button class="deck-btn deck-random" onclick="videoPlay('c1')">▶ Reproducir</button>
+            <button class="deck-btn" onclick="videoNext('c1')">Next ▶</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><div class="card-icon" style="background:var(--coral-mid);">📝</div><span class="card-label" style="color:var(--coral);">Practica rápida</span></div>
+      <div class="card-body">
+        <div class="quiz-list" id="quiz-c1"></div>
+      </div>
+    </div>
+
+    <div class="wa-wrapper">
+      <div class="wa-bar"><div class="wa-avatar">🎙</div><div><div class="wa-name">Laura — Misión #1</div><div class="wa-status">Antes de la Clase 2</div></div></div>
+      <div class="wa-chat">
+        <div class="wa-bubble from-teacher">Un audio corto con dos partes: qué estás haciendo justo cuando lo grabas, y si eso es algo que haces todos los días o no.<br><br>"I'm drinking coffee right now. I usually drink tea, actually."<div class="wa-time">Laura</div></div>
+        <div class="wa-bubble from-you"><em style="color:#888;">Tu audio pendiente...</em><div class="wa-time">Tú · pendiente</div></div>
+      </div>
+      <div class="wa-tag-row"><span class="wa-tag">🎙 2 frases · contraste</span></div>
+    </div>
+  </div>
+
+  <!-- CLASS 2 -->
+  <div class="class-panel" id="p1">
+    <div class="s-title">Empty Room, Full Story 🏠</div>
+    <div class="s-sub">Clase 2 · There is/are · There was/were</div>
+
+    <div class="diag-strip">
+      <div class="diag-strip-label">De tu examen diagnóstico</div>
+      <p>"There ___ a lot of people at the party." Escogiste <strong>be</strong> — la respuesta correcta es <strong>were</strong>. "Be" nunca va solo en una oración real.</p>
+    </div>
+
+    <div class="motivator">
+      <div class="motivator-emoji">🎉</div>
+      <p>Hoy describes lugares — el presente y el pasado. <strong>There is/are</strong> para ahora, <strong>there was/were</strong> para antes.</p>
+    </div>
+
+    <p style="font-size:14px; color:#555; margin-bottom:10px;"><strong>Para empezar:</strong> mira la escena de abajo y descríbela en voz alta — ¿qué hay ahí? Usa <strong>there is / there are</strong>. Dale a 🎲 random para otra.</p>
+
+    <div class="deck-wrap" id="deck-c2-venues">
+      <div class="deck-label">🎲 Escena<span class="deck-counter"></span></div>
+      <div class="deck-body"></div>
+      <div class="deck-controls">
+        <button class="deck-btn" onclick="deckPrev('deck-c2-venues')">◀ Prev</button>
+        <button class="deck-btn deck-random" onclick="deckRandom('deck-c2-venues')">🎲 Random</button>
+        <button class="deck-btn" onclick="deckNext('deck-c2-venues')">Next ▶</button>
+      </div>
+    </div>
+
+    <div class="card card-mission">
+      <div class="card-header"><div class="card-icon" style="background:#c5e0cc;">⚡</div><span class="card-label" style="color:var(--sage);">Tu misión hoy</span><span class="card-time">~30 min</span></div>
+      <div class="card-body">
+        <p><strong>The Best Party You've Been To:</strong> describes un espacio actual, y luego cuentas la historia de un evento pasado memorable.</p>
+        <div class="mission-steps">
+          <div class="m-step"><div class="m-num">1</div><div class="m-text">Describes tu sala o espacio de trabajo actual con "there is/are/isn't/aren't".</div></div>
+          <div class="m-step"><div class="m-num">2</div><div class="m-text">Cuentas la historia de la mejor fiesta/concierto/evento de tu vida con "there was/were" — primero como salga, frase por frase.</div></div>
+          <div class="m-step"><div class="m-num">3</div><div class="m-text">Conectamos esas frases sueltas con and / but / because / so — para que suene como una historia, no como una lista.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="border-color:var(--coral-mid);">
+      <div class="card-header" style="background:var(--coral-light);"><div class="card-icon" style="background:var(--coral-mid);">🧵</div><span class="card-label" style="color:var(--coral);">Conectores de hoy</span></div>
+      <div class="card-body">
+        <div class="frames-list">
+          <div class="frame-item"><div class="frame-en">and</div></div>
+          <div class="frame-item"><div class="frame-en">but</div></div>
+          <div class="frame-item"><div class="frame-en">because</div></div>
+          <div class="frame-item"><div class="frame-en">so</div></div>
+        </div>
+        <p style="font-size:13px; color:#888; margin-top:10px;">"There were a lot of people, <strong>but</strong> the music was too loud, <strong>so</strong> we left early." — mismo contenido, suena mucho más fluido.</p>
+      </div>
+    </div>
+
+    <div class="card card-phrases">
+      <div class="card-header"><div class="card-icon">📝</div><span class="card-label" style="color:var(--gold);">Frases para hoy</span></div>
+      <div class="card-body">
+        <div class="frames-list">
+          <div class="frame-item"><div class="frame-en">There is / There are ___.</div></div>
+          <div class="frame-item"><div class="frame-en">There was / There were ___.</div></div>
+          <div class="frame-item"><div class="frame-en">There wasn't enough ___.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-vocab">
+      <div class="card-header"><div class="card-icon" style="background:#c0d4f8;">✨</div><span class="card-label" style="color:var(--blue);">Vocabulario — toca para ver</span></div>
+      <div class="card-body">
+        <div class="vocab-grid">
+          <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-inner"><div class="flip-front"><div class="flip-word">there's</div><div class="flip-hint">tap →</div></div><div class="flip-back"><div class="flip-def">Singular, presente</div></div></div></div>
+          <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-inner"><div class="flip-front"><div class="flip-word">there are</div><div class="flip-hint">tap →</div></div><div class="flip-back"><div class="flip-def">Plural, presente</div></div></div></div>
+          <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-inner"><div class="flip-front"><div class="flip-word">there was</div><div class="flip-hint">tap →</div></div><div class="flip-back"><div class="flip-def">Singular, pasado</div></div></div></div>
+          <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-inner"><div class="flip-front"><div class="flip-word">there were</div><div class="flip-hint">tap →</div></div><div class="flip-back"><div class="flip-def">Plural, pasado</div></div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="border-color:#fcc;">
+      <div class="card-header" style="background:#fff0f1;"><div class="card-icon" style="background:#ffe4e6;">🔍</div><span class="card-label" style="color:#c0606a;">Tu error, resuelto</span></div>
+      <div class="card-body">
+        <div class="contrast-box">
+          <div class="contrast-side wrong"><div class="contrast-label">✗ tu respuesta</div><div class="contrast-text">There be a lot of people.</div></div>
+          <div class="contrast-side right"><div class="contrast-label">✓ correcta</div><div class="contrast-text">There <strong>were</strong> a lot of people.</div></div>
+        </div>
+        <p style="font-size:13px; color:#888;">"Be" es el infinitivo — siempre necesita convertirse en was/were según el número y el tiempo.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><div class="card-icon" style="background:var(--coral-mid);">📝</div><span class="card-label" style="color:var(--coral);">Practica rápida</span></div>
+      <div class="card-body">
+        <div class="quiz-list" id="quiz-c2"></div>
+      </div>
+    </div>
+
+    <div class="wa-wrapper">
+      <div class="wa-bar"><div class="wa-avatar">🖼</div><div><div class="wa-name">Laura — Misión #2</div><div class="wa-status">Antes de la Clase 3</div></div></div>
+      <div class="wa-chat">
+        <div class="wa-bubble from-teacher">Foto de cualquier lugar + descríbelo con "there is/are". Agrega una frase de cómo se veía antes, con "there was/were" — conectada con and/but/because/so.<br><br>"There's a big TV now, but there wasn't one here two years ago."<div class="wa-time">Laura</div></div>
+        <div class="wa-bubble from-you"><em style="color:#888;">Tu foto + audio pendiente...</em><div class="wa-time">Tú · pendiente</div></div>
+      </div>
+      <div class="wa-tag-row"><span class="wa-tag">🖼 Foto</span><span class="wa-tag">🎙 presente + pasado + conector</span></div>
+    </div>
+  </div>
+
+  <!-- CLASS 3 -->
+  <div class="class-panel" id="p2">
+    <div class="s-title">You Should Try This 💬</div>
+    <div class="s-sub">Clase 3 · Modales + verbo base (can / should / must)</div>
+
+    <div class="diag-strip">
+      <div class="diag-strip-label">De tu examen diagnóstico</div>
+      <p>Escogiste "I can <strong>to</strong> swim" — la respuesta correcta es "I can swim". Después de un modal, nunca va "to".</p>
+    </div>
+
+    <div class="motivator">
+      <div class="motivator-emoji">💡</div>
+      <p>Hoy das consejos reales usando <strong>should, must, have to</strong> y <strong>can</strong> — sin el "to" que se cuela del español.</p>
+    </div>
+
+    <div class="card card-mission">
+      <div class="card-header"><div class="card-icon" style="background:#c5e0cc;">⚡</div><span class="card-label" style="color:var(--sage);">Tu misión hoy</span><span class="card-time">~30 min</span></div>
+      <div class="card-body">
+        <p><strong>Dear Estefi:</strong> eres la columnista de consejos. Sacas 4 problemas de la baraja de abajo y respondes en el momento.</p>
+        <div class="mission-steps">
+          <div class="m-step"><div class="m-num">1</div><div class="m-text">4 problemas, 4 consejos — usando should / must / have to / don't have to.</div></div>
+          <div class="m-step"><div class="m-num">2</div><div class="m-text">Traes tu propio problema (real o inventado) y la profe te aconseja.</div></div>
+        </div>
+        <div class="tip-box">
+          <strong>Mapa de significado:</strong>
+          <span class="example-chip">should → consejo amigable</span>
+          <span class="example-chip">must / have to → obligación</span>
+          <span class="example-chip">don't have to → es opcional</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="deck-wrap" id="deck-c3-problems">
+      <div class="deck-label">🎲 Baraja de problemas<span class="deck-counter"></span></div>
+      <div class="deck-body"></div>
+      <div class="deck-controls">
+        <button class="deck-btn" onclick="deckPrev('deck-c3-problems')">◀ Prev</button>
+        <button class="deck-btn deck-random" onclick="deckRandom('deck-c3-problems')">🎲 Random</button>
+        <button class="deck-btn" onclick="deckNext('deck-c3-problems')">Next ▶</button>
+      </div>
+    </div>
+
+    <div class="card card-phrases">
+      <div class="card-header"><div class="card-icon">📝</div><span class="card-label" style="color:var(--gold);">Frases para hoy</span></div>
+      <div class="card-body">
+        <div class="frames-list">
+          <div class="frame-item"><div class="frame-en">You should ___.</div></div>
+          <div class="frame-item"><div class="frame-en">You must / have to ___.</div></div>
+          <div class="frame-item"><div class="frame-en">You don't have to ___.</div></div>
+          <div class="frame-item"><div class="frame-en">Maybe you could ___.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="border-color:#fcc;">
+      <div class="card-header" style="background:#fff0f1;"><div class="card-icon" style="background:#ffe4e6;">🔍</div><span class="card-label" style="color:#c0606a;">Tu error, resuelto</span></div>
+      <div class="card-body">
+        <div class="contrast-box">
+          <div class="contrast-side wrong"><div class="contrast-label">✗ tu respuesta</div><div class="contrast-text">I can to swim.</div></div>
+          <div class="contrast-side right"><div class="contrast-label">✓ correcta</div><div class="contrast-text">I can swim.</div></div>
+        </div>
+        <p style="font-size:13px; color:#888;">Este es el error más común para hispanohablantes, porque "poder" sí lleva infinitivo en español. En inglés, no.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><div class="card-icon" style="background:var(--coral-mid);">📝</div><span class="card-label" style="color:var(--coral);">Practica rápida</span></div>
+      <div class="card-body">
+        <div class="quiz-list" id="quiz-c3"></div>
+      </div>
+    </div>
+
+    <div class="wa-wrapper">
+      <div class="wa-bar"><div class="wa-avatar">🎙</div><div><div class="wa-name">Laura — Misión #3</div><div class="wa-status">Antes de la Clase 4</div></div></div>
+      <div class="wa-chat">
+        <div class="wa-bubble from-teacher">Piensa en alguien con un problema real ahora mismo y dale consejo con al menos 2 modales distintos — sin "to" después de ninguno.<div class="wa-time">Laura</div></div>
+        <div class="wa-bubble from-you"><em style="color:#888;">Tu audio pendiente...</em><div class="wa-time">Tú · pendiente</div></div>
+      </div>
+      <div class="wa-tag-row"><span class="wa-tag">🎙 2+ modales · sin "to"</span></div>
+    </div>
+  </div>
+
+  <!-- CLASS 4 -->
+  <div class="class-panel" id="p3">
+    <div class="s-title">I've Never Told You This 🤫</div>
+    <div class="s-sub">Clase 4 · Present Perfect vs. Past Simple</div>
+
+    <div class="diag-strip">
+      <div class="diag-strip-label">De tu examen diagnóstico</div>
+      <p>"I ___ this movie three times." Escogiste <strong>am seeing</strong> — la correcta es <strong>have seen</strong>. Ya dominas "since" (lo tuviste bien) — hoy afinamos "three times" sin fecha exacta.</p>
+    </div>
+
+    <div class="motivator">
+      <div class="motivator-emoji">🎬</div>
+      <p>Hoy hablas de experiencias de vida — y de las historias específicas detrás de ellas.</p>
+    </div>
+
+    <div class="card card-mission">
+      <div class="card-header"><div class="card-icon" style="background:#c5e0cc;">⚡</div><span class="card-label" style="color:var(--sage);">Tu misión hoy</span><span class="card-time">~30 min</span></div>
+      <div class="card-body">
+        <p><strong>Have You Ever…?</strong> Sacas preguntas de la baraja de abajo, y cada "yes" se convierte en una historia específica.</p>
+        <div class="mission-steps">
+          <div class="m-step"><div class="m-num">1</div><div class="m-text">Respondes "Have you ever...?" con "Yes, I have" / "No, I haven't".</div></div>
+          <div class="m-step"><div class="m-num">2</div><div class="m-text">Cada "sí" se convierte en pregunta de seguimiento: "When did that happen? And then?" — cuentas la historia en Past Simple, en orden.</div></div>
+        </div>
+        <div class="tip-box">
+          <strong>La diferencia clave:</strong>
+          <span class="example-chip">"I have seen it three times." (no sabemos cuándo exactamente)</span>
+          <span class="example-chip">"I saw it last Friday." (fecha exacta → Past Simple)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="deck-wrap" id="deck-c4-haveyouever">
+      <div class="deck-label">🎲 Baraja de preguntas<span class="deck-counter"></span></div>
+      <div class="deck-body"></div>
+      <div class="deck-controls">
+        <button class="deck-btn" onclick="deckPrev('deck-c4-haveyouever')">◀ Prev</button>
+        <button class="deck-btn deck-random" onclick="deckRandom('deck-c4-haveyouever')">🎲 Random</button>
+        <button class="deck-btn" onclick="deckNext('deck-c4-haveyouever')">Next ▶</button>
+      </div>
+    </div>
+
+    <div class="card" style="border-color:var(--coral-mid);">
+      <div class="card-header" style="background:var(--coral-light);"><div class="card-icon" style="background:var(--coral-mid);">🧵</div><span class="card-label" style="color:var(--coral);">Conectores de hoy</span></div>
+      <div class="card-body">
+        <div class="frames-list">
+          <div class="frame-item"><div class="frame-en">first</div></div>
+          <div class="frame-item"><div class="frame-en">then</div></div>
+          <div class="frame-item"><div class="frame-en">after that</div></div>
+          <div class="frame-item"><div class="frame-en">in the end</div></div>
+        </div>
+        <p style="font-size:13px; color:#888; margin-top:10px;">Úsalos para ordenar tu historia en vez de solo enumerar hechos: "First I called her. Then we met at the café. In the end, we talked for hours."</p>
+      </div>
+    </div>
+
+    <div class="card card-phrases">
+      <div class="card-header"><div class="card-icon">📝</div><span class="card-label" style="color:var(--gold);">Frases para hoy</span></div>
+      <div class="card-body">
+        <div class="frames-list">
+          <div class="frame-item"><div class="frame-en">Have you ever ___?</div></div>
+          <div class="frame-item"><div class="frame-en">I've never ___.</div></div>
+          <div class="frame-item"><div class="frame-en">When did that happen?</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="border-color:#fcc;">
+      <div class="card-header" style="background:#fff0f1;"><div class="card-icon" style="background:#ffe4e6;">🔍</div><span class="card-label" style="color:#c0606a;">Tu error, resuelto</span></div>
+      <div class="card-body">
+        <div class="contrast-box">
+          <div class="contrast-side wrong"><div class="contrast-label">✗ tu respuesta</div><div class="contrast-text">I am seeing this movie three times.</div></div>
+          <div class="contrast-side right"><div class="contrast-label">✓ correcta</div><div class="contrast-text">I have seen this movie three times.</div></div>
+        </div>
+        <p style="font-size:13px; color:#888;">"Three times" sin fecha es señal de Present Perfect — nada está pasando ahora mismo.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><div class="card-icon" style="background:var(--coral-mid);">📝</div><span class="card-label" style="color:var(--coral);">Practica rápida</span></div>
+      <div class="card-body">
+        <div class="quiz-list" id="quiz-c4"></div>
+      </div>
+    </div>
+
+    <div class="wa-wrapper">
+      <div class="wa-bar"><div class="wa-avatar">🎙</div><div><div class="wa-name">Laura — Misión #4</div><div class="wa-status">Antes de la Clase 5</div></div></div>
+      <div class="wa-chat">
+        <div class="wa-bubble from-teacher">Una frase "I've never..." y luego cuenta la historia específica detrás de una experiencia real en Past Simple — 4 o 5 frases, ordenadas con first / then / after that / in the end.<div class="wa-time">Laura</div></div>
+        <div class="wa-bubble from-you"><em style="color:#888;">Tu audio pendiente...</em><div class="wa-time">Tú · pendiente</div></div>
+      </div>
+      <div class="wa-tag-row"><span class="wa-tag">🎙 Present Perfect → Past Simple · ordenada</span></div>
+    </div>
+  </div>
+
+  <!-- CLASS 5 -->
+  <div class="class-panel" id="p4">
+    <div class="s-title">What Were You Doing When…? ⚡</div>
+    <div class="s-sub">Clase 5 · Past Simple vs. Past Continuous</div>
+
+    <div class="diag-strip">
+      <div class="diag-strip-label">De tu examen diagnóstico</div>
+      <p>"I was watching TV when my phone ___." La dejaste sin responder — la correcta es <strong>rang</strong>. Hoy construimos el patrón desde cero.</p>
+    </div>
+
+    <div class="motivator">
+      <div class="motivator-emoji">📖</div>
+      <p>Hoy cuentas historias de momentos interrumpidos — el clásico "estaba haciendo algo cuando pasó otra cosa".</p>
+    </div>
+
+    <div class="card card-mission">
+      <div class="card-header"><div class="card-icon" style="background:#c5e0cc;">⚡</div><span class="card-label" style="color:var(--sage);">Tu misión hoy</span><span class="card-time">~30 min</span></div>
+      <div class="card-body">
+        <p><strong>Interrupted:</strong> escribes 4 historias cortas de momentos interrumpidos en el documento compartido (class5-template). Si te trabas, la baraja de abajo te da ideas.</p>
+        <div class="mission-steps">
+          <div class="m-step"><div class="m-num">1</div><div class="m-text">Escribes 4 momentos reales usando "I was ___-ing when ___".</div></div>
+          <div class="m-step"><div class="m-num">2</div><div class="m-text">Lees dos en voz alta y cuentas una tercera de memoria — sin mirar. Para esa, prueba cerrarla con "that's when..." o "as soon as..." en vez de solo "when".</div></div>
+        </div>
+        <div class="tip-box">
+          <strong>La forma:</strong>
+          <span class="example-chip">acción larga de fondo (was/were + -ing) + acción corta que interrumpe (Past Simple)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="deck-wrap" id="deck-c5-ideas">
+      <div class="deck-label">🎲 Ideas — solo si te trabas<span class="deck-counter"></span></div>
+      <div class="deck-body"></div>
+      <div class="deck-controls">
+        <button class="deck-btn" onclick="deckPrev('deck-c5-ideas')">◀ Prev</button>
+        <button class="deck-btn deck-random" onclick="deckRandom('deck-c5-ideas')">🎲 Random</button>
+        <button class="deck-btn" onclick="deckNext('deck-c5-ideas')">Next ▶</button>
+      </div>
+    </div>
+
+    <div class="card" style="border-color:var(--coral-mid);">
+      <div class="card-header" style="background:var(--coral-light);"><div class="card-icon" style="background:var(--coral-mid);">🧵</div><span class="card-label" style="color:var(--coral);">Conectores de hoy</span></div>
+      <div class="card-body">
+        <div class="frames-list">
+          <div class="frame-item"><div class="frame-en">as soon as</div></div>
+          <div class="frame-item"><div class="frame-en">right when</div></div>
+          <div class="frame-item"><div class="frame-en">that's when...</div></div>
+        </div>
+        <p style="font-size:13px; color:#888; margin-top:10px;">Son versiones más precisas de "when" — hacen que la historia suene menos entrecortada.</p>
+      </div>
+    </div>
+
+    <div class="card card-phrases">
+      <div class="card-header"><div class="card-icon">📝</div><span class="card-label" style="color:var(--gold);">Frases para hoy</span></div>
+      <div class="card-body">
+        <div class="frames-list">
+          <div class="frame-item"><div class="frame-en">I was ___-ing when ___.</div></div>
+          <div class="frame-item"><div class="frame-en">While I was ___-ing, ___.</div></div>
+          <div class="frame-item"><div class="frame-en">Suddenly, ___.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="border-color:#fcc;">
+      <div class="card-header" style="background:#fff0f1;"><div class="card-icon" style="background:#ffe4e6;">🔍</div><span class="card-label" style="color:#c0606a;">Completando lo que dejaste en blanco</span></div>
+      <div class="card-body">
+        <div class="contrast-box">
+          <div class="contrast-side wrong"><div class="contrast-label">✗ evita</div><div class="contrast-text">...when my phone rings.</div></div>
+          <div class="contrast-side right"><div class="contrast-label">✓ correcta</div><div class="contrast-text">...when my phone rang.</div></div>
+        </div>
+        <p style="font-size:13px; color:#888;">La acción que interrumpe siempre va en Past Simple — es un momento único, no un hábito.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><div class="card-icon" style="background:var(--coral-mid);">📝</div><span class="card-label" style="color:var(--coral);">Practica rápida</span></div>
+      <div class="card-body">
+        <div class="quiz-list" id="quiz-c5"></div>
+      </div>
+    </div>
+
+    <div class="wa-wrapper">
+      <div class="wa-bar"><div class="wa-avatar">🎙</div><div><div class="wa-name">Laura — Misión #5</div><div class="wa-status">Antes de la Clase 6</div></div></div>
+      <div class="wa-chat">
+        <div class="wa-bubble from-teacher">Otra historia real de "I was ___-ing when ___" — algo que pasó esta semana, sin notas. Prueba cerrarla con "that's when..." o "as soon as...".<div class="wa-time">Laura</div></div>
+        <div class="wa-bubble from-you"><em style="color:#888;">Tu audio pendiente...</em><div class="wa-time">Tú · pendiente</div></div>
+      </div>
+      <div class="wa-tag-row"><span class="wa-tag">🎙 historia real · esta semana</span></div>
+    </div>
+  </div>
+
+  <!-- CLASS 6 -->
+  <div class="class-panel" id="p5">
+    <div class="s-title">The Place Where It Happened 📍</div>
+    <div class="s-sub">Clase 6 · Relative clauses · How often vs. How long</div>
+
+    <div class="diag-strip">
+      <div class="diag-strip-label">De tu examen diagnóstico</div>
+      <p>"This is the restaurant ___ we had dinner" — la dejaste en blanco (correcta: <strong>where</strong>). Y en "How often do you exercise?" escogiste <strong>For two hours</strong> — la correcta es <strong>Three times a week</strong>.</p>
+    </div>
+
+    <div class="motivator">
+      <div class="motivator-emoji">🎉</div>
+      <p>Última clase. Hoy cerramos los últimos dos puntos — y celebramos todo lo que ya construiste en 6 clases.</p>
+    </div>
+
+    <div class="card card-mission">
+      <div class="card-header"><div class="card-icon" style="background:#c5e0cc;">⚡</div><span class="card-label" style="color:var(--sage);">Tu misión hoy</span><span class="card-time">~28 min</span></div>
+      <div class="card-body">
+        <p><strong>The Place Where…</strong> más una entrevista rápida de frecuencia vs. duración.</p>
+        <div class="mission-steps">
+          <div class="m-step"><div class="m-num">1</div><div class="m-text">Describes 3 lugares con "This is the place where...", más una con "who" y una con "which".</div></div>
+          <div class="m-step"><div class="m-num">2</div><div class="m-text">Entrevista rápida sacando preguntas de la baraja de abajo (🔁 frecuencia / ⏳ duración) — cada una necesita el tipo de respuesta correcta. Intenta al menos una respuesta con contraste: "I call her every day, although we don't always talk long."</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="deck-wrap" id="deck-c6-interview">
+      <div class="deck-label">🎲 Baraja de entrevista<span class="deck-counter"></span></div>
+      <div class="deck-body"></div>
+      <div class="deck-controls">
+        <button class="deck-btn" onclick="deckPrev('deck-c6-interview')">◀ Prev</button>
+        <button class="deck-btn deck-random" onclick="deckRandom('deck-c6-interview')">🎲 Random</button>
+        <button class="deck-btn" onclick="deckNext('deck-c6-interview')">Next ▶</button>
+      </div>
+    </div>
+
+    <div class="card" style="border-color:var(--coral-mid);">
+      <div class="card-header" style="background:var(--coral-light);"><div class="card-icon" style="background:var(--coral-mid);">🧵</div><span class="card-label" style="color:var(--coral);">Conectores de hoy — el kit completo</span></div>
+      <div class="card-body">
+        <div class="frames-list">
+          <div class="frame-item"><div class="frame-en">although / even though</div></div>
+          <div class="frame-item"><div class="frame-en">actually</div></div>
+          <div class="frame-item"><div class="frame-en">to be honest</div></div>
+        </div>
+        <p style="font-size:13px; color:#888; margin-top:10px;">Estos son los últimos de la caja de herramientas. Ya tienes: and/but/because/so (Clase 2), first/then/after that/in the end (Clase 4), as soon as/right when/that's when (Clase 5), y estos de hoy. Úsalos todos en tu misión final.</p>
+      </div>
+    </div>
+
+    <div class="card card-phrases">
+      <div class="card-header"><div class="card-icon">📝</div><span class="card-label" style="color:var(--gold);">Frases para hoy</span></div>
+      <div class="card-body">
+        <div class="frames-list">
+          <div class="frame-item"><div class="frame-en">This is the place where ___.</div></div>
+          <div class="frame-item"><div class="frame-en">How often → once a week, twice a month...</div></div>
+          <div class="frame-item"><div class="frame-en">How long → for two years, since 2020...</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="border-color:#fcc;">
+      <div class="card-header" style="background:#fff0f1;"><div class="card-icon" style="background:#ffe4e6;">🔍</div><span class="card-label" style="color:#c0606a;">Tus últimos dos puntos</span></div>
+      <div class="card-body">
+        <div class="contrast-box">
+          <div class="contrast-side wrong"><div class="contrast-label">✗ evita</div><div class="contrast-text">the restaurant which we had dinner</div></div>
+          <div class="contrast-side right"><div class="contrast-label">✓ correcta</div><div class="contrast-text">the restaurant where we had dinner</div></div>
+        </div>
+        <p style="font-size:13px; color:#888; margin-bottom:12px;">"Where" es para lugares — reemplaza "in that restaurant" para no repetirlo.</p>
+        <div class="contrast-box">
+          <div class="contrast-side wrong"><div class="contrast-label">✗ tu respuesta</div><div class="contrast-text">"How often?" → "For two hours."</div></div>
+          <div class="contrast-side right"><div class="contrast-label">✓ correcta</div><div class="contrast-text">"How often?" → "Three times a week."</div></div>
+        </div>
+        <p style="font-size:13px; color:#888;">"How often" pregunta cuántas veces; "for two hours" responde a duración, no a frecuencia.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><div class="card-icon" style="background:var(--coral-mid);">📝</div><span class="card-label" style="color:var(--coral);">Practica rápida</span></div>
+      <div class="card-body">
+        <div class="quiz-list" id="quiz-c6"></div>
+      </div>
+    </div>
+
+    <div class="wa-wrapper">
+      <div class="wa-bar"><div class="wa-avatar">🎤</div><div><div class="wa-name">Laura — Misión Final #6</div><div class="wa-status">¡La más completa!</div></div></div>
+      <div class="wa-chat">
+        <div class="wa-bubble from-teacher">Un audio de 60-90 segundos que toque las 6 clases: algo pasando ahora, un lugar con "there is/are", un consejo con modal, una experiencia con Present Perfect, una historia interrumpida, y una frase con "the place where..." o "how often/how long". Esta vez, usa al menos <strong>4 conectores distintos</strong> de todo el curso — que suene como una sola historia conectada, no como una lista de frases correctas.<div class="wa-time">Laura</div></div>
+        <div class="wa-bubble from-you"><em style="color:#888;">Tu audio final pendiente...</em><div class="wa-time">Tú · pendiente</div></div>
+      </div>
+      <div class="wa-tag-row"><span class="wa-tag">🎤 60-90 seg · 4+ conectores</span></div>
+    </div>
+
+    <div style="background:linear-gradient(135deg, #101b1e 0%, #2f4a45 100%); border-radius:20px; padding:28px 24px; margin-top:24px; text-align:center;">
+      <div style="font-size:36px; margin-bottom:12px;">🎉</div>
+      <div style="font-family:'Playfair Display', serif; font-size:22px; font-weight:800; color:#fff; margin-bottom:10px;">¡6 clases completadas!</div>
+      <p style="font-size:14px; color:rgba(255,255,255,0.8); line-height:1.6; max-width:400px; margin:0 auto;">Cerraste los 7 puntos exactos que tu diagnóstico mostró. Tu inglés ya era más fuerte de lo que pensabas — ahora es más preciso también.</p>
+    </div>
+  </div>
+
+</main>
+
+<footer>English for Estefi · Laura Saldarriaga · 6 × 60 min · 1-on-1 · Presencial · 2026</footer>
+
+<script>
+  function goTo(i) {
+    document.querySelectorAll('.class-panel').forEach((p, j) => p.classList.toggle('active', j === i));
+    document.querySelectorAll('.prog-btn').forEach((b, j) => b.classList.toggle('active', j === i));
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  function toggle(el) {
+    el.classList.toggle('done');
+    el.querySelector('.check-box').textContent = el.classList.contains('done') ? '✓' : '';
+  }
+
+  // ===== DECK WIDGETS — scene carousels & shuffle decks =====
+  const DECKS = {
+    'deck-c1-scenes': [
+      { emoji: '🚦🚶🚗🏃‍♀️🏃', caption: 'A busy street crossing' },
+      { emoji: '🏖️🏊🍦🐕🎈', caption: 'A beach on a sunny day' },
+      { emoji: '🍎🥕🛒👩‍🌾🗣️', caption: 'A crowded morning market' },
+      { emoji: '☕💻📱🚶‍♂️🥐', caption: 'A busy coffee shop' },
+      { emoji: '🎉🎶🕺💃🎂', caption: 'A birthday party' },
+      { emoji: '🚉🎒🏃‍♂️📱⏰', caption: 'A train station at rush hour' },
+    ],
+    'deck-c2-venues': [
+      { emoji: '🏟️🪑🔇', caption: 'An empty stadium before the game' },
+      { emoji: '🍽️🪑🕯️', caption: 'An empty restaurant before opening' },
+      { emoji: '🎭🪑💡', caption: 'An empty theater before the show' },
+      { emoji: '📚🪑🔕', caption: 'An empty library early in the morning' },
+      { emoji: '🏋️🪞🔇', caption: 'An empty gym at 6am' },
+    ],
+    'deck-c3-problems': [
+      { text: "I'm always tired at work, but I can't sleep well at night." },
+      { text: "My best friend is always late, and it's starting to bother me." },
+      { text: "I want to learn how to cook, but I never have time." },
+      { text: "My boss keeps giving me more work, and I don't know how to say no." },
+      { text: "I promised to visit my parents more, but I keep canceling." },
+      { text: "I spend too much money on things I don't really need." },
+      { text: "I want to start exercising, but I always find an excuse." },
+      { text: "My neighbor plays loud music every night." },
+      { text: "I haven't talked to my sister in months because of an argument." },
+      { text: "I want to change jobs, but I'm scared to leave something stable." },
+    ],
+    'deck-c4-haveyouever': [
+      { text: 'Have you ever traveled alone?' },
+      { text: 'Have you ever lost something important?' },
+      { text: 'Have you ever cried at a movie?' },
+      { text: 'Have you ever changed your mind about someone?' },
+      { text: "Have you ever forgotten someone's birthday?" },
+      { text: 'Have you ever won a prize or a contest?' },
+      { text: 'Have you ever moved to a new city?' },
+      { text: 'Have you ever quit a job?' },
+      { text: 'Have you ever broken something valuable?' },
+      { text: 'Have you ever met someone famous?' },
+    ],
+    'deck-c5-ideas': [
+      { text: 'A call during a shower' },
+      { text: 'The power went out during a movie' },
+      { text: 'Someone walked in during an important meeting' },
+      { text: 'Your food arrived while you were on a video call' },
+      { text: 'You were about to fall asleep when your phone buzzed' },
+      { text: 'You were driving when you suddenly remembered something urgent' },
+      { text: 'You were cleaning when you found something surprising' },
+      { text: 'You were about to leave the house when someone knocked' },
+    ],
+    'deck-c6-interview': [
+      { tag: 'freq', text: 'How often do you check your phone?' },
+      { tag: 'dur', text: 'How long have you had your current phone?' },
+      { tag: 'freq', text: 'How often do you cook at home?' },
+      { tag: 'dur', text: 'How long have you lived in this city?' },
+      { tag: 'freq', text: 'How often do you call your mom?' },
+      { tag: 'dur', text: 'How long have you known your best friend?' },
+      { tag: 'freq', text: 'How often do you exercise?' },
+      { tag: 'dur', text: 'How long have you worked at your job?' },
+      { tag: 'freq', text: 'How often do you travel?' },
+      { tag: 'dur', text: 'How long have you been learning English?' },
+    ],
+  };
+  const deckState = {};
+
+  function renderDeck(id) {
+    const items = DECKS[id];
+    const el = document.getElementById(id);
+    if (!el || !items) return;
+    if (!(id in deckState)) deckState[id] = 0;
+    const item = items[deckState[id]];
+    let cardHtml;
+    if (item.emoji) {
+      cardHtml = `<div class="deck-card"><div class="deck-emoji">${item.emoji}</div><div class="deck-caption">${item.caption}</div></div>`;
+    } else if (item.tag) {
+      const tagLabel = item.tag === 'freq' ? '🔁 frequency' : '⏳ duration';
+      cardHtml = `<div class="deck-card"><span class="deck-tag ${item.tag}">${tagLabel}</span><div class="deck-text">${item.text}</div></div>`;
+    } else {
+      cardHtml = `<div class="deck-card"><div class="deck-text">${item.text}</div></div>`;
+    }
+    el.querySelector('.deck-body').innerHTML = cardHtml;
+    el.querySelector('.deck-counter').textContent = `${deckState[id] + 1} / ${items.length}`;
+  }
+  function deckPrev(id) {
+    const items = DECKS[id];
+    deckState[id] = (deckState[id] - 1 + items.length) % items.length;
+    renderDeck(id);
+  }
+  function deckNext(id) {
+    const items = DECKS[id];
+    deckState[id] = (deckState[id] + 1) % items.length;
+    renderDeck(id);
+  }
+  function deckRandom(id) {
+    const items = DECKS[id];
+    if (items.length < 2) return renderDeck(id);
+    let next;
+    do { next = Math.floor(Math.random() * items.length); } while (next === deckState[id]);
+    deckState[id] = next;
+    renderDeck(id);
+  }
+  document.querySelectorAll('.deck-wrap').forEach(el => renderDeck(el.id));
+
+  // ===== VIDEO CAROUSEL — one big video at a time =====
+  const VIDEO_DECKS = {
+    c1: [
+      { id: 'kDm4n6Zknkc', title: 'How to Use Present Continuous' },
+      { id: 'We_m8tyMqcE', title: 'Present Continuous — Uses & Examples' },
+      { id: 'H7uJ2Pqu21U', title: 'Lección 4: Presente Continuo (en español)' },
+    ],
+  };
+  const videoDeckState = {};
+
+  function renderVideoDeck(key) {
+    const items = VIDEO_DECKS[key];
+    if (!(key in videoDeckState)) videoDeckState[key] = 0;
+    const item = items[videoDeckState[key]];
+    const stage = document.getElementById(`videodeck-${key}-stage`);
+    stage.innerHTML = `<img src="https://img.youtube.com/vi/${item.id}/hqdefault.jpg" alt=""><div class="video-play-overlay-big"></div>`;
+    stage.onclick = () => playVideoInline(key, item.id);
+    document.getElementById(`videodeck-${key}-title`).textContent = item.title;
+    document.getElementById(`videodeck-${key}-counter`).textContent = `${videoDeckState[key] + 1} / ${items.length}`;
+    document.getElementById(`videodeck-${key}-fallback`).innerHTML = `<a href="https://www.youtube.com/watch?v=${item.id}" target="_blank" rel="noopener">¿No carga? Ábrelo en YouTube ↗</a>`;
+  }
+  function videoPrev(key) {
+    const items = VIDEO_DECKS[key];
+    videoDeckState[key] = (videoDeckState[key] - 1 + items.length) % items.length;
+    renderVideoDeck(key);
+  }
+  function videoNext(key) {
+    const items = VIDEO_DECKS[key];
+    videoDeckState[key] = (videoDeckState[key] + 1) % items.length;
+    renderVideoDeck(key);
+  }
+  function videoPlay(key) {
+    const item = VIDEO_DECKS[key][videoDeckState[key]];
+    playVideoInline(key, item.id);
+  }
+  function playVideoInline(key, videoId) {
+    const stage = document.getElementById(`videodeck-${key}-stage`);
+    stage.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1" title="video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+    stage.onclick = null;
+  }
+  Object.keys(VIDEO_DECKS).forEach(renderVideoDeck);
+
+  // ===== QUIZ — multiple choice practice =====
+  const QUIZZES = {
+    c1: [
+      { q: 'Look! She ___ on the phone right now.', options: ['talks', 'is talking', 'talk', 'talking'], correct: 1, note: '"Right now" + "Look!" → Present Continuous.' },
+      { q: 'I usually ___ coffee in the morning.', options: ['drink', 'am drinking', 'drinks', 'drinking'], correct: 0, note: '"Usually" es señal de Present Simple.' },
+      { q: "They ___ football every day.", options: ["don't play", "doesn't play", "aren't playing", "not play"], correct: 0, note: '"Every day" + negativo → don\'t + verbo base.' },
+      { q: 'We ___ a movie right now.', options: ['watch', 'watches', 'are watching', 'watched'], correct: 2, note: '"Right now" → be + -ing.' },
+      { q: 'He ___ pizza.', options: ['is liking', 'like', 'likes', 'liking'], correct: 2, note: '"Like" nunca lleva -ing — verbo de estado.' },
+    ],
+    c2: [
+      { q: '___ a book on the table.', options: ['There is', 'There are', 'There was', 'It is'], correct: 0, note: 'Singular, presente.' },
+      { q: '___ many people at the concert last night.', options: ['There is', 'There are', 'There were', 'There was'], correct: 2, note: 'Plural + pasado → were.' },
+      { q: '___ any milk in the fridge?', options: ['Is there', 'Are there', 'There is', 'There are'], correct: 0, note: '"Milk" es incontable → singular.' },
+      { q: 'Yesterday, ___ a big storm.', options: ['there is', 'there are', 'there was', 'there were'], correct: 2, note: 'Singular + pasado → was.' },
+      { q: '___ two cats in my garden.', options: ['There is', 'There are', 'There was', 'It has'], correct: 1, note: 'Plural, presente.' },
+    ],
+    c3: [
+      { q: 'You ___ study more if you want to pass.', options: ['can', 'should', 'is', 'must to'], correct: 1, note: 'Consejo → should + verbo base.' },
+      { q: 'I ___ swim very well.', options: ['can', 'cans', 'canning', 'to can'], correct: 0, note: 'Modal + verbo base, sin "to" ni -s.' },
+      { q: "You ___ arrive late — it's very important.", options: ["don't have to", 'can', "mustn't", 'should to'], correct: 2, note: 'Prohibición fuerte → mustn\'t.' },
+      { q: 'She ___ finish the report today.', options: ['has to', 'have to', 'must to', 'can to'], correct: 0, note: 'Obligación con "she" → has to.' },
+      { q: "You ___ pay — it's free!", options: ['must', 'have to', "don't have to", 'should to'], correct: 2, note: 'Sin obligación → don\'t have to.' },
+    ],
+    c4: [
+      { q: 'I ___ that movie three times.', options: ['saw', 'have seen', 'am seeing', 'see'], correct: 1, note: 'Sin fecha exacta → Present Perfect.' },
+      { q: 'She ___ Paris last year.', options: ['has visited', 'visited', 'visits', 'is visiting'], correct: 1, note: '"Last year" = fecha exacta → Past Simple.' },
+      { q: '___ you ever ___ sushi?', options: ['Did / try', 'Have / tried', 'Do / try', 'Are / trying'], correct: 1, note: '"Ever" → Present Perfect.' },
+      { q: 'We ___ the project yesterday.', options: ['have finished', 'finished', 'finish', 'are finishing'], correct: 1, note: '"Yesterday" → Past Simple.' },
+      { q: 'He ___ here since 2020.', options: ['lived', 'has lived', 'is living', 'live'], correct: 1, note: '"Since" → Present Perfect.' },
+    ],
+    c5: [
+      { q: 'I ___ TV when the phone rang.', options: ['watched', 'was watching', 'watch', 'am watching'], correct: 1, note: 'Acción larga de fondo → Past Continuous.' },
+      { q: 'She ___ me yesterday.', options: ['called', 'was calling', 'calls', 'is calling'], correct: 0, note: 'Acción corta y completa → Past Simple.' },
+      { q: 'While I ___ dinner, the doorbell rang.', options: ['cooked', 'was cooking', 'cook', 'cooks'], correct: 1, note: '"While" + acción de fondo → was/were + -ing.' },
+      { q: 'They ___ at 9pm.', options: ['arrived', 'were arriving', 'arrive', 'arrives'], correct: 0, note: 'Momento único → Past Simple.' },
+      { q: 'What ___ you ___ when I saw you?', options: ['did / do', 'were / doing', 'do / do', 'are / doing'], correct: 1, note: 'Pregunta sobre acción en progreso en el pasado.' },
+    ],
+    c6: [
+      { q: 'This is the restaurant ___ we had dinner.', options: ['who', 'where', 'which', 'what'], correct: 1, note: 'Lugar → where.' },
+      { q: "She's the person ___ helped me.", options: ['where', 'which', 'who', 'whose'], correct: 2, note: 'Persona → who.' },
+      { q: 'How often ___ you exercise?', options: ['do', 'are', 'have', 'is'], correct: 0, note: 'Frecuencia → Present Simple con "do".' },
+      { q: 'How long ___ you lived here?', options: ['do', 'did', 'have', 'are'], correct: 2, note: 'Duración → Present Perfect con "have".' },
+      { q: 'This is the book ___ I told you about.', options: ['who', 'where', 'which', 'whose'], correct: 2, note: 'Cosa → which.' },
+    ],
+  };
+
+  function renderQuiz(key) {
+    const container = document.getElementById(`quiz-${key}`);
+    if (!container) return;
+    const items = QUIZZES[key];
+    container.innerHTML = items.map((item, qi) => `
+      <div class="quiz-item">
+        <div class="quiz-q">${qi + 1}. ${item.q}</div>
+        <div class="quiz-options">
+          ${item.options.map((opt, oi) => `<button class="quiz-opt" onclick="answerQuiz('${key}', ${qi}, ${oi})">${opt}</button>`).join('')}
+        </div>
+        <div class="quiz-note" id="quiz-${key}-note-${qi}">${item.note}</div>
+      </div>
+    `).join('') + `<div class="quiz-score" id="quiz-${key}-score">0 / ${items.length} respondidas</div>`;
+  }
+  const quizProgress = {};
+  function answerQuiz(key, qi, oi) {
+    const item = QUIZZES[key][qi];
+    const q = document.querySelectorAll(`#quiz-${key} .quiz-item`)[qi];
+    const buttons = q.querySelectorAll('.quiz-opt');
+    if (buttons[0].disabled) return;
+    buttons.forEach((b, i) => {
+      b.disabled = true;
+      if (i === item.correct) b.classList.add('correct');
+      else if (i === oi) b.classList.add('wrong');
+    });
+    document.getElementById(`quiz-${key}-note-${qi}`).classList.add('show');
+    if (!(key in quizProgress)) quizProgress[key] = { answered: 0, correct: 0 };
+    quizProgress[key].answered++;
+    if (oi === item.correct) quizProgress[key].correct++;
+    document.getElementById(`quiz-${key}-score`).innerHTML = `<strong>${quizProgress[key].correct}</strong> / ${QUIZZES[key].length} correctas · ${quizProgress[key].answered} / ${QUIZZES[key].length} respondidas`;
+  }
+  Object.keys(QUIZZES).forEach(renderQuiz);
+</script>
+</body>
+</html>
