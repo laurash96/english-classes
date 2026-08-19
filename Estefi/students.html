@@ -194,6 +194,16 @@
   .quiz-score { text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #888; padding-top: 14px; margin-top: 4px; border-top: 1px solid var(--border); }
   .quiz-score strong { color: var(--coral); }
 
+  /* ===== LISTENING ===== */
+  .listen-controls { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+  .listen-btn { border: 1px solid var(--border); background: #fff; border-radius: 100px; padding: 8px 16px; font-size: 13px; font-family: 'Outfit', sans-serif; color: #666; cursor: pointer; transition: all 0.15s ease; }
+  .listen-btn:hover { background: #f5f2ee; }
+  .listen-btn.listen-play { background: var(--coral); color: #fff; border-color: var(--coral); font-weight: 600; }
+  .listen-btn.listen-play:hover { background: #a5431f; }
+  .listen-btn.listen-play.speaking { background: #8a3a20; }
+  .listen-transcript { background: #f7f3ee; border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; font-size: 13.5px; line-height: 1.7; color: #555; margin-bottom: 16px; display: none; }
+  .listen-transcript.show { display: block; }
+
   @media (max-width: 480px) {
     .quiz-options { grid-template-columns: 1fr; }
     header { padding: 36px 20px 32px; }
@@ -303,6 +313,20 @@
           <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-inner"><div class="flip-front"><div class="flip-word">usually</div><div class="flip-hint">tap →</div></div><div class="flip-back"><div class="flip-def">Señal de Present Simple</div><div class="flip-example">"I usually wake up at 7."</div></div></div></div>
           <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-inner"><div class="flip-front"><div class="flip-word">like / know / want</div><div class="flip-hint">tap →</div></div><div class="flip-back"><div class="flip-def">Nunca llevan -ing. Nunca.</div><div class="flip-example">"I know" — not "I'm knowing"</div></div></div></div>
         </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><div class="card-icon">🎧</div><span class="card-label" style="color:#a86a2a;">Escucha y responde</span></div>
+      <div class="card-body">
+        <p style="font-size:13px; color:#888; margin-bottom:12px;">Laura reproduce el audio en clase. Escucha con atención antes de ver el texto.</p>
+        <div class="listen-controls">
+          <button class="listen-btn listen-play" id="listen-play-c1" onclick="speakParagraph('c1')">▶ Escuchar</button>
+          <button class="listen-btn" onclick="stopSpeaking()">⏹ Detener</button>
+          <button class="listen-btn" id="transcript-toggle-c1" onclick="toggleTranscript('c1')">📄 Ver texto</button>
+        </div>
+        <div class="listen-transcript" id="transcript-c1"><p>It's Saturday morning. Right now, Marta is sitting in a small café near her house. She's drinking a cup of coffee and reading a book. Every Saturday, she comes to this same café — she loves the quiet atmosphere. Today, though, the café is very noisy because a group of tourists is talking loudly at the table next to her. Marta doesn't usually mind noise, but today she's trying to concentrate on a difficult chapter.</p></div>
+        <div class="quiz-list" id="listenquiz-c1"></div>
       </div>
     </div>
 
@@ -426,6 +450,20 @@
       </div>
     </div>
 
+    <div class="card">
+      <div class="card-header"><div class="card-icon">🎧</div><span class="card-label" style="color:#a86a2a;">Escucha y responde</span></div>
+      <div class="card-body">
+        <p style="font-size:13px; color:#888; margin-bottom:12px;">Laura reproduce el audio en clase. Escucha con atención antes de ver el texto.</p>
+        <div class="listen-controls">
+          <button class="listen-btn listen-play" id="listen-play-c2" onclick="speakParagraph('c2')">▶ Escuchar</button>
+          <button class="listen-btn" onclick="stopSpeaking()">⏹ Detener</button>
+          <button class="listen-btn" id="transcript-toggle-c2" onclick="toggleTranscript('c2')">📄 Ver texto</button>
+        </div>
+        <div class="listen-transcript" id="transcript-c2"><p>Right now, there's a small park near Estefi's apartment. There are tall trees, a few benches, and a small fountain in the middle. But ten years ago, this place was very different. There wasn't a park here — there was an old, empty building. There were no trees, and there was a lot of trash on the street. The neighborhood has changed a lot since then.</p></div>
+        <div class="quiz-list" id="listenquiz-c2"></div>
+      </div>
+    </div>
+
     <div class="card" style="border-color:#fcc;">
       <div class="card-header" style="background:#fff0f1;"><div class="card-icon" style="background:#ffe4e6;">🔍</div><span class="card-label" style="color:#c0606a;">Tu error, resuelto</span></div>
       <div class="card-body">
@@ -505,6 +543,20 @@
           <div class="frame-item"><div class="frame-en">You don't have to ___.</div></div>
           <div class="frame-item"><div class="frame-en">Maybe you could ___.</div></div>
         </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><div class="card-icon">🎧</div><span class="card-label" style="color:#a86a2a;">Escucha y responde</span></div>
+      <div class="card-body">
+        <p style="font-size:13px; color:#888; margin-bottom:12px;">Laura reproduce el audio en clase. Escucha con atención antes de ver el texto.</p>
+        <div class="listen-controls">
+          <button class="listen-btn listen-play" id="listen-play-c3" onclick="speakParagraph('c3')">▶ Escuchar</button>
+          <button class="listen-btn" onclick="stopSpeaking()">⏹ Detener</button>
+          <button class="listen-btn" id="transcript-toggle-c3" onclick="toggleTranscript('c3')">📄 Ver texto</button>
+        </div>
+        <div class="listen-transcript" id="transcript-c3"><p>Daniel is stressed about his new job. His friend gives him some advice: "You should talk to your manager about your workload. You don't have to accept every extra task — it's okay to say no sometimes. But you must remember to rest on weekends; you can't work seven days a week forever. If you want, you can also try meditation — it really helps with stress."</p></div>
+        <div class="quiz-list" id="listenquiz-c3"></div>
       </div>
     </div>
 
@@ -601,6 +653,20 @@
       </div>
     </div>
 
+    <div class="card">
+      <div class="card-header"><div class="card-icon">🎧</div><span class="card-label" style="color:#a86a2a;">Escucha y responde</span></div>
+      <div class="card-body">
+        <p style="font-size:13px; color:#888; margin-bottom:12px;">Laura reproduce el audio en clase. Escucha con atención antes de ver el texto.</p>
+        <div class="listen-controls">
+          <button class="listen-btn listen-play" id="listen-play-c4" onclick="speakParagraph('c4')">▶ Escuchar</button>
+          <button class="listen-btn" onclick="stopSpeaking()">⏹ Detener</button>
+          <button class="listen-btn" id="transcript-toggle-c4" onclick="toggleTranscript('c4')">📄 Ver texto</button>
+        </div>
+        <div class="listen-transcript" id="transcript-c4"><p>Camila has traveled to many countries — she has visited Peru, Argentina, and Mexico. She has never been to Europe, though. Last year, she finally saved enough money for a big trip. She flew to Lima in March and stayed there for two weeks. She has always wanted to see Machu Picchu, and last year she finally did it.</p></div>
+        <div class="quiz-list" id="listenquiz-c4"></div>
+      </div>
+    </div>
+
     <div class="card" style="border-color:#fcc;">
       <div class="card-header" style="background:#fff0f1;"><div class="card-icon" style="background:#ffe4e6;">🔍</div><span class="card-label" style="color:#c0606a;">Tu error, resuelto</span></div>
       <div class="card-body">
@@ -692,6 +758,20 @@
       </div>
     </div>
 
+    <div class="card">
+      <div class="card-header"><div class="card-icon">🎧</div><span class="card-label" style="color:#a86a2a;">Escucha y responde</span></div>
+      <div class="card-body">
+        <p style="font-size:13px; color:#888; margin-bottom:12px;">Laura reproduce el audio en clase. Escucha con atención antes de ver el texto.</p>
+        <div class="listen-controls">
+          <button class="listen-btn listen-play" id="listen-play-c5" onclick="speakParagraph('c5')">▶ Escuchar</button>
+          <button class="listen-btn" onclick="stopSpeaking()">⏹ Detener</button>
+          <button class="listen-btn" id="transcript-toggle-c5" onclick="toggleTranscript('c5')">📄 Ver texto</button>
+        </div>
+        <div class="listen-transcript" id="transcript-c5"><p>Yesterday evening, Sofía was cooking dinner when she suddenly heard a strange noise outside. She was chopping vegetables at the time, so she stopped and looked out the window. While she was looking outside, her phone rang — it was her sister calling. She answered the phone, but she couldn't find out what the noise was.</p></div>
+        <div class="quiz-list" id="listenquiz-c5"></div>
+      </div>
+    </div>
+
     <div class="card" style="border-color:#fcc;">
       <div class="card-header" style="background:#fff0f1;"><div class="card-icon" style="background:#ffe4e6;">🔍</div><span class="card-label" style="color:#c0606a;">Completando lo que dejaste en blanco</span></div>
       <div class="card-body">
@@ -776,6 +856,20 @@
           <div class="frame-item"><div class="frame-en">How often → once a week, twice a month...</div></div>
           <div class="frame-item"><div class="frame-en">How long → for two years, since 2020...</div></div>
         </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><div class="card-icon">🎧</div><span class="card-label" style="color:#a86a2a;">Escucha y responde</span></div>
+      <div class="card-body">
+        <p style="font-size:13px; color:#888; margin-bottom:12px;">Laura reproduce el audio en clase. Escucha con atención antes de ver el texto.</p>
+        <div class="listen-controls">
+          <button class="listen-btn listen-play" id="listen-play-c6" onclick="speakParagraph('c6')">▶ Escuchar</button>
+          <button class="listen-btn" onclick="stopSpeaking()">⏹ Detener</button>
+          <button class="listen-btn" id="transcript-toggle-c6" onclick="toggleTranscript('c6')">📄 Ver texto</button>
+        </div>
+        <div class="listen-transcript" id="transcript-c6"><p>This is the neighborhood where Valentina grew up. It's the place where she met her best friend, Camila — the girl who lived next door. Valentina visits her parents here quite often; she goes about twice a month. She has lived in the city center for five years now, but she still calls this neighborhood "home."</p></div>
+        <div class="quiz-list" id="listenquiz-c6"></div>
       </div>
     </div>
 
@@ -1057,6 +1151,127 @@
     document.getElementById(`quiz-${key}-score`).innerHTML = `<strong>${quizProgress[key].correct}</strong> / ${QUIZZES[key].length} correctas · ${quizProgress[key].answered} / ${QUIZZES[key].length} respondidas`;
   }
   Object.keys(QUIZZES).forEach(renderQuiz);
+
+  // ===== LISTENING — TTS paragraph + comprehension quiz =====
+  const LISTENING = {
+    c1: {
+      text: "It's Saturday morning. Right now, Marta is sitting in a small café near her house. She's drinking a cup of coffee and reading a book. Every Saturday, she comes to this same café — she loves the quiet atmosphere. Today, though, the café is very noisy because a group of tourists is talking loudly at the table next to her. Marta doesn't usually mind noise, but today she's trying to concentrate on a difficult chapter.",
+      questions: [
+        { q: 'What day is it in the story?', options: ['Friday', 'Saturday', 'Sunday', 'Monday'], correct: 1 },
+        { q: 'What is Marta doing right now?', options: ['Working', 'Sleeping', 'Drinking coffee and reading', 'Talking to tourists'], correct: 2 },
+        { q: 'Why does she usually like this café?', options: ["It's cheap", "It's quiet", "It's big", "It's new"], correct: 1 },
+        { q: 'Why is the café noisy today?', options: ['Music is playing', 'A group of tourists is talking loudly', 'The coffee machine is broken', "It's her birthday"], correct: 1 },
+        { q: 'What is Marta trying to do?', options: ['Sleep', 'Finish her coffee', 'Concentrate on a difficult chapter', 'Meet a friend'], correct: 2 },
+      ],
+    },
+    c2: {
+      text: "Right now, there's a small park near Estefi's apartment. There are tall trees, a few benches, and a small fountain in the middle. But ten years ago, this place was very different. There wasn't a park here — there was an old, empty building. There were no trees, and there was a lot of trash on the street. The neighborhood has changed a lot since then.",
+      questions: [
+        { q: 'What is there in the park now?', options: ['A pool', 'Trees, benches, and a fountain', 'A parking lot', 'A school'], correct: 1 },
+        { q: 'What was there before the park?', options: ['Another park', 'An old, empty building', 'A lake', 'Nothing'], correct: 1 },
+        { q: 'Were there trees before?', options: ['Yes, a lot', 'No', 'Only one', 'The story doesn\'t say'], correct: 1 },
+        { q: 'Where is the park located?', options: ['Downtown', "Near Estefi's apartment", 'Next to a school', 'Far from the city'], correct: 1 },
+        { q: 'How long ago was the neighborhood different?', options: ['One year', 'Five years', 'Ten years', 'Twenty years'], correct: 2 },
+      ],
+    },
+    c3: {
+      text: "Daniel is stressed about his new job. His friend gives him some advice: \"You should talk to your manager about your workload. You don't have to accept every extra task — it's okay to say no sometimes. But you must remember to rest on weekends; you can't work seven days a week forever. If you want, you can also try meditation — it really helps with stress.\"",
+      questions: [
+        { q: 'Why is Daniel stressed?', options: ['His family', 'His new job', 'His health', 'Money'], correct: 1 },
+        { q: 'What should Daniel do about his workload?', options: ['Quit his job', 'Talk to his manager', 'Work more hours', 'Ignore it'], correct: 1 },
+        { q: 'Does Daniel have to accept every extra task?', options: ['Yes, always', 'No, he doesn\'t have to', 'Only on Mondays', 'The story doesn\'t say'], correct: 1 },
+        { q: 'What must Daniel remember to do?', options: ['Call his mom', 'Rest on weekends', 'Buy new clothes', 'Change jobs'], correct: 1 },
+        { q: 'What can Daniel try to help with stress?', options: ['Running', 'Meditation', 'Sleeping less', 'Working more'], correct: 1 },
+      ],
+    },
+    c4: {
+      text: "Camila has traveled to many countries — she has visited Peru, Argentina, and Mexico. She has never been to Europe, though. Last year, she finally saved enough money for a big trip. She flew to Lima in March and stayed there for two weeks. She has always wanted to see Machu Picchu, and last year she finally did it.",
+      questions: [
+        { q: 'Has Camila traveled to many countries?', options: ['No, never', 'Yes', 'Only once', 'The story doesn\'t say'], correct: 1 },
+        { q: 'Has she ever been to Europe?', options: ['Yes, many times', 'No, never', 'Once', 'She lives there'], correct: 1 },
+        { q: 'When did she fly to Lima?', options: ['Last January', 'Last March', 'Last December', 'This year'], correct: 1 },
+        { q: 'How long did she stay in Lima?', options: ['One week', 'Two weeks', 'One month', 'Three days'], correct: 1 },
+        { q: 'What did she finally do last year?', options: ['Move to Peru', 'Visit Machu Picchu', 'Learn Spanish', 'Buy a house'], correct: 1 },
+      ],
+    },
+    c5: {
+      text: "Yesterday evening, Sofía was cooking dinner when she suddenly heard a strange noise outside. She was chopping vegetables at the time, so she stopped and looked out the window. While she was looking outside, her phone rang — it was her sister calling. She answered the phone, but she couldn't find out what the noise was.",
+      questions: [
+        { q: 'What was Sofía doing when she heard the noise?', options: ['Sleeping', 'Cooking dinner', 'Watching TV', 'Driving'], correct: 1 },
+        { q: 'When did she hear the noise?', options: ['Yesterday morning', 'Yesterday evening', 'This morning', 'Last week'], correct: 1 },
+        { q: 'What did she do when she heard it?', options: ['Called the police', 'Stopped and looked out the window', 'Kept cooking', 'Went to sleep'], correct: 1 },
+        { q: 'Who called her?', options: ['Her mom', 'Her sister', 'Her friend', 'Her boss'], correct: 1 },
+        { q: 'Did she find out what the noise was?', options: ['Yes', 'No', 'It was a cat', 'It was the wind'], correct: 1 },
+      ],
+    },
+    c6: {
+      text: "This is the neighborhood where Valentina grew up. It's the place where she met her best friend, Camila — the girl who lived next door. Valentina visits her parents here quite often; she goes about twice a month. She has lived in the city center for five years now, but she still calls this neighborhood \"home.\"",
+      questions: [
+        { q: 'What is this place for Valentina?', options: ['Where she works', 'Where she grew up', 'Where she studies', 'A place she visited once'], correct: 1 },
+        { q: 'Who is Camila?', options: ['Her sister', 'Her best friend, who lived next door', 'Her teacher', 'A stranger'], correct: 1 },
+        { q: 'How often does Valentina visit her parents?', options: ['Every day', 'About twice a month', 'Once a year', 'Never'], correct: 1 },
+        { q: 'How long has she lived in the city center?', options: ['One year', 'Five years', 'Ten years', 'Since she was born'], correct: 1 },
+        { q: 'What does she still call this neighborhood?', options: ['"Downtown"', '"Home"', '"The old place"', '"Far away"'], correct: 1 },
+      ],
+    },
+  };
+
+  function renderListenQuiz(key) {
+    const container = document.getElementById(`listenquiz-${key}`);
+    if (!container) return;
+    const items = LISTENING[key].questions;
+    container.innerHTML = items.map((item, qi) => `
+      <div class="quiz-item">
+        <div class="quiz-q">${qi + 1}. ${item.q}</div>
+        <div class="quiz-options">
+          ${item.options.map((opt, oi) => `<button class="quiz-opt" onclick="answerListenQuiz('${key}', ${qi}, ${oi})">${opt}</button>`).join('')}
+        </div>
+      </div>
+    `).join('') + `<div class="quiz-score" id="listenquiz-${key}-score">0 / ${items.length} respondidas</div>`;
+  }
+  const listenProgress = {};
+  function answerListenQuiz(key, qi, oi) {
+    const item = LISTENING[key].questions[qi];
+    const q = document.querySelectorAll(`#listenquiz-${key} .quiz-item`)[qi];
+    const buttons = q.querySelectorAll('.quiz-opt');
+    if (buttons[0].disabled) return;
+    buttons.forEach((b, i) => {
+      b.disabled = true;
+      if (i === item.correct) b.classList.add('correct');
+      else if (i === oi) b.classList.add('wrong');
+    });
+    if (!(key in listenProgress)) listenProgress[key] = { answered: 0, correct: 0 };
+    listenProgress[key].answered++;
+    if (oi === item.correct) listenProgress[key].correct++;
+    const total = LISTENING[key].questions.length;
+    document.getElementById(`listenquiz-${key}-score`).innerHTML = `<strong>${listenProgress[key].correct}</strong> / ${total} correctas · ${listenProgress[key].answered} / ${total} respondidas`;
+  }
+  Object.keys(LISTENING).forEach(renderListenQuiz);
+
+  function speakParagraph(key) {
+    if (!('speechSynthesis' in window)) { alert('Este navegador no soporta lectura en voz alta. Usa el texto en su lugar.'); return; }
+    window.speechSynthesis.cancel();
+    const utter = new SpeechSynthesisUtterance(LISTENING[key].text);
+    utter.lang = 'en-US';
+    utter.rate = 0.92;
+    const btn = document.getElementById(`listen-play-${key}`);
+    if (btn) {
+      btn.classList.add('speaking');
+      btn.textContent = '🔊 Reproduciendo...';
+      utter.onend = () => { btn.classList.remove('speaking'); btn.textContent = '▶ Escuchar'; };
+    }
+    window.speechSynthesis.speak(utter);
+  }
+  function stopSpeaking() {
+    window.speechSynthesis.cancel();
+    document.querySelectorAll('.listen-play').forEach(btn => { btn.classList.remove('speaking'); btn.textContent = '▶ Escuchar'; });
+  }
+  function toggleTranscript(key) {
+    const box = document.getElementById(`transcript-${key}`);
+    const btn = document.getElementById(`transcript-toggle-${key}`);
+    box.classList.toggle('show');
+    btn.textContent = box.classList.contains('show') ? '🙈 Ocultar texto' : '📄 Ver texto';
+  }
 </script>
 </body>
 </html>
